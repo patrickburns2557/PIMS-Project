@@ -21,8 +21,9 @@ window = tk.Tk()
 
 window.geometry("800x600")
 #window.resizable(width=False, height=True)
-window.wm_attributes('-transparentcolor', 'purple')
-
+#window.wm_attributes('-transparentcolor', 'purple')
+window.title("example")
+window.iconbitmap("logo.ico")
 
 #individual patient list entry
 class patientListWidget(tk.Frame):
@@ -49,8 +50,7 @@ class patientListWidget(tk.Frame):
             text=firstName,
             width=20,
             anchor="w",
-            justify=tk.LEFT,
-            #bg="purple"
+            justify=tk.LEFT
         )
         firstNameLabel.pack(padx=2, pady=2)
 
@@ -67,8 +67,7 @@ class patientListWidget(tk.Frame):
             text=lastName,
             width=20,
             anchor="w",
-            justify=tk.LEFT,
-            #bg="purple"
+            justify=tk.LEFT
         )
         lastNameLabel.pack(padx=2, pady=2)
 
@@ -97,8 +96,7 @@ class patientListWidget(tk.Frame):
             text=location,
             width=20,
             anchor="w",
-            justify=tk.LEFT,
-            #bg="purple"
+            justify=tk.LEFT
         )
         locationLabel.pack(padx=2, pady=2)
 
@@ -164,8 +162,5 @@ for i in range(50):
 
 showme = Example(window, patientList)
 showme.pack(side="left", fill="both", expand=True)
-
-#p1 = Patient("testfirst", "testlast", "testlocation")
-#wid = patientListWidget(window, p1.firstName, p1.lastName, p1.location).pack()
 
 window.mainloop()
