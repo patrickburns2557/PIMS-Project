@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
-#individual patient list entry
+#individual patient list entry to be used in ScrollablePatientList
 class SinglePatientListWidget(tk.Frame):
     numInstances = 0
     def __init__(self, parentWidget, firstName, lastName, location):
@@ -98,8 +98,8 @@ class PatientListTopLabel(SinglePatientListWidget):
 
 
 
-
-class PatientList(tk.Frame):
+#Class to create a scrollable list of patient names given a list of Patient objects
+class ScrollablePatientList(tk.Frame):
     def __init__(self, parent, patientList):
         tk.Frame.__init__(self, parent)
         #create a canvas that will be used to scroll on
@@ -131,12 +131,6 @@ class PatientList(tk.Frame):
             patient = SinglePatientListWidget(scrollable_frame, p.firstName, p.lastName, p.location)
             patient.pack(fill="both", expand=True)
         
+        
         scrollbar.pack(side="right", fill="y")
         canvas.pack(side="left", fill="both", expand=True)
-
-
-
-#patientList = []
-#patientList.append(Patient("richard", "jackson", "down the hall"))
-
-

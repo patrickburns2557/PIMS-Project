@@ -57,7 +57,7 @@ leftLabel.pack(side=tk.LEFT)
 rightLabel.pack(side=tk.RIGHT)
 
 
-showme = spl.PatientList(window, patientList)
+showme = spl.ScrollablePatientList(window, patientList)
 showme.pack(fill="both", expand=True)
 #showme.grid(row=0, column=0, sticky="nesw")
 #window.grid_rowconfigure(0, weight=1)
