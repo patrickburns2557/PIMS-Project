@@ -14,122 +14,89 @@ class SinglePatientListWidget(tk.Frame):
         
 
         #frame to hold the label
-        firstNameFrame = tk.Frame(
+        self.firstNameFrame = tk.Frame(
             self,
             relief=tk.RAISED,
             borderwidth=1,
-            bg="orange"
+            bg="black"
         )
-        firstNameFrame.grid(row=0,column=0, padx=3, pady=3)
-        firstNameLabel = tk.Label(
-            firstNameFrame,
+        self.firstNameFrame.grid(row=0,column=0, padx=3, pady=3)
+        self.firstNameLabel = tk.Label(
+            self.firstNameFrame,
             text=firstName,
             width=20,
             anchor="w",
             justify=tk.LEFT
         )
-        firstNameLabel.pack(padx=2, pady=2)
+        self.firstNameLabel.pack(padx=2, pady=2)
 
         #frame to hold the label
-        lastNameFrame = tk.Frame(
+        self.lastNameFrame = tk.Frame(
             self,
             relief=tk.RAISED,
             borderwidth=1,
-            bg="blue"
+            bg="black"
         )
-        lastNameFrame.grid(row=0,column=1, padx=3, pady=3)
-        lastNameLabel = tk.Label(
-            lastNameFrame,
+        self.lastNameFrame.grid(row=0,column=1, padx=3, pady=3)
+        self.lastNameLabel = tk.Label(
+            self.lastNameFrame,
             text=lastName,
             width=20,
             anchor="w",
             justify=tk.LEFT
         )
-        lastNameLabel.pack(padx=2, pady=2)
+        self.lastNameLabel.pack(padx=2, pady=2)
 
         #space in between last name and location
         #make sure the spacer is the same color as the grid behind it
         if SinglePatientListWidget.numInstances % 2 == 1:
-            spacer = tk.Frame(
+            self.spacer = tk.Frame(
                 self,
                 width=300,
                 bg="grey"
             )
         else:
-            spacer = tk.Frame(
+            self.spacer = tk.Frame(
                 self,
                 width=300,
             )
-        spacer.grid(row=0,column=2, padx=3, pady=3)
+        self.spacer.grid(row=0,column=2, padx=0, pady=3, sticky="news")
 
         #frame to hold the label
-        locationFrame = tk.Frame(
+        self.locationFrame = tk.Frame(
             self,
             relief=tk.RAISED,
             borderwidth=1,
-            bg="green"
+            bg="black"
         )
-        locationFrame.grid(row=0,column=3, padx=3, pady=3)
-        locationLabel = tk.Label(
-            locationFrame,
+        self.locationFrame.grid(row=0,column=3, padx=3, pady=3)
+        self.locationLabel = tk.Label(
+            self.locationFrame,
             text=location,
             width=20,
             anchor="w",
             justify=tk.LEFT
         )
-        locationLabel.pack(padx=2, pady=2)
+        self.locationLabel.pack(padx=2, pady=2)
         
         #Resize the spacer to fill any extra window size
         self.grid_columnconfigure(2, weight=1)
 
+#reuse the SinglePatientListWidget to be the label at the top of the list
+class PatientListTopLabel(SinglePatientListWidget):
+    def __init__(self, parentWidget, firstName, lastName, location):
+        frontColor = "#ffffff"
+        backColor = "#889dcd"
+        super().__init__(parentWidget, firstName, lastName, location)
+        self.firstNameLabel.config(bg=backColor, fg=frontColor)
+        self.lastNameLabel.config(bg=backColor, fg=frontColor)
+        self.locationLabel.config(bg=backColor, fg=frontColor)
+        self.spacer.config(bg=backColor)
+        self.endSpacer = tk.Label(self, width=1, bg=backColor)
+        self.endSpacer.grid(row=0, column=4, padx=3, pady=3)
+        self.config(bg=backColor)
 
-        
 
-class PatientListTop(tk.Frame):
-    def __init__(self, parentWidget):
-        super().__init__(parentWidget)
-        color = "#889dcd"
-        firstNameLabel = tk.Label(
-            self,
-            text="FIRST NAME",
-            bg=color,
-            fg="#ffffff",
-            width=20,
-            #anchor="w",
-            #justify=tk.LEFT,
-        )
-        firstNameLabel.grid(row=0, column=0, padx=3, pady=3)
-        
-        lastNameLabel = tk.Label(
-            self,
-            text="LAST NAME",
-            bg=color,
-            fg="#ffffff",
-            width=20,
-            #anchor="w",
-            #justify=tk.LEFT
-        )
-        lastNameLabel.grid(row=0, column=1, padx=3, pady=3)
-
-        spacer = tk.Frame(
-            self,
-            width=300,
-            bg=color
-        )
-        spacer.grid(row=0, column=2, padx=3, pady=3, sticky="news")
-
-        locationLabel = tk.Label(
-            self,
-            text="LOCATION",
-            bg=color,
-            fg="#ffffff",
-            width=20,
-            #anchor="w",
-            #justify=tk.LEFT
-        )
-        locationLabel.grid(row=0, column=3, padx=3, pady=3)
-
-        self.grid_columnconfigure(2, weight=1)
 
 
 class PatientList(tk.Frame):
@@ -159,7 +126,7 @@ class PatientList(tk.Frame):
         canvas.configure(yscrollcommand=scrollbar.set)
 
         #Load in the patients to list
-        PatientListTop(scrollable_frame).pack(fill="both", expand=True)
+        PatientListTopLabel(self, "FIRST NAME", "LAST NAME", "LOCATION").pack(side=tk.TOP, fill="both", expand=False)
         for p in patientList:
             patient = SinglePatientListWidget(scrollable_frame, p.firstName, p.lastName, p.location)
             patient.pack(fill="both", expand=True)
