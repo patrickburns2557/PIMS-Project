@@ -1,5 +1,6 @@
 import GUI.ScrollablePatientList as spl
-import GUI.PatientDetailedView as PDV
+import GUI.PatientDetailedView as pdv
+import GUI.ListView as lv
 from Data.dataClasses import *
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -22,10 +23,9 @@ def switch():
     
     
     currentView.destroy()
-    #currentView = tk.Label(text="You have been replaced\nby a new frame", font=("Arial", 25))
     p1 = Patient("patrick", "burns", "up the hall")
 
-    currentView = PDV.PatientDetailedView(window, p1) 
+    currentView = pdv.PatientDetailedView(window, p1) 
     currentView.grid(row=1, column=1, sticky="news")
 
 
@@ -41,7 +41,7 @@ def create5():
         location = "location " + str(i)
         patientList.append(Patient(first, last, location))
     currentView.destroy()
-    currentView = spl.ScrollablePatientList(window, patientList)
+    currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
 
 def create10():
@@ -55,7 +55,7 @@ def create10():
         location = "location " + str(i)
         patientList.append(Patient(first, last, location))
     currentView.destroy()
-    currentView = spl.ScrollablePatientList(window, patientList)
+    currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
 
 def create50():
@@ -69,7 +69,7 @@ def create50():
         location = "location " + str(i)
         patientList.append(Patient(first, last, location))
     currentView.destroy()
-    currentView = spl.ScrollablePatientList(window, patientList)
+    currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
 
 
@@ -103,7 +103,8 @@ rightLabel.grid(row=1, column=2)
 
 
 
-currentView = spl.ScrollablePatientList(window, patientList)
+#currentView = spl.ScrollablePatientList(window, patientList)
+currentView = lv.ListView(window, patientList)
 #scroll.pack(fill="both", expand=True)
 currentView.grid(row=1, column=1, sticky="news")
 
