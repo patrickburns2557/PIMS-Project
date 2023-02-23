@@ -128,7 +128,7 @@ class ScrollablePatientList(tk.Frame):
         #Load in the patients to list
         PatientListTopLabel(self, "FIRST NAME", "LAST NAME", "LOCATION").pack(side=tk.TOP, fill="both", expand=False)
         for p in patientList:
-            patient = SinglePatientListWidget(scrollable_frame, p.firstName, p.lastName, p.location)
+            patient = SinglePatientListWidget(scrollable_frame, p.firstName, p.lastName, p.locationFacility)
             patient.pack(fill="both", expand=True)
         
         
