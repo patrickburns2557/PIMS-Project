@@ -72,7 +72,7 @@ class SinglePatientListWidget(tk.Frame):
         self.locationFrame.grid(row=0,column=3, padx=3, pady=3)
         self.locationLabel = tk.Label(
             self.locationFrame,
-            text=location,
+            text=(location[0] + "\n" + location[1] + "\n" + location[2] + "\n" + location[3]),
             width=20,
             anchor="w",
             justify=tk.LEFT
@@ -90,7 +90,7 @@ class PatientListTopLabel(SinglePatientListWidget):
         super().__init__(parentWidget, firstName, lastName, location)
         self.firstNameLabel.config(bg=backColor, fg=frontColor)
         self.lastNameLabel.config(bg=backColor, fg=frontColor)
-        self.locationLabel.config(bg=backColor, fg=frontColor)
+        self.locationLabel.config(bg=backColor, fg=frontColor, text="LOCATION")
         self.spacer.config(bg=backColor)
         self.endSpacer = tk.Label(self, width=1, bg=backColor)
         self.endSpacer.grid(row=0, column=4, padx=3, pady=3)
