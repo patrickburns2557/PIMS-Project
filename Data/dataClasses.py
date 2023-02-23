@@ -33,6 +33,7 @@ class Patient():
         
 
         #LOCATION INFORMATION
+        self.location = ["", "", "", ""] # Facility, Floor, Room, Bed number
         self.locationFacility = ""
         self.locationFloor = ""
         self.locationRoom = ""
@@ -66,10 +67,10 @@ class Patient():
 
     # address = list of 4 strings that equate to Street, City, State, Zip
     def setAddress(self, address):
-        self.address[0] = address[0]
-        self.address[1] = address[1]
-        self.address[2] = address[2]
-        self.address[3] = address[3]
+        self.address[0] = address[0] # Street
+        self.address[1] = address[1] # City
+        self.address[2] = address[2] # State
+        self.address[3] = address[3] # Zip
     
     def setHomePhone(self, homePhone):
         self.homePhone = homePhone
@@ -118,11 +119,17 @@ class Patient():
     ################################
     # LOCATION INFORMATION METHODS
     ################################
-    def setLocation(self, facility, floor, room, bed):
-        self.locationFacility = facility
-        self.locationFloor = floor
-        self.locationRoom = room
-        self.locationBed = bed
+    #def setLocation(self, facility, floor, room, bed):
+    #    self.locationFacility = facility
+    #    self.locationFloor = floor
+    #    self.locationRoom = room
+    #    self.locationBed = bed
+    # location = list of 4 strings that equate to Facility, Floor, Room number, and Bed number
+    def setLocation(self, location):
+        self.location[0] = location[0] # Facility
+        self.location[1] = location[1] # Floor
+        self.location[2] = location[2] # Room number
+        self.location[3] = location[3] # Bed number
 
     def setNumAllowedVisitors(self, numVisitors):
         self.numAllowedVisitors = numVisitors
