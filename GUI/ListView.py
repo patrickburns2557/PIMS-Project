@@ -27,3 +27,5 @@ class ListView(tk.Frame):
         
         self.scrollable = spl.ScrollablePatientList(self, patientList)
         self.scrollable.grid(row=1, column=0, sticky="news", columnspan=3)
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(1, weight=1)

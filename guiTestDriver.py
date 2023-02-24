@@ -8,11 +8,11 @@ import tkinter.ttk as ttk
 patientList = []
 currentView = 0 #will probably initialize to the login screen on startup
 window = tk.Tk()
-window.geometry("1024x768")
+window.geometry("1280x720")
 #window.resizable(width=False, height=True)
 window.title(__file__)
 window.iconbitmap('logo.ico')
-
+window.minsize(1280, 720)
 
 def switch():
     global window
