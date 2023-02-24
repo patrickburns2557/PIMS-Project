@@ -23,7 +23,11 @@ def switch():
     
     
     currentView.destroy()
-    p1 = Patient("patrick", "burns", "up the hall")
+    #currentView = tk.Label(text="You have been replaced\nby a new frame", font=("Arial", 25))
+    p1 = Patient()
+    p1.setFirstName("patrick")
+    p1.setLastname("burns")
+    p1.setLocation(["up the hall", "floor", "room", "bed"])
 
     currentView = pdv.PatientDetailedView(window, p1) 
     currentView.grid(row=1, column=1, sticky="news")
@@ -39,7 +43,9 @@ def create5():
         first = "first " + str(i)
         last = "last " + str(i)
         location = "location " + str(i)
-        patientList.append(Patient(first, last, location))
+        p = Patient()
+        p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
+        patientList.append(p)
     currentView.destroy()
     currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
@@ -53,7 +59,9 @@ def create10():
         first = "first " + str(i)
         last = "last " + str(i)
         location = "location " + str(i)
-        patientList.append(Patient(first, last, location))
+        p = Patient()
+        p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
+        patientList.append(p)
     currentView.destroy()
     currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
@@ -67,7 +75,9 @@ def create50():
         first = "first " + str(i)
         last = "last " + str(i)
         location = "location " + str(i)
-        patientList.append(Patient(first, last, location))
+        p = Patient()
+        p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
+        patientList.append(p)
     currentView.destroy()
     currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
@@ -80,16 +90,25 @@ def create50():
 
 
 patientList = []
-patientList.append(Patient("Richard", "jackson", "down the hall"))
-patientList.append(Patient("patrick", "burns", "up the hall"))
-patientList.append(Patient("Amy", "Jones", "first floor"))
-patientList.append(Patient("Bob", "Jones", "Third floor"))
-patientList.append(Patient("My First Name", "My Last Name", "My Location"))
+p = Patient()
+p.setFirstName("Richard") ; p.setLastname("jackson") ; p.setLocation(["down the hall", "floor", "room", "bed"])
+patientList.append(p)
+p = Patient()
+p.setFirstName("Amy") ; p.setLastname("Jones") ; p.setLocation(["first floor", "floor", "room", "bed"])
+patientList.append(p)
+p = Patient()
+p.setFirstName("patrick") ; p.setLastname("burns") ; p.setLocation(["up the hall", "floor", "room", "bed"])
+patientList.append(p)
+p = Patient()
+p.setFirstName("My First Name") ; p.setLastname("MyLastName") ; p.setLocation(["My Location", "floor", "room", "bed"])
+patientList.append(p)
 for i in range(50):
     first = "first " + str(i)
     last = "last " + str(i)
     location = "location " + str(i)
-    patientList.append(Patient(first, last, location))
+    p = Patient()
+    p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
+    patientList.append(p)
 
 
 topLabel = tk.Button(window,text="DetailedViewTest",font=("Arial", 20), command=lambda: switch())
@@ -101,22 +120,12 @@ bottomLabel.grid(row=2, column=1)
 leftLabel.grid(row=1, column=0)
 rightLabel.grid(row=1, column=2)
 
-
-
 #currentView = spl.ScrollablePatientList(window, patientList)
 currentView = lv.ListView(window, patientList)
 #scroll.pack(fill="both", expand=True)
+
 currentView.grid(row=1, column=1, sticky="news")
 
-
-#showme.grid(row=0, column=0, sticky="nesw")
-#window.grid_rowconfigure(0, weight=1)
-#window.grid_columnconfigure(0, weight=1)
-
-#window.grid_columnconfigure(0, weight=0)
-#window.grid_columnconfigure(2, weight=0)
-#window.grid_rowconfigure(0, weight=0)
-#window.grid_rowconfigure(2, weight=0)
 window.grid_rowconfigure(1, weight=1)
 window.grid_columnconfigure(1, weight=1)
 
