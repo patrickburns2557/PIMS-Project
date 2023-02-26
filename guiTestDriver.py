@@ -41,6 +41,12 @@ def switch():
     p1.addAllowedVisitor("George Washington")
     p1.addAllowedVisitor("Visitor 4")
     p1.setLocation(["up the hall", "floor", "room", "bed"])
+    p1.setFamilyDoctor("Dr. Medical Doctor Man")
+    p1.setDateAdmittance("January 17, 2020")
+    p1.setTimeAdmittance("7:15PM")
+    p1.setReasonAdmission("Broken Arm")
+    p1.addPrescription("Medicine 1", "15mg", "Every Morning")
+    p1.addPrescription("Another Medicine", "3mg", "Every Night")
 
     currentView = pdv.PatientDetailedView(window, p1) 
     currentView.grid(row=1, column=1, sticky="news")
