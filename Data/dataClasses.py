@@ -125,11 +125,6 @@ class Patient():
     ################################
     # LOCATION INFORMATION METHODS
     ################################
-    #def setLocation(self, facility, floor, room, bed):
-    #    self.locationFacility = facility
-    #    self.locationFloor = floor
-    #    self.locationRoom = room
-    #    self.locationBed = bed
     # location = list of 4 strings that equate to Facility, Floor, Room number, and Bed number
     def setLocation(self, location):
         self.location[0] = location[0] # Facility
