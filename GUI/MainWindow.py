@@ -14,7 +14,11 @@ class MainWindow(tk.Tk):
         self.geometry("1280x720")
         #window.resizable(width=False, height=True)
         self.title(__file__)
-        self.iconbitmap('logo.ico')
+        #Skip loading window icon if it fails since it's not strictly necessary
+        try:
+            self.iconbitmap('./logo.ico')
+        except:
+            pass
         self.minsize(1280, 720)
         
         self.currentView = lv.ListView(self, patientList) #Default view when starting program
