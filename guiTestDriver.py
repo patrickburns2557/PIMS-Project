@@ -1,5 +1,6 @@
 import GUI.ScrollablePatientList as spl
-import GUI.PatientDetailedView as PDV
+import GUI.PatientDetailedView as pdv
+import GUI.ListView as lv
 from Data.dataClasses import *
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -24,11 +25,45 @@ def switch():
     currentView.destroy()
     #currentView = tk.Label(text="You have been replaced\nby a new frame", font=("Arial", 25))
     p1 = Patient()
-    p1.setFirstName("patrick")
-    p1.setLastname("burns")
+    p1.setFirstName("Patrick")
+    p1.setMiddleName("Wayne")
+    p1.setLastname("Burns")
+    p1.setAddress(["918 Main Road", "Huntsville", "Alabama", "35776"])
+    p1.setHomePhone("555-123-4567")
+    p1.setWorkPhone("555-456-7890")
+    p1.setMobilePhone("555-789-0234")
+    p1.addEmergencyContact("Emergency contact name 1", "555-233-4566")
+    p1.addEmergencyContact("Emergency contact name two", "555-455-6788")
+    p1.addEmergencyContact("Emergency contact name 3", "555-455-6788")
+    p1.setNumAllowedVisitors("3")
+    p1.addAllowedVisitor("Visitor 1")
+    p1.addAllowedVisitor("Bob Jones")
+    p1.addAllowedVisitor("George Washington")
+    p1.addAllowedVisitor("Visitor 4")
     p1.setLocation(["up the hall", "floor", "room", "bed"])
+    p1.setFamilyDoctor("Dr. Medical Doctor Man")
+    p1.setDateAdmittance("January 17, 2020")
+    p1.setTimeAdmittance("7:15PM")
+    p1.setDateDischarge("April 2, 2020")
+    p1.setTimeDischarge("8:20PM")
+    p1.setReasonAdmission("Broken Arm")
+    p1.addPrescription("Medicine 1", "15mg", "Every Morning")
+    p1.addPrescription("Another Medicine", "3mg", "Every Night")
+    p1.addScheduledProcedure("Surgery on leg at 3PM")
+    p1.addScheduledProcedure("Another surgery at 5PM")
+    p1.addDoctorNote("Patient needs medicine")
+    p1.addDoctorNote("Patient is doing well")
+    p1.addNurseNote("Patient had treatment at 7:15AM")
+    p1.addNurseNote("Patient scheduled for surgery tomorrow")
+    p1.setInsuranceCarrier("Big Insurance Company")
+    p1.setInsuranceAccountNumber("123456789")
+    p1.setInsuranceGroupNumber("987654")
+    p1.setAmountPaid(481.1891024)
+    p1.setAmountPaidByInsurance(15.81870)
+    p1.addCharge("Broken leg repaired", 890.1333)
+    p1.addCharge("Expensive Medicine administered", 443.145)
 
-    currentView = PDV.PatientDetailedView(window, p1) 
+    currentView = pdv.PatientDetailedView(window, p1) 
     currentView.grid(row=1, column=1, sticky="news")
 
 
@@ -46,7 +81,7 @@ def create5():
         p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
         patientList.append(p)
     currentView.destroy()
-    currentView = spl.ScrollablePatientList(window, patientList)
+    currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
 
 def create10():
@@ -62,7 +97,7 @@ def create10():
         p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
         patientList.append(p)
     currentView.destroy()
-    currentView = spl.ScrollablePatientList(window, patientList)
+    currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
 
 def create50():
@@ -78,7 +113,7 @@ def create50():
         p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
         patientList.append(p)
     currentView.destroy()
-    currentView = spl.ScrollablePatientList(window, patientList)
+    currentView = lv.ListView(window, patientList)
     currentView.grid(row=1, column=1, sticky="news")
 
 
@@ -111,17 +146,17 @@ for i in range(50):
 
 
 topLabel = tk.Button(window,text="DetailedViewTest",font=("Arial", 20), command=lambda: switch())
-bottomLabel = tk.Button(window,text="Create 5",font=("Arial", 20), command=lambda: create5())
-leftLabel = tk.Button(window,text="Create\n10",font=("Arial", 20), command=lambda: create10())
-rightLabel = tk.Button(window,text="Create\n50",font=("Arial", 20), command=lambda: create50())
+#bottomLabel = tk.Button(window,text="Create 5",font=("Arial", 20), command=lambda: create5())
+#leftLabel = tk.Button(window,text="Create\n10",font=("Arial", 20), command=lambda: create10())
+#rightLabel = tk.Button(window,text="Create\n50",font=("Arial", 20), command=lambda: create50())
 topLabel.grid(row=0, column=1)
-bottomLabel.grid(row=2, column=1)
-leftLabel.grid(row=1, column=0)
-rightLabel.grid(row=1, column=2)
+#bottomLabel.grid(row=2, column=1)
+#leftLabel.grid(row=1, column=0)
+#rightLabel.grid(row=1, column=2)
 
-
-
-currentView = spl.ScrollablePatientList(window, patientList)
+#currentView = spl.ScrollablePatientList(window, patientList)
+currentView = lv.ListView(window, patientList)
+#scroll.pack(fill="both", expand=True)
 
 currentView.grid(row=1, column=1, sticky="news")
 

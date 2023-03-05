@@ -47,7 +47,7 @@ class Patient():
         self.insuranceAccountNumber = ""
         self.insuranceGroupNumber = ""
         self.listCharges = [] # List of strings containing the name of each charge
-        self.listChargeAmount = [] # List of floats(?) containing the value of each charge
+        self.listChargesAmount = [] # List of floats(?) containing the value of each charge
         self.amountPaid = 0.0
         self.amountOwed = 0.0
         self.amountPaidByInsurance = 0.0
@@ -100,6 +100,12 @@ class Patient():
 
     def setFamilyDoctor(self, familyDoctor):
         self.familyDoctor = familyDoctor
+    
+    def setDateDischarge(self, dateDischarge):
+        self.dateDischarge = dateDischarge
+
+    def setTimeDischarge(self, timeDischarge):
+        self.timeDischarge = timeDischarge
 
     def addDoctorNote(self, doctorNote):
         self.doctorNotes.append(doctorNote)
@@ -152,7 +158,7 @@ class Patient():
 
     def addCharge(self, charge, chargeAmount):
         self.listCharges.append(charge)
-        self.listChargeAmount.append(chargeAmount)
+        self.listChargesAmount.append(chargeAmount)
 
     def setAmountPaid(self, amountPaid):
         self.amountPaid = amountPaid
@@ -162,7 +168,7 @@ class Patient():
     
     def updateAmountOwed(self):
         totalCharges = 0.0
-        for x in self.listChargeAmount:
+        for x in self.listChargesAmount:
             totalCharges += x
         self.amountOwed = totalCharges - self.amountPaid - self.amountPaidByInsurance
 
