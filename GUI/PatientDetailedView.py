@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from Data.dataClasses import *
+import GUI.utility as guiUtil
 
 BGCOLOR = "#E4E4E4"
 BUTTONSELECTED = "#D9D9D9"
@@ -40,9 +41,16 @@ class PatientDetailedView(tk.Frame):
             command=lambda:self.switchBilling(),
             font=FONTINFO
         )
+        self.returnButton = tk.Button(
+            self.buttonFrame,
+            text="Return to Patient List",
+            command=lambda:guiUtil.switch(1),
+            font=FONTINFO
+        )
         self.personalButton.grid(row=0, column=0, padx=3, pady=3)
         self.medicalButton.grid(row=0, column=1, padx=3, pady=3)
         self.billingButton.grid(row=0, column=2, padx=3, pady=3)
+        self.returnButton.grid(row=0, column=3, padx=3, pady=3)
 
         
 
