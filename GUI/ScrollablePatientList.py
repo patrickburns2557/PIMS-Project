@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+import GUI.utility as guiUtil
 
 #individual patient list entry to be used in ScrollablePatientList
 class SinglePatientListWidget(tk.Frame):
@@ -47,6 +48,24 @@ class SinglePatientListWidget(tk.Frame):
         )
         self.lastNameLabel.pack(padx=2, pady=2)
 
+        #frame to hold the button
+        self.detailedViewFrame = tk.Frame(
+            self,
+            relief=tk.RAISED,
+            borderwidth=1,
+            bg="black"
+        )
+        self.detailedViewFrame.grid(row=0,column=2, padx=3, pady=3)
+        self.detailedViewButton = tk.Button(
+            self.detailedViewFrame,
+            text="detailed view",
+            command=lambda: guiUtil.switch(2),
+            width=20,
+            anchor="w",
+            justify=tk.LEFT
+        )
+        self.detailedViewButton.pack(padx=2, pady=2)
+
         #space in between last name and location
         #make sure the spacer is the same color as the grid behind it
         if SinglePatientListWidget.numInstances % 2 == 1:
@@ -60,7 +79,7 @@ class SinglePatientListWidget(tk.Frame):
                 self,
                 width=300,
             )
-        self.spacer.grid(row=0,column=2, padx=0, pady=3, sticky="news")
+        self.spacer.grid(row=0,column=3, padx=0, pady=3, sticky="news")
 
         #frame to hold the label
         self.locationFrame = tk.Frame(
@@ -69,7 +88,7 @@ class SinglePatientListWidget(tk.Frame):
             borderwidth=1,
             bg="black"
         )
-        self.locationFrame.grid(row=0,column=3, padx=3, pady=3)
+        self.locationFrame.grid(row=0,column=4, padx=3, pady=3)
         self.locationLabel = tk.Label(
             self.locationFrame,
             text=(location[0] + "\n" + location[1] + "\n" + location[2] + "\n" + location[3]),
