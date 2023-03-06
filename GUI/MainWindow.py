@@ -7,8 +7,9 @@ import GUI.ListView as lv
 from Data.dataClasses import *
 
 class MainWindow(ctk.CTk):
-    ctk.set_appearance_mode("light")
-    ctk.set_default_color_theme("dark-blue")
+    #ctk.set_appearance_mode("light")
+    #ctk.set_default_color_theme("dark-blue")
+    #print(ctk.get_appearance_mode())
     window = None #Class variable to hold itself in so that other classes can make calls to the MainWindow class and change the window's views
     def __init__(self, patientList):
         super().__init__()
