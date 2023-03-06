@@ -5,6 +5,8 @@ import GUI.MainWindow
 from Data.dataClasses import *
 import tkinter as tk
 import tkinter.ttk as ttk
+import GUI.utility as guiUtil
+
 
 patientList = []
 
@@ -23,8 +25,6 @@ def switch():
 
     currentView = pdv.PatientDetailedView(window, p1) 
     currentView.grid(row=1, column=1, sticky="news")
-
-
 
 def create5():
     global patientList
@@ -80,7 +80,6 @@ def create50():
 
 
 
-
 patientList = []
 p1 = Patient()
 p1.setFirstName("Patrick")
@@ -121,31 +120,33 @@ p1.setAmountPaidByInsurance(15.81870)
 p1.addCharge("Broken leg repaired", 890.1333)
 p1.addCharge("Expensive Medicine administered", 443.145)
 patientList.append(p1)
+
 p = Patient()
 p.setFirstName("Richard") ; p.setLastname("jackson") ; p.setLocation(["down the hall", "floor", "room", "bed"])
-patientList.append(p)
+guiUtil.patientList.append(p)
 p = Patient()
 p.setFirstName("Amy") ; p.setLastname("Jones") ; p.setLocation(["first floor", "floor", "room", "bed"])
-patientList.append(p)
+guiUtil.patientList.append(p)
 p = Patient()
 p.setFirstName("patrick") ; p.setLastname("burns") ; p.setLocation(["up the hall", "floor", "room", "bed"])
-patientList.append(p)
+guiUtil.patientList.append(p)
 p = Patient()
 p.setFirstName("My First Name") ; p.setLastname("MyLastName") ; p.setLocation(["My Location", "floor", "room", "bed"])
-patientList.append(p)
+guiUtil.patientList.append(p)
 for i in range(50):
     first = "first " + str(i)
     last = "last " + str(i)
     location = "location " + str(i)
     p = Patient()
     p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
-    patientList.append(p)
+    guiUtil.patientList.append(p)
 
 
 window = GUI.MainWindow.MainWindow(patientList)
 
 topLabel = tk.Button(window,text="DetailedViewTest",font=("Arial", 20), command=lambda: GUI.MainWindow.switchDetailedView(p1))
 topLabel.grid(row=0, column=1)
+
 
 topLabel2 = tk.Button(window, text="List View", font=("Arial", 20), command=lambda: GUI.MainWindow.switchPatientList(patientList))
 topLabel2.grid(row=0, column=2)

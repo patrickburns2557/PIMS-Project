@@ -169,3 +169,10 @@ class Patient():
 
     def setAmountPaidByInsurance(self, amount):
         self.amountPaidByInsurance = amount
+
+class User:
+    def __init__(self):
+        self.userType = 0
+        self.username = ""
+        self.password = ""
+        
