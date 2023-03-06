@@ -5,6 +5,7 @@ import GUI.MainWindow
 from Data.dataClasses import *
 import tkinter as tk
 import tkinter.ttk as ttk
+import customtkinter as ctk
 
 
 patientList = []
@@ -140,13 +141,20 @@ for i in range(20):
 
 window = GUI.MainWindow.MainWindow(patientList)
 
-topLabel = tk.Button(window,text="DetailedViewTest",font=("Arial", 20), command=lambda: GUI.MainWindow.switchDetailedView(p1))
-topLabel.grid(row=0, column=1)
+testText = ctk.CTkLabel(window, text="Testing Buttons:", font=("Arial", 20))
+testText.grid(row=0, column=1, sticky="e")
+
+detailButton = ctk.CTkButton(window,text="DetailedViewTest",font=("Arial", 20), command=lambda: GUI.MainWindow.switchDetailedView(p1))
+detailButton.grid(row=0, column=2, padx=2, pady=2)
 
 
-topLabel2 = tk.Button(window, text="List View", font=("Arial", 20), command=lambda: GUI.MainWindow.switchPatientList(patientList))
-topLabel2.grid(row=0, column=2)
+listButton = ctk.CTkButton(window, text="List View", font=("Arial", 20), command=lambda: GUI.MainWindow.switchPatientList(patientList))
+listButton.grid(row=0, column=3, padx=2, pady=2)
 
+lightButton = ctk.CTkButton(window, text="Light mode", font=("Arial", 20), command=lambda:ctk.set_appearance_mode("light"))
+lightButton.grid(row=0, column=4, padx=2, pady=2)
+darkButton = ctk.CTkButton(window, text="Dark mode", font=("Arial", 20), command=lambda:ctk.set_appearance_mode("dark"))
+darkButton.grid(row=0, column=5, padx=2, pady=2)
 
 window.grid_rowconfigure(1, weight=1)
 window.grid_columnconfigure(1, weight=1)
