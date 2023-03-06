@@ -5,7 +5,6 @@ import GUI.MainWindow
 from Data.dataClasses import *
 import tkinter as tk
 import tkinter.ttk as ttk
-import GUI.utility as guiUtil
 
 
 patientList = []
@@ -123,23 +122,23 @@ patientList.append(p1)
 
 p = Patient()
 p.setFirstName("Richard") ; p.setLastname("jackson") ; p.setLocation(["down the hall", "floor", "room", "bed"])
-guiUtil.patientList.append(p)
+patientList.append(p)
 p = Patient()
 p.setFirstName("Amy") ; p.setLastname("Jones") ; p.setLocation(["first floor", "floor", "room", "bed"])
-guiUtil.patientList.append(p)
+patientList.append(p)
 p = Patient()
 p.setFirstName("patrick") ; p.setLastname("burns") ; p.setLocation(["up the hall", "floor", "room", "bed"])
-guiUtil.patientList.append(p)
+patientList.append(p)
 p = Patient()
 p.setFirstName("My First Name") ; p.setLastname("MyLastName") ; p.setLocation(["My Location", "floor", "room", "bed"])
-guiUtil.patientList.append(p)
+patientList.append(p)
 for i in range(50):
     first = "first " + str(i)
     last = "last " + str(i)
     location = "location " + str(i)
     p = Patient()
     p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
-    guiUtil.patientList.append(p)
+    patientList.append(p)
 
 
 window = GUI.MainWindow.MainWindow(patientList)
