@@ -1,11 +1,14 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+import customtkinter as ctk
 import GUI.ScrollablePatientList as spl
 import GUI.PatientDetailedView as pdv
 import GUI.ListView as lv
 from Data.dataClasses import *
 
-class MainWindow(tk.Tk):
+class MainWindow(ctk.CTk):
+    ctk.set_appearance_mode("light")
+    ctk.set_default_color_theme("dark-blue")
     window = None #Class variable to hold itself in so that other classes can make calls to the MainWindow class and change the window's views
     def __init__(self, patientList):
         super().__init__()
@@ -26,10 +29,6 @@ class MainWindow(tk.Tk):
 
 #Function to allow other classes to change the current view in the window to PatientDetailedView
 def switchDetailedView(patient):
-    MainWindow.window.currentView.unbind_all("<MouseWheel>") #need to do this anytime the scrollable list is removed
-    #and not replaced by another one so that errors don't occur when mouse wheel is scrolled
-    
-    
     MainWindow.window.currentView.destroy()
 
     MainWindow.window.currentView = pdv.PatientDetailedView(MainWindow.window, patient) 

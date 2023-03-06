@@ -14,9 +14,6 @@ def switch():
     global window
     global currentView
     
-    currentView.unbind_all("<MouseWheel>") #need to do this anytime the scrollable list is removed
-    #and not replaced by another one so that errors don't occur when mouse wheel is scrolled
-    
     
     currentView.destroy()
     #currentView = tk.Label(text="You have been replaced\nby a new frame", font=("Arial", 25))
@@ -132,7 +129,7 @@ patientList.append(p)
 p = Patient()
 p.setFirstName("My First Name") ; p.setLastname("MyLastName") ; p.setLocation(["My Location", "floor", "room", "bed"])
 patientList.append(p)
-for i in range(50):
+for i in range(20):
     first = "first " + str(i)
     last = "last " + str(i)
     location = "location " + str(i)
