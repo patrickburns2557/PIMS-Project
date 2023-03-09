@@ -29,6 +29,9 @@ class MainWindow(ctk.CTk):
         self.currentView = lv.ListView(self, patientList) #Default view when starting program
         self.currentView.grid(row=1, column=1, sticky="news", columnspan=10)
 
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+
 #Function to allow other classes to change the current view in the window to PatientDetailedView
 def switchDetailedView(patient):
     MainWindow.window.currentView.destroy()
