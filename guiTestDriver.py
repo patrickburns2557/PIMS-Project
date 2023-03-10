@@ -88,6 +88,11 @@ lightButton.grid(row=0, column=4, padx=2, pady=2)
 darkButton = ctk.CTkButton(window, text="Dark mode", font=("Arial", 20), command=lambda:ctk.set_appearance_mode("dark"))
 darkButton.grid(row=0, column=5, padx=2, pady=2)
 
+bigScaleButton = ctk.CTkButton(window, text="Bigger scaling", font=("Arial", 20), command=lambda:ctk.set_widget_scaling(1.2))
+bigScaleButton.grid(row=0, column=6, padx=2, pady=2)
+smallScaleButton = ctk.CTkButton(window, text="Smaller scaling", font=("Arial", 20), command=lambda:ctk.set_widget_scaling(1))
+smallScaleButton.grid(row=0, column=7, padx=2, pady=2)
+
 window.grid_rowconfigure(1, weight=1)
 window.grid_columnconfigure(1, weight=1)
 
