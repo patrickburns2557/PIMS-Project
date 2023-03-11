@@ -81,7 +81,7 @@ class SinglePatientListWidget(ctk.CTkFrame):
                 text=(self.patient.location[0] + "\n" + self.patient.location[1] + "\n" + self.patient.location[2] + "\n" + self.patient.location[3]),
                 width=150,
                 anchor="w",
-                justify=tk.LEFT
+                justify=ctk.LEFT
             )
             self.locationLabel.pack(padx=2, pady=2)
         except:#placeholder text if the location fails to load

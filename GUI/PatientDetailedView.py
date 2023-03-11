@@ -482,7 +482,7 @@ class BillingInfoTab(ctk.CTkFrame):
         self.amountOwed.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         
-        self.listChargesFrame = ctk.CTkScrollableFrame(
+        self.listChargesFrame = ctk.CTkFrame(
             self
         )
         self.listChargesFrame.grid(row=1, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION, rowspan=10)
