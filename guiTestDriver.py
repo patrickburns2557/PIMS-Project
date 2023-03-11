@@ -10,6 +10,7 @@ import customtkinter as ctk
 
 patientList = []
 
+user = User()
 
 def switch():
     global window
@@ -139,7 +140,7 @@ for i in range(20):
     patientList.append(p)
 
 
-window = GUI.MainWindow.MainWindow(patientList)
+window = GUI.MainWindow.MainWindow(patientList, user)
 
 testText = ctk.CTkLabel(window, text="Testing Buttons:", font=("Arial", 20))
 testText.grid(row=0, column=1, sticky="e")
