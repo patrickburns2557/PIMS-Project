@@ -13,6 +13,7 @@ FONTINFOOLD = ("Courier")
 FONTBUTTON = ("Courier", 20)
 PADSECTION = 15
 PADLABEL = 2
+PADCOMP = 3 #Component padding
 
 #Class for showing all the information for a selected patient
 class PatientDetailedView(ctk.CTkFrame):
@@ -138,7 +139,7 @@ class PersonalInfoTab(ctk.CTkFrame):
             text=patient.firstName + " " + patient.middleName + " " + patient.lastName,
             font=FONTNAME
         )
-        self.name.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.addressFrame = ctk.CTkFrame(
@@ -150,10 +151,10 @@ class PersonalInfoTab(ctk.CTkFrame):
             self.addressFrame,
             text=patient.address[0] + "\n" + patient.address[1] + ", " + patient.address[2] + "\n" + patient.address[3],
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.address.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.address.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.phoneFrame = ctk.CTkFrame(
@@ -165,10 +166,10 @@ class PersonalInfoTab(ctk.CTkFrame):
             self.phoneFrame,
             text="Mobile:" + patient.mobilePhone + "\nHome:  " + patient.homePhone + "\nWork:  " + patient.workPhone,
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.phone.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.phone.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.emergContactFrame = ctk.CTkFrame(
@@ -177,8 +178,12 @@ class PersonalInfoTab(ctk.CTkFrame):
         self.emergContactFrame.grid(row=2, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.emergContactFrame, "Emergency Contacts").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         for i in range(len(patient.emergencyContactNames)):
-            self.contact = LabelBorder(self.emergContactFrame, str(i+1) + ".)\n  Name:   " + patient.emergencyContactNames[i] + "\n  Number: " + patient.emergencyContactNumbers[i], isList=True)
-            self.contact.grid(row=i+1, column=0, sticky="w", padx=3, pady=3)
+            self.contact = LabelBorder(
+                self.emergContactFrame,
+                label=str(i+1) + ".)\n  Name:   " + patient.emergencyContactNames[i] + "\n  Number: " + patient.emergencyContactNumbers[i],
+                isList=True
+            )
+            self.contact.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.locationFrame = ctk.CTkFrame(
@@ -190,10 +195,10 @@ class PersonalInfoTab(ctk.CTkFrame):
             self.locationFrame,
             text="Facility: " + patient.location[0] + "\nFloor:    " + patient.location[1] + "\nRoom:     " + patient.location[2] + "\nBed:      " + patient.location[3],
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.location.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.location.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.visitationFrame = ctk.CTkFrame(
@@ -205,21 +210,25 @@ class PersonalInfoTab(ctk.CTkFrame):
             self.visitationFrame,
             text="Max simultaneous visitors: " + patient.numAllowedVisitors,
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.numVisitors.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.numVisitors.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.allowedVisitors = ctk.CTkLabel(
             self.visitationFrame,
             text="List of approved visitors:",
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.allowedVisitors.grid(row=2, column=0, sticky="w", padx=3, pady=3)
+        self.allowedVisitors.grid(row=2, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         for i in range(len(patient.allowedVisitors)):
-            self.visitor = LabelBorder(self.visitationFrame, str(i+1) + ".) " + patient.allowedVisitors[i], isList=True)
-            self.visitor.grid(row=i+3, column=0, padx=3, pady=3, sticky="w")
+            self.visitor = LabelBorder(
+                self.visitationFrame,
+                label=str(i+1) + ".) " + patient.allowedVisitors[i],
+                isList=True
+            )
+            self.visitor.grid(row=i+3, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
 
 
@@ -230,14 +239,14 @@ class MedicalInfoTab(ctk.CTkFrame):
         self.nameFrame = ctk.CTkFrame(
             self
         )
-        self.nameFrame.grid(row=0, column=0, columnspan=10, sticky="w", padx=PADSECTION, pady= PADSECTION)
+        self.nameFrame.grid(row=0, column=0, columnspan=10, sticky="nw", padx=PADSECTION, pady= PADSECTION)
         LabelBorder(self.nameFrame, "Name").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.name = ctk.CTkLabel(
             self.nameFrame,
             text=patient.firstName + " " + patient.middleName + " " + patient.lastName,
             font=FONTNAME
         )
-        self.name.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.famDoctorFrame = ctk.CTkFrame(
@@ -249,144 +258,121 @@ class MedicalInfoTab(ctk.CTkFrame):
             self.famDoctorFrame,
             text=patient.familyDoctor,
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.famDoctor.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.famDoctor.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.admittanceFrame = ctk.CTkFrame(
             self
         )
-        self.admittanceFrame.grid(row=2, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
+        self.admittanceFrame.grid(row=2, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.admittanceFrame, "Admittance").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.admittance = ctk.CTkLabel(
             self.admittanceFrame,
             text="Date:   " + patient.dateAdmittance + "\nTime:   " + patient.timeAdmittance + "\nReason: " + patient.reasonAdmission,
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.admittance.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.admittance.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
         self.dischargeFrame = ctk.CTkFrame(
             self
         )
-        self.dischargeFrame.grid(row=3, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
+        self.dischargeFrame.grid(row=3, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.dischargeFrame, "Discharge").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.discharge = ctk.CTkLabel(
             self.dischargeFrame,
             text="Date: " + patient.dateDischarge + "\nTime: " + patient.timeDischarge,
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=FONTINFO
         )
-        self.discharge.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.discharge.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
-        #maybe make scrollable at some point
-        self.prescriptionFrame = tk.LabelFrame(
-            self,
-            text="Prescriptions",
-            font=FONTINFOOLD
+        self.prescriptionFrame = ctk.CTkFrame(
+            self
         )
-        self.prescriptionFrame.grid(row=1, column=1, sticky="w", padx=PADSECTION, pady=PADSECTION, rowspan=2)
+        self.prescriptionFrame.grid(row=1, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION, rowspan=2)
+        LabelBorder(self.prescriptionFrame, "Prescriptions").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         for i in range(len(patient.prescriptionNames)):
-            self.prescription = tk.Label(
+            self.prescription = LabelBorder(
                 self.prescriptionFrame,
-                relief=tk.RAISED,
-                borderwidth=1,
-                text=str(i+1) + ".)\n  Name:     " + patient.prescriptionNames[i] + "\n  Amount:   " + patient.prescriptionAmount[i] + "\n  Schedule: " + patient.prescriptionSchedule[i],
-                anchor="w",
-                justify=tk.LEFT,
-                font=FONTINFOOLD
+                label=str(i+1) + ".)\n  Name:     " + patient.prescriptionNames[i] + "\n  Amount:   " + patient.prescriptionAmount[i] + "\n  Schedule: " + patient.prescriptionSchedule[i],
+                isList=True
             )
-            self.prescription.grid(row=i, column=0, sticky="w", padx=3, pady=3)
+            self.prescription.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
 
-        self.proceduresFrame = tk.LabelFrame(
-            self,
-            text="Scheduled Procedures",
-            font=FONTINFOOLD
+        self.proceduresFrame = ctk.CTkFrame(
+            self
         )
-        self.proceduresFrame.grid(row=3, column=1, sticky="w", padx=PADSECTION, pady=PADSECTION)
+        self.proceduresFrame.grid(row=3, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION)
+        LabelBorder(self.proceduresFrame, "Scheduled Procedures").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         for i in range(len(patient.scheduledProcedures)):
-            self.procedure = tk.Label(
+            self.procedure = LabelBorder(
                 self.proceduresFrame,
-                relief=tk.RAISED,
-                borderwidth=1,
-                text=str(i+1) + ".) " + patient.scheduledProcedures[i],
-                anchor="w",
-                justify=tk.LEFT,
-                font=FONTINFOOLD
+                label=str(i+1) + ".) " + patient.scheduledProcedures[i],
+                isList=True
             )
-            self.procedure.grid(row=i, column=0, sticky="w", padx=3, pady=3)
+            self.procedure.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
-        self.doctorNoteFrame = tk.LabelFrame(
-            self,
-            text="Doctor Notes",
-            font=FONTINFOOLD
+        self.doctorNoteFrame = ctk.CTkFrame(
+            self
         )
-        self.doctorNoteFrame.grid(row=1, column=2, sticky="w", padx=PADSECTION, pady=PADSECTION)
+        self.doctorNoteFrame.grid(row=1, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
+        LabelBorder(self.doctorNoteFrame, "Doctor Notes").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         for i in range(len(patient.doctorNotes)):
-            self.doctorNote = tk.Label(
+            self.doctorNote = LabelBorder(
                 self.doctorNoteFrame,
-                relief=tk.RAISED,
-                borderwidth=1,
-                text=str(i+1) + ".) " + patient.doctorNotes[i],
-                anchor="w",
-                justify=tk.LEFT,
-                font=FONTINFOOLD
+                label=str(i+1) + ".) " + patient.doctorNotes[i],
+                isList=True
             )
-            self.doctorNote.grid(row=i, column=0, sticky="w", padx=3, pady=3)
+            self.doctorNote.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
-        self.nurseNoteFrame = tk.LabelFrame(
-            self,
-            text="Nurse Notes",
-            font=FONTINFOOLD
+        self.nurseNoteFrame =ctk.CTkFrame(
+            self
         )
-        self.nurseNoteFrame.grid(row=2, column=2, sticky="w", padx=PADSECTION, pady=PADSECTION)
+        self.nurseNoteFrame.grid(row=2, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
+        LabelBorder(self.nurseNoteFrame, "Nurse Notes").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         for i in range(len(patient.nurseNotes)):
-            self.nurseNote = tk.Label(
+            self.nurseNote = LabelBorder(
                 self.nurseNoteFrame,
-                relief=tk.RAISED,
-                borderwidth=1,
-                text=str(i+1) + ".) " + patient.nurseNotes[i],
-                anchor="w",
-                justify=tk.LEFT,
-                font=FONTINFOOLD
+                label=str(i+1) + ".) " + patient.nurseNotes[i],
+                isList=True
             )
-            self.nurseNote.grid(row=i, column=0, sticky="w", padx=3, pady=3)
+            self.nurseNote.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
-        self.addNoteFrame = tk.LabelFrame(
-            self,
-            text="Add New Note",
-            font=FONTINFOOLD
+        self.addNoteFrame = ctk.CTkFrame(
+            self
         )
-        self.note = tk.StringVar()
-        self.addNoteFrame.grid(row=3, column=2, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        self.addNoteEntry = tk.Entry(
+        self.addNoteFrame.grid(row=3, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
+        LabelBorder(self.addNoteFrame, "Add New Note").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.note = ctk.StringVar()
+        self.addNoteEntry = ctk.CTkEntry(
             self.addNoteFrame,
-            font=FONTINFOOLD,
-            width=40,
+            font=FONTINFO,
+            width=350,
             textvariable=self.note
         )
-        self.addNoteEntry.grid(row=0, column=0)
-        self.addNoteButton = tk.Button(
+        self.addNoteEntry.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
+        self.addNoteButton = ctk.CTkButton(
             self.addNoteFrame,
             text="Add",
-            font=FONTINFOOLD,
-            padx=5,
-            pady=5
+            font=FONTINFO,
+            width=80
         )
         #Create if statement to change between adding doctor note or nurse note
         #depending on the type of user logged in
         self.addNoteButton.configure(command=lambda: self.addDoctorNote(patient, self.note.get()))
-        self.addNoteButton.grid(row=0, column=1)
+        self.addNoteButton.grid(row=1, column=1, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
     def addNurseNote(self, patient, nurseNote):
@@ -403,97 +389,96 @@ class MedicalInfoTab(ctk.CTkFrame):
 
 class BillingInfoTab(ctk.CTkFrame):
     def __init__(self, parentWidget, patient):
-        #super().__init__(parentWidget, bg=BGCOLOR)
         super().__init__(parentWidget)
 
-        self.nameFrame = tk.LabelFrame(
-            self,
-            text="Name",
-            font=FONTINFOOLD
+        self.nameFrame = ctk.CTkFrame(
+            self
         )
         self.nameFrame.grid(row=0, column=0, columnspan=10, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        self.name = tk.Label(
+        LabelBorder(self.nameFrame, "Name").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.name = ctk.CTkLabel(
             self.nameFrame,
             text=patient.firstName + " " + patient.middleName + " " + patient.lastName,
             font=FONTNAME
         )
-        self.name.pack()
+        self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        self.insuranceFrame = tk.LabelFrame(
-            self,
-            text="Insurance Carrier",
-            font=FONTINFOOLD
+
+        self.insuranceFrame = ctk.CTkFrame(
+            self
         )
         self.insuranceFrame.grid(row=1, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        self.insuranceName = tk.Label(
+        LabelBorder(self.insuranceFrame, "Insurance Carrier").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.insuranceName = ctk.CTkLabel(
             self.insuranceFrame,
             text=patient.insuranceCarrier,
             anchor="w",
-            justify=tk.LEFT,
-            font=FONTINFOOLD
+            justify=ctk.LEFT,
+            font=FONTINFO
         )
-        self.insuranceName.pack()
+        self.insuranceName.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        self.policyInfoFrame = tk.LabelFrame(
-            self,
-            text="Insurance Policy Info",
-            font=FONTINFOOLD
+
+        self.policyInfoFrame = ctk.CTkFrame(
+            self
         )
         self.policyInfoFrame.grid(row=2, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        self.policyInfo = tk.Label(
+        LabelBorder(self.policyInfoFrame, "Insurance Policy Info").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.policyInfo = ctk.CTkLabel(
             self.policyInfoFrame,
             text="Account Number: " + patient.insuranceAccountNumber + "\nGroup Number:   " + patient.insuranceGroupNumber,
             anchor="w",
-            justify=tk.LEFT,
-            font=FONTINFOOLD
+            justify=ctk.LEFT,
+            font=FONTINFO
         )
-        self.policyInfo.pack(fill=tk.BOTH)
+        self.policyInfo.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        self.amountPaidFrame = tk.LabelFrame(
-            self,
-            text="Amount Paid",
-            font=FONTINFOOLD
+
+        self.amountPaidFrame = ctk.CTkFrame(
+            self
         )
         self.amountPaidFrame.grid(row=3, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        self.amountPaid = tk.Label(
+        LabelBorder(self.amountPaidFrame, "Amount Paid").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.amountPaid = ctk.CTkLabel(
             self.amountPaidFrame,
             text="${:.2f}".format(patient.amountPaid),
             anchor="w",
-            justify=tk.LEFT,
-            font=FONTINFOOLD
+            justify=ctk.LEFT,
+            font=FONTINFO
         )
-        self.amountPaid.pack(fill=tk.BOTH)
+        self.amountPaid.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        self.amountPaidInsuranceFrame = tk.LabelFrame(
-            self,
-            text="Amount Paid By Insurance",
-            font=FONTINFOOLD
+
+        self.amountPaidInsuranceFrame = ctk.CTkFrame(
+            self
         )
         self.amountPaidInsuranceFrame.grid(row=4, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        self.amountPaidInsurance = tk.Label(
+        LabelBorder(self.amountPaidInsuranceFrame, "Amount Paid By Insurance").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.amountPaidInsurance = ctk.CTkLabel(
             self.amountPaidInsuranceFrame,
             text="${:.2f}".format(patient.amountPaidByInsurance),
             anchor="w",
-            justify=tk.LEFT,
-            font=FONTINFOOLD
+            justify=ctk.LEFT,
+            font=FONTINFO
         )
-        self.amountPaidInsurance.pack(fill=tk.BOTH)
+        self.amountPaidInsurance.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        patient.updateAmountOwed() #UPDATE AMOUNT OWED BEFORE PRINTING IT IN GUI
-        self.amountOwedFrame = tk.LabelFrame(
-            self,
-            text="Amount Owed",
-            font=FONTINFOOLD
+
+        patient.updateAmountOwed() #Update amount owed before printing it in GUI
+        self.amountOwedFrame = ctk.CTkFrame(
+            self
         )
         self.amountOwedFrame.grid(row=5, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        self.amountOwed = tk.Label(
+        LabelBorder(self.amountOwedFrame, "Amount Owed").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.amountOwed = ctk.CTkLabel(
             self.amountOwedFrame,
             text="${:.2f}".format(patient.amountOwed),
             anchor="w",
-            justify=tk.LEFT,
-            font=FONTINFOOLD
+            justify=ctk.LEFT,
+            font=FONTINFO
         )
-        self.amountOwed.pack(fill=tk.BOTH)
+        self.amountOwed.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
+
 
         self.chargesList = tk.StringVar(value=patient.listCharges)
         self.chargesAmountList = tk.StringVar(value=patient.listChargesAmount)
@@ -519,6 +504,7 @@ class BillingInfoTab(ctk.CTkFrame):
         self.chargesAmountListBox.grid(row=0, column=1, sticky="w", padx=3, pady=3)
 
 
+
 #Class to create a label with a border around it
 #isList is a boolean flag to mark if the border is a list item, in which it should use the default INFO font
 #   Assumes false as the default
@@ -530,10 +516,11 @@ class LabelBorder(ctk.CTkFrame):
             self,
             text=label,
             anchor="w",
-            justify=tk.LEFT,
+            justify=ctk.LEFT,
             font=("Courier", 15),
             height=1
         )
         if isList:
             self.label.configure(font=FONTINFO)
+            self.label.configure(wraplength=550)
         self.label.pack(padx=3)
