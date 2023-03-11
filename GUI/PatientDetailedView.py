@@ -463,8 +463,10 @@ class BillingInfoTab(ctk.CTkFrame):
         )
         self.amountPaidInsurance.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
-        patient.updateAmountOwed() #Update amount owed before printing it in GUI
+        try:
+            patient.updateAmountOwed() #Update amount owed before printing it in GUI
+        except:
+            pass
         self.amountOwedFrame = ctk.CTkFrame(
             self
         )
@@ -479,29 +481,33 @@ class BillingInfoTab(ctk.CTkFrame):
         )
         self.amountOwed.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
-        self.chargesList = tk.StringVar(value=patient.listCharges)
-        self.chargesAmountList = tk.StringVar(value=patient.listChargesAmount)
-        self.listChargesFrame = tk.LabelFrame(
-            self,
-            text="List of Charges",
-            font=FONTINFOOLD
+        
+        self.listChargesFrame = ctk.CTkScrollableFrame(
+            self
         )
         self.listChargesFrame.grid(row=1, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION, rowspan=10)
-        self.chargesListBox = tk.Listbox(
-            self.listChargesFrame,
-            listvariable=self.chargesList,
-            width=30,
-            font=FONTINFOOLD
-        )
-        self.chargesListBox.grid(row=0, column=0, sticky="w", padx=3, pady=3)
-        self.chargesAmountListBox = tk.Listbox(
-            self.listChargesFrame,
-            listvariable=self.chargesAmountList,
-            width=12,
-            font=FONTINFOOLD
-        )
-        self.chargesAmountListBox.grid(row=0, column=1, sticky="w", padx=3, pady=3)
+        LabelBorder(self.listChargesFrame, "List of Charges").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL, columnspan=2)
+        for i in range(len(patient.listCharges)):
+            self.singleChargeFrame = ctk.CTkFrame(self.listChargesFrame)
+            self.chargeName = ctk.CTkLabel(
+                self.singleChargeFrame,
+                text=patient.listCharges[i],
+                anchor="w",
+                justify=ctk.LEFT,
+                wraplength=500,
+                font=FONTINFO
+            )
+            self.chargeName.grid(row=0, column=0, sticky="w", padx=PADCOMP)
+            self.chargeAmount = ctk.CTkLabel(
+                self.singleChargeFrame,
+                text="${:.2f}".format(patient.listChargesAmount[i]),
+                anchor="e",
+                justify=ctk.RIGHT,
+                font=FONTINFO
+            )
+            self.chargeAmount.grid(row=0, column=1, sticky="e", padx=10)
+            self.singleChargeFrame.grid(row=i+1, column=0, sticky="ew", padx=PADCOMP, pady=PADCOMP)
+            self.singleChargeFrame.grid_columnconfigure(0, weight=1)
 
 
 

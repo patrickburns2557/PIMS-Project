@@ -47,6 +47,7 @@ p1.setInsuranceGroupNumber("987654")
 p1.setAmountPaid(481.1891024)
 p1.setAmountPaidByInsurance(15.81870)
 p1.addCharge("Broken leg repaired", 890.1333)
+p1.addCharge("Really long charge name that would need to be wrapped around to display properly without going off of the screen", 3101.31)
 p1.addCharge("Expensive Medicine administered", 443.145)
 patientList.append(p1)
 
