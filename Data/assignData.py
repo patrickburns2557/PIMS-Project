@@ -1,44 +1,14 @@
-#create list of patient objects from database info
+# create list of patient objects from database info
+ 
+from Data.sqlConnector import *
+from Data.dataClasses import *
 
-import sqlConnector
-from dataClasses import Patient
-
-# open database for use
-db = sqlConnector.myConnector()
-db.execute("use patient_information;")
-
-# add columns for allowed visitors amount and names 
-# db.addColumn("allowed_visitor_amount")
-# db.addColumn("allowed_visitor_names")
-
-# add number and name of allowed visitors to all patients
-db.update("allowed_visitor_amount", "1", "0")
-db.update("allowed_visitor_amount", "3", "1")
-db.update("allowed_visitor_amount", "1", "2")
-db.update("allowed_visitor_amount", "2", "3")
-db.update("allowed_visitor_amount", "4", "4")
-db.update("allowed_visitor_amount", "3", "5")
-db.update("allowed_visitor_amount", "1", "6")
-db.update("allowed_visitor_amount", "2", "7")
-db.update("allowed_visitor_amount", "3", "8")
-db.update("allowed_visitor_amount", "4", "9")
-
-db.update("allowed_visitor_names", "'Vivian Garcia'", "0")
-db.update("allowed_visitor_names", "'Jaxon Patel\nOmar Lucero\nJada Thompson'", "1")
-db.update("allowed_visitor_names", "'Kyle Nguyen'", "2")
-db.update("allowed_visitor_names", "'Robert Smith\nAlex Smith'", "3")
-db.update("allowed_visitor_names", "'Lilith Carter\nNixon Lainey\nLily Chen\nXavier Davis'", "4")
-db.update("allowed_visitor_names", "'Blaine Brown\nBlaze Rojas\nNathan Kim'", "5")
-db.update("allowed_visitor_names", "'Skyla Williams'", "6")
-db.update("allowed_visitor_names", "'Tristan Davis\nAbby Davis'", "7")
-db.update("allowed_visitor_names", "'Heidi Rodriguez\nAndrew Rodriguez\nSarah Lee'", "8")
-db.update("allowed_visitor_names", "'Ryan Herring\nLila Fitzpatrick\nOlivia White\nEthan Johnson'", "9")
-
-
+# access database
+db = myConnector()
 
 # method to get specific data from database by column
 def setData(data):
-    s = "SELECT " + data + " FROM patient_info;"
+    s = "SELECT " + data + " FROM patients;"
     db.execute(s)
     x = db.fetch()
     return x
@@ -47,13 +17,15 @@ class patientList():
 
     def __init__(self):
 
-        # open database for use
-        db = sqlConnector.myConnector()
-        db.execute("use patient_information;")
+        # list of patient objects
         self.patientRecords = []
 
     def createList(self):
-        for i in range(10):
+
+        # get current amount of patients
+        rowCount = db.checkRowCount()
+
+        for i in range(rowCount):
 
             patients = Patient()
 
@@ -63,7 +35,7 @@ class patientList():
             patients.setMiddleName((setData("middle_name")[i])[0])
 
             address = []
-            address.append((setData("adress_street")[i])[0])
+            address.append((setData("address_street")[i])[0])
             address.append((setData("address_city")[i])[0])
             address.append((setData("address_state")[i])[0])
             address.append((setData("address_zip")[i])[0])
@@ -73,8 +45,8 @@ class patientList():
             patients.setWorkPhone((setData("work_phone")[i])[0])
             patients.setMobilePhone((setData("mobile_phone")[i])[0])
 
-            patients.addEmergencyContact((setData("emergency1_first_name")[i][0]), (setData("emergency1_number")[i][0]))
-            patients.addEmergencyContact((setData("emergency2_first_name")[i][0]), (setData("emergency2_number")[i][0]))
+            patients.addEmergencyContact((setData("emergency1_name")[i][0]), (setData("emergency1_number")[i][0]))
+            patients.addEmergencyContact((setData("emergency2_name")[i][0]), (setData("emergency2_number")[i][0]))
 
             # getting medical info
 
@@ -96,7 +68,7 @@ class patientList():
             for j in range(len(prescriptionName)):
                 patients.addPrescription(prescriptionName[j], prescriptionAmounts[j], prescriptionTime[j])
 
-            procedures = (setData("scheduled_procedures")[i][0]).split('\n')
+            procedures = (setData("scheduled_procedures")[i][0]).split(', ')
 
             for j in range(len(procedures)):
                 patients.addScheduledProcedure(procedures[j])
@@ -117,28 +89,26 @@ class patientList():
             for j in range(num):
                 patients.addAllowedVisitor(visitors[j])
 
-            patients.setInsuranceCarrier((setData("insurace_carrier")[i])[0])
+            patients.setInsuranceCarrier((setData("insurance_carrier")[i])[0])
             patients.setInsuranceAccountNumber((setData("insurance_account_number")[i])[0])
             patients.setInsuranceGroupNumber((setData("insurance_group_number")[i])[0])
 
             # getting billing info
 
-            charges = (setData("billing_items")[i][0]).split('\n')
-            for c in charges:
-                amount = ""
-                name = ""
-                for letter in c:
-                    if letter.isdigit():
-                        amount = amount + letter
-                    elif letter.isalpha():
-                        name = name + letter
-                    
-                amount = float(amount)
-                patients.addCharge(name, amount)
+            names = (setData("billing_items_name")[i][0]).split('\n')
+            amounts = (setData("billing_items_amount")[i][0]).split('\n')
 
-                patients.setAmountOwed((setData("amound_owed")[i])[0])
-                patients.setAmountPaid((setData("amount_paid")[i])[0])
-                patients.setAmountPaidByInsurance((setData("paid_by_insurance")[i])[0])
+            for j in range(len(names)):
+                amounts[j] = float(amounts[j])
+                patients.addCharge(names[j], amounts[j])
+
+            patients.setAmountOwed((setData("amount_owed")[i])[0])
+            patients.setAmountPaid((setData("amount_paid")[i])[0])
+            patients.setAmountPaidByInsurance((setData("paid_by_insurance")[i])[0])
 
             # list of all patient objects
             self.patientRecords.append(patients)
+
+    # returns completed list of patient objects
+    def getList(self):
+        return self.patientRecords

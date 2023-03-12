@@ -10,28 +10,33 @@ class myConnector():
         )
 
         self.myCursor = self.connection.cursor()
+        self.myCursor.execute("use patient_information;")
 
-    #takes mySQL command(string) and executes
-    def execute(self, cmnd):
-        self.myCursor.execute(cmnd)
+    # execute SQL commands
+    def execute(self, cmd):
+        self.myCursor.execute(cmd)
 
-    #fetches all database data from executed statement
+    # returns all data given a statement
     def fetch(self):
         return self.myCursor.fetchall()
     
-    #add column to database
+    # add column to database
     def addColumn(self, colName):
-        query = "ALTER TABLE patient_info ADD " + colName + " text;"
+        query = "ALTER TABLE patients ADD " + colName + " text;"
         self.myCursor.execute(query)
         self.connection.commit()
 
-    #update database by column
+    # update database by column
     def update(self, col, data, id):
         #column name, data being updated, patient id
-        query = "UPDATE patient_info\n SET " + col + " = " + data + "\nWHERE patient_ID = " + id
+        query = "UPDATE patients\n SET " + col + " = " + data + "\nWHERE patient_ID = " + id
         self.myCursor.execute(query)
         self.connection.commit()
 
+    # returns amount of rows in table
     def checkRowCount(self):
-        rows = self.execute("SELECT * FROM patient_info")
+        query = "SELECT COUNT(*) FROM patients"
+        self.myCursor.execute(query)
+        rows = self.fetch()
+        rows = int(rows[0][0])
         return rows
