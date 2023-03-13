@@ -1,6 +1,3 @@
-import GUI.ScrollablePatientList as spl
-import GUI.PatientDetailedView as pdv
-import GUI.ListView as lv
 import GUI.MainWindow
 from Data.dataClasses import *
 import Data.System
@@ -19,13 +16,6 @@ window = GUI.MainWindow.MainWindow(Data.System.getPatientList())
 testText = ctk.CTkLabel(window, text="Testing Buttons:", font=("Arial", 20))
 testText.grid(row=0, column=1, sticky="e")
 
-detailButton = ctk.CTkButton(window,text="DetailedViewTest",font=("Arial", 20), command=lambda: GUI.MainWindow.switchDetailedView(p1))
-detailButton.grid(row=0, column=2, padx=2, pady=2)
-
-
-listButton = ctk.CTkButton(window, text="List View", font=("Arial", 20), command=lambda: GUI.MainWindow.switchPatientList(Data.System.getPatientList()))
-listButton.grid(row=0, column=3, padx=2, pady=2)
-
 lightButton = ctk.CTkButton(window, text="Light mode", font=("Arial", 20), command=lambda:ctk.set_appearance_mode("light"))
 lightButton.grid(row=0, column=4, padx=2, pady=2)
 darkButton = ctk.CTkButton(window, text="Dark mode", font=("Arial", 20), command=lambda:ctk.set_appearance_mode("dark"))
@@ -36,8 +26,7 @@ bigScaleButton.grid(row=0, column=6, padx=2, pady=2)
 smallScaleButton = ctk.CTkButton(window, text="Smaller scaling", font=("Arial", 20), command=lambda:ctk.set_widget_scaling(1))
 smallScaleButton.grid(row=0, column=7, padx=2, pady=2)
 
-window.grid_rowconfigure(1, weight=1)
-window.grid_columnconfigure(1, weight=1)
+
 
 
 window.mainloop()
