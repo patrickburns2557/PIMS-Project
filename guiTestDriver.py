@@ -9,8 +9,6 @@ import customtkinter as ctk
 Data.System.initialize()
 
 
-#window = GUI.MainWindow.MainWindow(Data.System.getPatientList())
-
 window = GUI.MainWindow.MainWindow(Data.System.getPatientList(), Data.System.getUser())
 
 testText = ctk.CTkLabel(window, text="Testing Buttons:", font=("Arial", 20))

@@ -17,8 +17,6 @@ class MainWindow(ctk.CTk):
         MainWindow.window = self #Store self into class variable upon creation
 
         self.geometry("1280x720")
-        #window.resizable(width=False, height=True)
-        #self.title(__file__)
         self.title("Patient Information Management System (PIMS)")
         #Skip loading window icon if it fails since it's not strictly necessary
         try:
@@ -27,7 +25,7 @@ class MainWindow(ctk.CTk):
             pass
         self.minsize(1280, 720)
         
-        self.currentView = lgn.LoginView(self, patientList, user) #Default view when starting program
+        self.currentView = lgn.LoginView(self, user) #Default view when starting program
         self.currentView.grid(row=1, column=1, sticky="news", columnspan=10)
 
         self.grid_rowconfigure(1, weight=1)

@@ -1,14 +1,14 @@
 import customtkinter as ctk
 from Data.dataClasses import *
 import GUI.MainWindow
+import Data.System
 
 class LoginView(ctk.CTkFrame):
-    def __init__(self, parentWidget, patientList, user):
+    def __init__(self, parentWidget, user):
         super().__init__(parentWidget)
         self.username = ctk.StringVar()
         self.password = ctk.StringVar()
         self.user = user
-        self.patientList = patientList
         
         self.usernameLabel = ctk.CTkLabel(self, text="Username:", font=("Courier", 18, "bold"))
         self.usernameLabel.grid(row=0, column=0, padx=10)
@@ -45,7 +45,7 @@ class LoginView(ctk.CTkFrame):
 
     def processLogin(self, username, password):
         if loginSystem.login(self.user, username, password):
-            GUI.MainWindow.switchPatientList(self.patientList)
+            GUI.MainWindow.switchPatientList(Data.System.getPatientList())
         else:
             self.incorrectLabel = ctk.CTkLabel(self, text="Incorrect username or password", font=("Courier", 18, "bold"))
             self.incorrectLabel.grid(row=3, columnspan=2, padx=10)

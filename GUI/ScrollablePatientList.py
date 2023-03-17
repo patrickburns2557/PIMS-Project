@@ -21,6 +21,7 @@ class SinglePatientListWidget(ctk.CTkFrame):
                 self.firstNameFrame,
                 text=self.patient.firstName,
                 width=200,
+                height=30,
                 anchor="w",
                 command=lambda: GUI.MainWindow.switchDetailedView(self.patient)
             )
@@ -45,6 +46,7 @@ class SinglePatientListWidget(ctk.CTkFrame):
                 self.lastNameFrame,
                 text=self.patient.lastName,
                 width=200,
+                height=30,
                 anchor="w",
                 command=lambda: GUI.MainWindow.switchDetailedView(self.patient)
             )
