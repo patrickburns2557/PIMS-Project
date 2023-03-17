@@ -172,6 +172,7 @@ class Patient():
     def setAmountPaidByInsurance(self, amount):
         self.amountPaidByInsurance = amount
 
+
 # Usertype 0 for doctor
 # Usertype 1 for nurse
 # Usertype 2 for office staff

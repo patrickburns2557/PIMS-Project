@@ -1,4 +1,5 @@
 import Data.assignData
+from Data.dataClasses import *
 
 #Class to hold the patient master list and the currently logged in user
 class System():
@@ -7,6 +8,7 @@ class System():
         System.TheSystem = self #Store self into class variable upon creation
         
         self.patientList = []
+        self.user = User()
         patientCreator = Data.assignData.patientList()
         patientCreator.createList()
         self.patientList = patientCreator.getList()
@@ -18,3 +20,6 @@ def initialize():
 #Returns current master list of patients
 def getPatientList():
     return System.TheSystem.patientList
+
+def getUser():
+    return System.TheSystem.user

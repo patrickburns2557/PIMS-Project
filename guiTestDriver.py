@@ -11,9 +11,7 @@ Data.System.initialize()
 
 #window = GUI.MainWindow.MainWindow(Data.System.getPatientList())
 
-user = User()
-
-window = GUI.MainWindow.MainWindow(Data.System.getPatientList(), user)
+window = GUI.MainWindow.MainWindow(Data.System.getPatientList(), Data.System.getUser())
 
 testText = ctk.CTkLabel(window, text="Testing Buttons:", font=("Arial", 20))
 testText.grid(row=0, column=1, sticky="e")
@@ -28,6 +26,8 @@ bigScaleButton.grid(row=0, column=6, padx=2, pady=2)
 smallScaleButton = ctk.CTkButton(window, text="Smaller scaling", font=("Arial", 20), command=lambda:ctk.set_widget_scaling(1))
 smallScaleButton.grid(row=0, column=7, padx=2, pady=2)
 
+userButton = ctk.CTkButton(window, text="PrintUserInfo", font=("Arial", 20), command=lambda:print("Type: " + str(Data.System.getUser().userType)))
+userButton.grid(row=0, column=8, padx=2, pady=2)
 
 
 
