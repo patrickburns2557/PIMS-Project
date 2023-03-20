@@ -3,6 +3,7 @@ import tkinter.ttk as ttk
 import customtkinter as ctk
 from Data.dataClasses import *
 import GUI.MainWindow as MainWindow
+import Data.System
 
 BGCOLOR = "#E4E4E4"
 BUTTONSELECTED = "#D9D9D9"
@@ -58,6 +59,7 @@ class PatientDetailedView(ctk.CTkFrame):
             font=FONTBUTTON,
             width=100,
             height=40,
+            command=lambda:MainWindow.switchPatientList(Data.System.getPatientList())
             #command= BACK COMMAND HERE
         )
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)

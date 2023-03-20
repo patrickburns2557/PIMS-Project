@@ -2,6 +2,8 @@
 #Users, patients, login, etc...
 #we may want to split this up further
 
+import hashlib
+
 class Patient():
     def __init__(self):
         
@@ -170,9 +172,38 @@ class Patient():
     def setAmountPaidByInsurance(self, amount):
         self.amountPaidByInsurance = amount
 
+
+# Usertype 0 for doctor
+# Usertype 1 for nurse
+# Usertype 2 for office staff
+# Usertype 3 for volunteer
 class User:
     def __init__(self):
-        self.userType = 0
-        self.username = ""
-        self.password = ""
+        self.userType = -1
+
+    def setUserType(self, userType):
+        self.userType = userType
+
+    def getUserType(self):
+        return self.userType
+
+
+class loginSystem:
+    def login(user, username, password):
+        auth = password.encode()
+        auth_hash = hashlib.md5(auth).hexdigest()
+        with open("logins.txt", "r") as f:
+            lines = f.readlines()
+        f.close()
+        
+        loginFound = False
+        for line in lines:
+            line = line.split()
+            if username == line[0] and auth_hash == line[1]:
+                user.setUserType(line[2])
+                return True
+        if loginFound == False:
+            return False
+    
+
         

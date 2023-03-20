@@ -4,6 +4,7 @@ import customtkinter as ctk
 import GUI.ScrollablePatientList as spl
 import GUI.PatientDetailedView as pdv
 import GUI.ListView as lv
+import GUI.loginGUI as lgn
 from Data.dataClasses import *
 
 class MainWindow(ctk.CTk):
@@ -11,13 +12,11 @@ class MainWindow(ctk.CTk):
     ctk.set_default_color_theme("dark-blue")
     #print(ctk.get_appearance_mode())
     window = None #Class variable to hold itself in so that other classes can make calls to the MainWindow class and change the window's views
-    def __init__(self, patientList):
+    def __init__(self, patientList, user):
         super().__init__()
         MainWindow.window = self #Store self into class variable upon creation
 
         self.geometry("1280x720")
-        #window.resizable(width=False, height=True)
-        #self.title(__file__)
         self.title("Patient Information Management System (PIMS)")
         #Skip loading window icon if it fails since it's not strictly necessary
         try:
@@ -26,7 +25,7 @@ class MainWindow(ctk.CTk):
             pass
         self.minsize(1280, 720)
         
-        self.currentView = lv.ListView(self, patientList) #Default view when starting program
+        self.currentView = lgn.LoginView(self, user) #Default view when starting program
         self.currentView.grid(row=1, column=1, sticky="news", columnspan=10)
 
         self.grid_rowconfigure(1, weight=1)

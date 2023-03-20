@@ -21,6 +21,7 @@ class SinglePatientListWidget(ctk.CTkFrame):
                 self.firstNameFrame,
                 text=self.patient.firstName,
                 width=200,
+                height=30,
                 anchor="w",
                 command=lambda: GUI.MainWindow.switchDetailedView(self.patient)
             )
@@ -45,6 +46,7 @@ class SinglePatientListWidget(ctk.CTkFrame):
                 self.lastNameFrame,
                 text=self.patient.lastName,
                 width=200,
+                height=30,
                 anchor="w",
                 command=lambda: GUI.MainWindow.switchDetailedView(self.patient)
             )
@@ -78,7 +80,7 @@ class SinglePatientListWidget(ctk.CTkFrame):
         try:
             self.locationLabel = ctk.CTkLabel(
                 self.locationFrame,
-                text=(self.patient.location[0] + "\n" + self.patient.location[1] + "\n" + self.patient.location[2] + "\n" + self.patient.location[3]),
+                text=("Facility:  " + self.patient.location[0] + "\nFloor:      " + self.patient.location[1] + "\nRoom:    " + self.patient.location[2] + "\nBed:        " + self.patient.location[3]),
                 width=150,
                 anchor="w",
                 justify=ctk.LEFT
