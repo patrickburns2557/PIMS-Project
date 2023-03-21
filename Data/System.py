@@ -21,5 +21,10 @@ def initialize():
 def getPatientList():
     return System.TheSystem.patientList
 
+#Returns the User object for the currently logged in user
 def getUser():
     return System.TheSystem.user
+
+#Returns the type of the currently logged in user
+def getUserType():
+    return System.TheSystem.user.getUserType()

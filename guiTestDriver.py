@@ -24,7 +24,7 @@ bigScaleButton.grid(row=0, column=6, padx=2, pady=2)
 smallScaleButton = ctk.CTkButton(window, text="Smaller scaling", font=("Arial", 20), command=lambda:ctk.set_widget_scaling(1))
 smallScaleButton.grid(row=0, column=7, padx=2, pady=2)
 
-userButton = ctk.CTkButton(window, text="PrintUserInfo", font=("Arial", 20), command=lambda:print("Type: " + str(Data.System.getUser().userType)))
+userButton = ctk.CTkButton(window, text="PrintUserInfo", font=("Arial", 20), command=lambda:print("Type: " + str(Data.System.getUserType())))
 userButton.grid(row=0, column=8, padx=2, pady=2)
 
 

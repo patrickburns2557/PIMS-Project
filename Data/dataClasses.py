@@ -200,7 +200,7 @@ class loginSystem:
         for line in lines:
             line = line.split()
             if username == line[0] and auth_hash == line[1]:
-                user.setUserType(line[2])
+                user.setUserType(int(line[2]))
                 return True
         if loginFound == False:
             return False
