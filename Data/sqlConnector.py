@@ -2,15 +2,17 @@ import mysql.connector
 
 class myConnector():
     def __init__(self):
+        try:
+            self.connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="PIMS2023"
+            )
 
-        self.connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="PIMS2023"
-        )
-
-        self.myCursor = self.connection.cursor()
-        self.myCursor.execute("use patient_information;")
+            self.myCursor = self.connection.cursor()
+            self.myCursor.execute("use patient_information;")
+        except:
+            print("Loading database failed.")
 
     # execute SQL commands
     def execute(self, cmd):

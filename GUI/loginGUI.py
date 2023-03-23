@@ -2,6 +2,7 @@ import customtkinter as ctk
 from Data.dataClasses import *
 import GUI.MainWindow
 import Data.System
+from PIL import Image
 
 class LoginView(ctk.CTkFrame):
     def __init__(self, parentWidget, user):
@@ -10,8 +11,22 @@ class LoginView(ctk.CTkFrame):
         self.password = ctk.StringVar()
         self.user = user
         
+        self.logo = ctk.CTkImage(
+            light_image=Image.open("logo.png"),
+            size=(300, 300)
+        )
+        self.logoLabel = ctk.CTkLabel(
+            self,
+            text="",
+            image=self.logo,
+            anchor="center",
+            justify="center"
+        )
+        self.logoLabel.grid(row=0, column=0, padx=10, pady=30, columnspan=10, sticky="ew")
+
+
         self.usernameLabel = ctk.CTkLabel(self, text="Username:", font=("Courier", 18, "bold"))
-        self.usernameLabel.grid(row=0, column=0, padx=10)
+        self.usernameLabel.grid(row=1, column=1, padx=10)
 
         self.usernameEntry = ctk.CTkEntry(
             self,
@@ -19,10 +34,10 @@ class LoginView(ctk.CTkFrame):
             font=("Courier", 18, "bold"),
             textvariable=self.username
         )
-        self.usernameEntry.grid(row=0, column=1, sticky="ew", pady=6)
+        self.usernameEntry.grid(row=1, column=2, sticky="ew", pady=6)
 
         self.passwordLabel = ctk.CTkLabel(self, text="Password:", font=("Courier", 18, "bold"))
-        self.passwordLabel.grid(row=1, column=0, padx=10)
+        self.passwordLabel.grid(row=2, column=1, padx=10)
 
         self.passwordEntry = ctk.CTkEntry(
             self,
@@ -31,7 +46,7 @@ class LoginView(ctk.CTkFrame):
             show="*",
             textvariable=self.password
         )
-        self.passwordEntry.grid(row=1, column=1, sticky="ew", pady=6)
+        self.passwordEntry.grid(row=2, column=2, sticky="ew", pady=6)
 
         self.personalButton = ctk.CTkButton(
             self,
@@ -41,7 +56,15 @@ class LoginView(ctk.CTkFrame):
             width=270,
             height=40,
         )
-        self.personalButton.grid(row=2, column=0, padx=5, pady=5)
+        self.personalButton.grid(row=3, column=1, padx=5, pady=5, columnspan=2)
+
+
+        self.leftSpacer = ctk.CTkFrame(self, fg_color="transparent")
+        self.rightSpacer = ctk.CTkFrame(self, fg_color="transparent")
+        self.leftSpacer.grid(row=0, column=0, rowspan=10)
+        self.rightSpacer.grid(row=0, column=3, rowspan=10)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(3, weight=1)
 
     def processLogin(self, username, password):
         if loginSystem.login(self.user, username, password):
