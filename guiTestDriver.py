@@ -1,6 +1,7 @@
 import GUI.MainWindow
 from Data.dataClasses import *
 import Data.System
+import Data.Printer
 import tkinter as tk
 import tkinter.ttk as ttk
 import customtkinter as ctk
@@ -26,6 +27,9 @@ smallScaleButton.grid(row=0, column=7, padx=2, pady=2)
 
 userButton = ctk.CTkButton(window, text="PrintUserInfo", font=("Arial", 20), command=lambda:print("Type: " + str(Data.System.getUserType())))
 userButton.grid(row=0, column=8, padx=2, pady=2)
+
+printButton = ctk.CTkButton(window, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint())
+printButton.grid(row=0, column=9, padx=2, pady=2)
 
 
 

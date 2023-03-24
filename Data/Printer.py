@@ -1,5 +1,9 @@
+import Data.System
 from Data.dataClasses import Patient
+import GUI.MainWindow
 import pandas as pd
+
+# To use the class, simply call Data.Printer.initPrint() to print the current view
 
 # This class allows a way to print patient data.
 # First a user must add one or more patients with an add method
@@ -7,6 +11,30 @@ import pandas as pd
 class Printer():
     def __init__(self):
         self.patients = []
+        self.viewType = None #set whenever view is switched
+
+    #start printing the correct number of user(s)
+    def startPrint(self):
+        self.__getContext()
+        if (self.viewType is None): # viewtype was not set yet.
+            print("viewType not set!\nAborting print.")
+            return
+        elif self.viewType == 0:  # patient lists
+            Printer.addPatients(self, Data.System.getPatientList())
+            Printer.printPatients(self)
+            return
+        elif self.viewType == 1:  # todo: patient detailed view
+            print("NOT IMPLEMENTED")
+            return
+        else:
+            print("viewType unexpected value: " + str(self.viewType) + "\nAborting print.")
+            return
+
+    # are we printing one user or a whole list
+    def __getContext(self):
+        self.viewType = GUI.MainWindow.getViewType()
+        print(self.viewType)
+
 
     # add a single patient to the list
     def addPatient(self, patient):
@@ -37,8 +65,10 @@ class Printer():
         df = makeDataFrame(self.patients)
         if df.empty:
             return
-        # write the data to a text file
-        writeFile(df)
+        # write the data to a text file. Ensures all the data is shown and fits on one row
+        with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.max_colwidth', None, 'display.expand_frame_repr', False):
+            writeFile(df)
+
 
 
 # create a data frame given a list of patients
@@ -67,3 +97,8 @@ def writeFile(dataFrame):
         f.write(str(dataFrame))
 
     print("Printing complete! ")
+
+# print a current view
+def initPrint():
+    p=Printer()
+    p.startPrint()
