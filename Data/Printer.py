@@ -2,6 +2,11 @@ import Data.System
 from Data.dataClasses import Patient
 import GUI.MainWindow
 import pandas as pd
+from os import startfile
+from datetime import datetime
+
+#constant
+REPORT_NAME = "PatientReport.txt"
 
 # To use the class, simply call Data.Printer.initPrint() to print the current view
 
@@ -69,6 +74,13 @@ class Printer():
         with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.max_colwidth', None, 'display.expand_frame_repr', False):
             writeFile(df)
 
+        #attempt to open the file in the default OS text editor
+        try:
+            openFile(REPORT_NAME)
+        except:
+            print("Could not automatically open report.")
+
+
 
 
 # create a data frame given a list of patients
@@ -92,11 +104,15 @@ def makeDataFrame(patients):
 
 # writes a dataframe to a text file
 def writeFile(dataFrame):
-    with open('patientReport.txt', 'w') as f:
-        f.write("Patient Management Information System\nPatient Report:\n")
+    with open(REPORT_NAME, 'w') as f:
+        f.write("PATIENT MANAGEMENT INFORMATION SYSTEM\nPatient Report(s) at "+str(datetime.now())+"\n")
         f.write(str(dataFrame))
 
     print("Printing complete! ")
+
+#opens the report in the OS's text viewer
+def openFile(file):
+    startfile(file)
 
 # print a current view
 def initPrint():
