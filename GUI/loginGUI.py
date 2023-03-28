@@ -24,7 +24,6 @@ class LoginView(ctk.CTkFrame):
         )
         self.logoLabel.grid(row=0, column=0, padx=10, pady=30, columnspan=10, sticky="ew")
 
-
         self.usernameLabel = ctk.CTkLabel(self, text="Username:", font=("Courier", 18, "bold"))
         self.usernameLabel.grid(row=1, column=1, padx=10)
 
@@ -51,13 +50,15 @@ class LoginView(ctk.CTkFrame):
         self.personalButton = ctk.CTkButton(
             self,
             text="Login",
-            command=lambda:self.processLogin(self.username.get(), self.password.get()),
+            command=lambda:self.processLogin(),
             font=("Courier", 20),
             width=270,
             height=40,
         )
         self.personalButton.grid(row=3, column=1, padx=5, pady=5, columnspan=2)
 
+        self.usernameEntry.bind('<Return>', self.processLogin)
+        self.passwordEntry.bind('<Return>', self.processLogin)
 
         self.leftSpacer = ctk.CTkFrame(self, fg_color="transparent")
         self.rightSpacer = ctk.CTkFrame(self, fg_color="transparent")
@@ -66,17 +67,13 @@ class LoginView(ctk.CTkFrame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(3, weight=1)
 
-    def processLogin(self, username, password):
+        self.master.after(100, lambda:self.usernameEntry.focus_set())
+
+    def processLogin(self, event=None):
+        username = self.username.get()
+        password = self.password.get()
         if loginSystem.login(self.user, username, password):
             GUI.MainWindow.switchPatientList(Data.System.getPatientList())
         else:
             self.incorrectLabel = ctk.CTkLabel(self, text="Incorrect username or password", font=("Courier", 18, "bold"))
-            self.incorrectLabel.grid(row=3, columnspan=2, padx=10)
-
-
-
-
-
-        
-
-        
+            self.incorrectLabel.grid(row=4, column=1, padx=5, pady=5, columnspan=2)
