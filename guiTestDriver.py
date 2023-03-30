@@ -27,6 +27,8 @@ smallScaleButton.grid(row=0, column=7, padx=2, pady=2)
 userButton = ctk.CTkButton(window, text="PrintUserInfo", font=("Arial", 20), command=lambda:print("Type: " + str(Data.System.getUserType())))
 userButton.grid(row=0, column=8, padx=2, pady=2)
 
+logoutButton = ctk.CTkButton(window, text="Logout", font=("Arial", 20), command=lambda:[Data.System.logoutUser(), GUI.MainWindow.switchLoginView(Data.System.getUser())])
+logoutButton.grid(row=0, column=9, padx=2, pady=2)
 
 
 window.mainloop()

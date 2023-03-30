@@ -1,4 +1,5 @@
 import Data.assignData
+import GUI.MainWindow
 from Data.dataClasses import *
 
 #Class to hold the patient master list and the currently logged in user
@@ -96,3 +97,7 @@ def getUser():
 #Returns the type of the currently logged in user
 def getUserType():
     return System.TheSystem.user.getUserType()
+
+def logoutUser():
+    System.TheSystem.user = User()
+    
