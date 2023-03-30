@@ -51,10 +51,7 @@ class Printer():
         # not all users should be able to view all info.
         redactedPatient = Patient()
 
-        # everyone is allowed the name of patient
-        redactedPatient.setFirstName(patient.firstName)
-        redactedPatient.setMiddleName(patient.middleName)
-        redactedPatient.setLastname(patient.lastName)
+        redactedPatient = addName(redactedPatient, patient)
 
         # only add info to redacted patient that a user is supposed to view
         ut = Data.System.getUserType()
@@ -89,9 +86,29 @@ class Printer():
         if type(patients) != list:
             print("Error: list of patients expected. Found: " + str(type(patients)))
             return
+
+        # check if user is doctor, nurse, staff, volunteer
+        ut = Data.System.getUserType()
         # add all the patients in the list
         for patient in patients:
-            self.patients.append(patient)
+            redactedPatient = Patient()
+            redactedPatient = addName(redactedPatient, patient)  # everyone is allowed the name
+
+            # check privileges
+            if ut == 0 or ut == 1:  # doctor or nurse
+                redactedPatient = addPersonalInfo(redactedPatient, patient)
+                redactedPatient = addMedicalInfo(redactedPatient, patient)
+                redactedPatient = addBillingInfo(redactedPatient, patient)
+            elif ut == 2:  # office staff
+                redactedPatient = addPersonalInfo(redactedPatient, patient)
+                redactedPatient = addBillingInfo(redactedPatient, patient)
+            elif ut == 3:  # volunteer
+                redactedPatient = addPersonalInfo(redactedPatient, patient)
+            else:
+                print("Unknown usertype " + str(ut) + " Aborting print!")
+                return
+
+            self.patients.append(redactedPatient)
 
     # output patients
     def printPatients(self):
@@ -174,7 +191,22 @@ def initPrint(scope):
     p.startPrint(scope)
 
 
+# add full name to redactedPatient
+def addName(redactedPatient, patient):
+    # everyone is allowed the name of patient
+    redactedPatient.setFirstName(patient.firstName)
+    redactedPatient.setMiddleName(patient.middleName)
+    redactedPatient.setLastname(patient.lastName)
+
+    return redactedPatient
+
+
+# add all personal info to redactedPatient
 def addPersonalInfo(redactedPatient, patient):
+    # name
+    redactedPatient = addName(redactedPatient, patient)
+
+    # address
     redactedPatient.setAddress(patient.address)
     redactedPatient.setLocation(patient.location)
 
@@ -195,6 +227,7 @@ def addPersonalInfo(redactedPatient, patient):
     return redactedPatient
 
 
+# add med info to redactedPatient
 def addMedicalInfo(redactedPatient, patient):
     redactedPatient.setFamilyDoctor(patient.familyDoctor)
 
@@ -222,6 +255,7 @@ def addMedicalInfo(redactedPatient, patient):
     return redactedPatient
 
 
+# add billing info to redactedPatient
 def addBillingInfo(redactedPatient, patient):
     # insurance info
     redactedPatient.setAmountPaidByInsurance(patient.amountPaidByInsurance)
