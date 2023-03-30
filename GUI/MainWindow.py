@@ -51,7 +51,6 @@ def switchPatientList(patientList):
 
     MainWindow.window.currentView = lv.ListView(MainWindow.window, patientList)
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
-
     MainWindow.viewType = 0
 
 # checks if user is looking at patients list or single patient
@@ -61,3 +60,10 @@ def getViewType():
 #pull which patient the user is currently looking at
 def getCurrentPatient():
     return MainWindow.currentPatient
+    
+def switchLoginView(user):
+    MainWindow.window.currentView.destroy()
+
+    MainWindow.window.currentView = lgn.LoginView(MainWindow.window, user)
+    MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
+    MainWindow.viewType = -1
