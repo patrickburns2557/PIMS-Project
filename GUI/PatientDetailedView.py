@@ -183,6 +183,8 @@ class PersonalInfoTab(ctk.CTkFrame):
         )
         self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
+        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint(1)).grid(
+            row=0, column=1, sticky="w", padx=PADLABEL, pady=PADLABEL)
 
         #Don't show address of patient if volunteer is logged in
         if Data.System.getUserType() != 3:
@@ -302,6 +304,8 @@ class MedicalInfoTab(ctk.CTkFrame):
         )
         self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
+        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint(2)).grid(
+            row=0, column=1, sticky="w", padx=PADLABEL, pady=PADLABEL)
 
         self.famDoctorFrame = ctk.CTkFrame(
             self
@@ -460,6 +464,8 @@ class BillingInfoTab(ctk.CTkFrame):
         )
         self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
+        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint(3)).grid(
+            row=0, column=1, sticky="w", padx=PADLABEL, pady=PADLABEL)
 
         self.insuranceFrame = ctk.CTkFrame(
             self
