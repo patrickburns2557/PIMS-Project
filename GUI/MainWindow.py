@@ -43,3 +43,9 @@ def switchPatientList(patientList):
 
     MainWindow.window.currentView = lv.ListView(MainWindow.window, patientList)
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
+
+def switchLoginView(user):
+    MainWindow.window.currentView.destroy()
+
+    MainWindow.window.currentView = lgn.LoginView(MainWindow.window, user)
+    MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
