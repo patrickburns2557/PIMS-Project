@@ -28,7 +28,7 @@ smallScaleButton.grid(row=0, column=7, padx=2, pady=2)
 userButton = ctk.CTkButton(window, text="PrintUserInfo", font=("Arial", 20), command=lambda:print("Type: " + str(Data.System.getUserType())))
 userButton.grid(row=0, column=8, padx=2, pady=2)
 
-printButton = ctk.CTkButton(window, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint())
+printButton = ctk.CTkButton(window, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint(0))
 printButton.grid(row=0, column=9, padx=2, pady=2)
 
 

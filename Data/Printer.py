@@ -5,7 +5,7 @@ import pandas as pd
 from os import startfile
 from datetime import datetime
 
-#constant
+# constants
 REPORT_NAME = "PatientReport.txt"
 
 # To use the class, simply call Data.Printer.initPrint() to print the current view
@@ -16,20 +16,21 @@ REPORT_NAME = "PatientReport.txt"
 class Printer():
     def __init__(self):
         self.patients = []
-        self.viewType = None #set whenever view is switched
+        self.viewType = None  # set whenever view is switched
 
-    #start printing the correct number of user(s)
-    def startPrint(self):
+    # start printing the correct number of user(s)
+    def startPrint(self, scope):
         self.__getContext()
-        if (self.viewType is None): # viewtype was not set yet.
+        if (self.viewType is None):  # viewtype was not set yet.
             print("viewType not set!\nAborting print.")
             return
         elif self.viewType == 0:  # patient lists
             Printer.addPatients(self, Data.System.getPatientList())
             Printer.printPatients(self)
             return
-        elif self.viewType == 1:  # todo: patient detailed view
-            print("NOT IMPLEMENTED")
+        elif self.viewType == 1:
+            Printer.addPatient(self, GUI.MainWindow.getCurrentPatient(), scope)
+            Printer.printPatients(self)
             return
         else:
             print("viewType unexpected value: " + str(self.viewType) + "\nAborting print.")
@@ -38,17 +39,49 @@ class Printer():
     # are we printing one user or a whole list
     def __getContext(self):
         self.viewType = GUI.MainWindow.getViewType()
-        print(self.viewType)
 
-
-    # add a single patient to the list
-    def addPatient(self, patient):
+    # add a single patient to the list.
+    # If scope is provided, only print certain info: 0=all info, 1= personal, 2=medical, 3=Billing
+    def addPatient(self, patient, scope):
         # check if we are given the correct data type
         if type(patient) != Patient:
             print("Error: single patient expected. Found: " + str(type(patient)))
             return
+
+        # not all users should be able to view all info.
+        redactedPatient = Patient()
+
+        # everyone is allowed the name of patient
+        redactedPatient.setFirstName(patient.firstName)
+        redactedPatient.setMiddleName(patient.middleName)
+        redactedPatient.setLastname(patient.lastName)
+
+        # only add info to redacted patient that a user is supposed to view
+        ut = Data.System.getUserType()
+        if ut == 0 or ut == 1:  # doctors & nurses should access everything
+            if scope == 0 or scope == 1:  # personal info
+                redactedPatient = addPersonalInfo(redactedPatient, patient)
+            if scope == 0 or scope == 2:  # medical info
+                redactedPatient = addMedicalInfo(redactedPatient, patient)
+            if scope == 0 or scope == 3:  # billing info
+                redactedPatient = addBillingInfo(redactedPatient, patient)
+
+        elif ut == 2:  # office staff
+            if scope == 0 or scope == 1:  # personal info
+                redactedPatient = addPersonalInfo(redactedPatient, patient)
+            if scope == 0 or scope == 3:  # billing info
+                redactedPatient = addBillingInfo(redactedPatient, patient)
+
+        elif ut == 3:  # volunteer
+            if scope == 0 or scope == 1:  # personal info
+                redactedPatient = addPersonalInfo(redactedPatient, patient)
+
+        else:
+            print("Unknown user type" + str(ut) + ". Aborting print!")
+            return
+
         # add the patient
-        self.patients.append(patient)
+        self.patients.append(redactedPatient)
 
     # add multiple patients to the list at once using a list
     def addPatients(self, patients):
@@ -70,17 +103,36 @@ class Printer():
         df = makeDataFrame(self.patients)
         if df.empty:
             return
+
+        # order the dataframe in a sensible manner
+        df = df[[
+            'firstName', 'middleName', 'lastName',
+            'address',
+            'homePhone', 'workPhone', 'mobilePhone',
+            'emergencyContactNames', 'emergencyContactNumbers',
+            'dateAdmittance', 'timeAdmittance',
+            'reasonAdmission',
+            'dateDischarge', 'timeDischarge',
+            'familyDoctor',
+            'doctorNotes', 'nurseNotes',
+            'prescriptionNames', 'prescriptionSchedule', 'prescriptionAmount',
+            'scheduledProcedures',
+            'location',
+            'numAllowedVisitors', 'allowedVisitors',
+            'insuranceCarrier', 'insuranceAccountNumber', 'insuranceGroupNumber',
+            'listCharges', 'listChargesAmount',
+            'amountPaid', 'amountOwed', 'amountPaidByInsurance'
+        ]]
         # write the data to a text file. Ensures all the data is shown and fits on one row
-        with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.max_colwidth', None, 'display.expand_frame_repr', False):
+        with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.max_colwidth', None,
+                               'display.expand_frame_repr', False):
             writeFile(df)
 
-        #attempt to open the file in the default OS text editor
+        # attempt to open the file in the default OS text editor
         try:
             openFile(REPORT_NAME)
         except:
             print("Could not automatically open report.")
-
-
 
 
 # create a data frame given a list of patients
@@ -105,16 +157,84 @@ def makeDataFrame(patients):
 # writes a dataframe to a text file
 def writeFile(dataFrame):
     with open(REPORT_NAME, 'w') as f:
-        f.write("PATIENT MANAGEMENT INFORMATION SYSTEM\nPatient Report(s) at "+str(datetime.now())+"\n")
+        f.write("PATIENT MANAGEMENT INFORMATION SYSTEM\nPatient Report(s) at " + str(datetime.now()) + "\n\n")
         f.write(str(dataFrame))
 
     print("Printing complete! ")
 
-#opens the report in the OS's text viewer
+
+# opens the report in the OS's text viewer
 def openFile(file):
     startfile(file)
 
+
 # print a current view
-def initPrint():
-    p=Printer()
-    p.startPrint()
+def initPrint(scope):
+    p = Printer()
+    p.startPrint(scope)
+
+
+def addPersonalInfo(redactedPatient, patient):
+    redactedPatient.setAddress(patient.address)
+    redactedPatient.setLocation(patient.location)
+
+    # phone
+    redactedPatient.setMobilePhone(patient.mobilePhone)
+    redactedPatient.setHomePhone(patient.homePhone)
+    redactedPatient.setWorkPhone(patient.workPhone)
+
+    for e in range(0, len(patient.emergencyContactNames)):
+        redactedPatient.addEmergencyContact(patient.emergencyContactNames[e],
+                                            patient.emergencyContactNumbers[e])
+
+    # visitors
+    redactedPatient.setNumAllowedVisitors(patient.allowedVisitors)
+    for v in patient.allowedVisitors:
+        redactedPatient.addAllowedVisitor(v)
+
+    return redactedPatient
+
+
+def addMedicalInfo(redactedPatient, patient):
+    redactedPatient.setFamilyDoctor(patient.familyDoctor)
+
+    redactedPatient.setDateAdmittance(patient.dateAdmittance)
+    redactedPatient.setTimeAdmittance(patient.dateAdmittance)
+    redactedPatient.setReasonAdmission(patient.reasonAdmission)
+
+    # discharge
+    redactedPatient.setDateDischarge(patient.dateDischarge)
+    redactedPatient.setTimeDischarge(patient.timeDischarge)
+
+    # prescriptions
+    for p in range(0, len(patient.prescriptionNames)):
+        redactedPatient.addPrescription(patient.prescriptionNames[p], patient.prescriptionAmount[p],
+                                        patient.prescriptionSchedule[p])
+    # scheduled procedures
+    for s in patient.scheduledProcedures:
+        redactedPatient.addScheduledProcedure(s)
+
+    for n in patient.doctorNotes:
+        redactedPatient.addDoctorNote(n)
+
+    for n in patient.nurseNotes:
+        redactedPatient.addNurseNote(n)
+    return redactedPatient
+
+
+def addBillingInfo(redactedPatient, patient):
+    # insurance info
+    redactedPatient.setAmountPaidByInsurance(patient.amountPaidByInsurance)
+    redactedPatient.setInsuranceCarrier(patient.insuranceCarrier)
+    redactedPatient.setInsuranceGroupNumber(patient.insuranceGroupNumber)
+    redactedPatient.setInsuranceAccountNumber(patient.insuranceAccountNumber)
+
+    # billing info
+    redactedPatient.setAmountPaid(patient.amountPaid)
+    redactedPatient.setAmountOwed(patient.amountOwed)
+
+    # list of charges
+    for c in range(0, len(patient.listCharges)):
+        redactedPatient.addCharge(patient.listCharges[c], patient.listChargesAmount[c])
+
+    return redactedPatient

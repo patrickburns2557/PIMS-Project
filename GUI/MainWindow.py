@@ -14,6 +14,7 @@ class MainWindow(ctk.CTk):
     # print(ctk.get_appearance_mode())
     window = None # Class variable to hold itself in so that other classes can make calls to the MainWindow class and change the window's views
     viewType = None # holds the current view (0 for patient list, 1 for detailedView) so other classes know which view the user is on
+    currentPatient = None # the patient the user is currently looking at
     def __init__(self, patientList, user):
         super().__init__()
         MainWindow.window = self #Store self into class variable upon creation
@@ -38,6 +39,7 @@ class MainWindow(ctk.CTk):
 def switchDetailedView(patient):
     MainWindow.window.currentView.destroy()
 
+    MainWindow.currentPatient = patient
     MainWindow.window.currentView = pdv.PatientDetailedView(MainWindow.window, patient) 
     MainWindow.window.currentView.grid(row=1, column=1, sticky="news",columnspan=10)
 
@@ -55,3 +57,7 @@ def switchPatientList(patientList):
 # checks if user is looking at patients list or single patient
 def getViewType():
     return MainWindow.viewType
+
+#pull which patient the user is currently looking at
+def getCurrentPatient():
+    return MainWindow.currentPatient
