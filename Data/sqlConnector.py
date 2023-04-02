@@ -29,7 +29,7 @@ class myConnector():
     # update database by column
     def update(self, col, data, id):
         #column name, data being updated, patient id
-        query = "UPDATE patients\n SET " + col + " = " + data + "\nWHERE patient_ID = " + id
+        query = "UPDATE patients\n SET " + str(col) + " = '" + str(data) + "'\nWHERE patient_ID = " + str(id)
         self.myCursor.execute(query)
         self.connection.commit()
 
