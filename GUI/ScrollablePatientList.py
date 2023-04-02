@@ -35,12 +35,34 @@ class SinglePatientListWidget(ctk.CTkFrame):
             )
             self.firstNameLabel.pack(padx=2, pady=2)
         
+        self.middleNameFrame = ctk.CTkFrame(
+            self
+        )
+        self.middleNameFrame.grid(row=0, column=1, padx=3, pady=3)
+        try:
+            self.middleNameButton = ctk.CTkButton(
+                self.middleNameFrame,
+                text=self.patient.middleName,
+                width=200,
+                height=30,
+                anchor="w",
+                command=lambda: GUI.MainWindow.switchDetailedView(self.patient)
+            )
+            self.middleNameButton.pack(padx=2, pady=2)
+        except:#placeholder text if the first name fails to load
+            self.middleNameLabel = ctk.CTkLabel(
+                self.middleNameFrame,
+                text="MIDDLE NAME",
+                width=200,
+                font=("Courier", 18, "bold")
+            )
+            self.middleNameLabel.pack(padx=2, pady=2)
 
         #frame to hold the label
         self.lastNameFrame = ctk.CTkFrame(
             self,
         )
-        self.lastNameFrame.grid(row=0,column=1, padx=3, pady=3)
+        self.lastNameFrame.grid(row=0,column=2, padx=3, pady=3)
         try:
             self.lastNameLabel = ctk.CTkButton(
                 self.lastNameFrame,
@@ -70,13 +92,13 @@ class SinglePatientListWidget(ctk.CTkFrame):
             height=10,
             fg_color="transparent"
         )
-        self.spacer.grid(row=0,column=2, padx=0, pady=3, sticky="news")
+        self.spacer.grid(row=0,column=3, padx=0, pady=3, sticky="news")
 
         #frame to hold the label
         self.locationFrame = ctk.CTkFrame(
             self,
         )
-        self.locationFrame.grid(row=0,column=3, padx=3, pady=3)
+        self.locationFrame.grid(row=0,column=4, padx=3, pady=3)
         try:
             self.locationLabel = ctk.CTkLabel(
                 self.locationFrame,
@@ -97,14 +119,14 @@ class SinglePatientListWidget(ctk.CTkFrame):
             self.locationLabel.pack(padx=2, pady=2)
         
         #Resize the spacer to fill any extra window size
-        self.grid_columnconfigure(2, weight=1)
+        self.grid_columnconfigure(3, weight=1)
 
 #reuse the SinglePatientListWidget to be the label at the top of the list
 class PatientListTopLabel(SinglePatientListWidget):
     def __init__(self, parentWidget):
         super().__init__(parentWidget, "")
         self.endSpacer = ctk.CTkFrame(self, width=18, height=10, fg_color="transparent")
-        self.endSpacer.grid(row=0, column=4)
+        self.endSpacer.grid(row=0, column=5)
         self.configure(fg_color=backColor)
 
 
