@@ -54,6 +54,9 @@ logoutButton = ctk.CTkButton(window, text="Logout", font=("Arial", 20), command=
 logoutButton.grid(row=0, column=9, padx=2, pady=2)
 
 
-
+#Move this to the top bar class when made
+#for now will be button to bring up the gui to create a new patient
+NewPatientButton = ctk.CTkButton(window, text="Create New Patient", font=("Arial", 20), command=lambda:GUI.MainWindow.switchPatientCreationView(Data.System.getUser()))
+NewPatientButton.grid(row=0, column=1, padx=2, pady=2)
 
 window.mainloop()
