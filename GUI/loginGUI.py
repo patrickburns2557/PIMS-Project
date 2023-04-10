@@ -74,6 +74,7 @@ class LoginView(ctk.CTkFrame):
         password = self.password.get()
         if loginSystem.login(self.user, username, password):
             GUI.MainWindow.switchPatientList(Data.System.getPatientList())
+            GUI.MainWindow.updateTopBar() #update user type in TopBar
         else:
             self.incorrectLabel = ctk.CTkLabel(self, text="Incorrect username or password", font=("Courier", 18, "bold"))
             self.incorrectLabel.grid(row=4, column=1, padx=5, pady=5, columnspan=2)

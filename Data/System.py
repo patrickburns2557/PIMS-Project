@@ -100,4 +100,5 @@ def getUserType():
 
 def logoutUser():
     System.TheSystem.user = User()
+    GUI.MainWindow.updateTopBar() #update user type in TopBar
     
