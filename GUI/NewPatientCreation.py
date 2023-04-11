@@ -163,9 +163,9 @@ class NewPatientView(ctk.CTkFrame):
 #############################################
 
 
-class PersonalInfoTab(ctk.CTkFrame):
+class PersonalInfoTab(ctk.CTkScrollableFrame):
     def __init__(self, parentWidget, patient):
-        super().__init__(parentWidget)
+        super().__init__(parentWidget, orientation= "horizontal")
         
         self.addNoteFrame = ctk.CTkFrame(
             self
@@ -608,9 +608,9 @@ class PersonalInfoTab(ctk.CTkFrame):
     def addLocation(self, patient,Location):
         patient.setLocation(Location)
         
-class MedicalInfoTab(ctk.CTkFrame):
+class MedicalInfoTab(ctk.CTkScrollableFrame, ):
     def __init__(self, parentWidget, patient):
-        super().__init__(parentWidget)
+        super().__init__(parentWidget, orientation= "horizontal")
         
         
         self.addNoteFrame = ctk.CTkFrame(
@@ -870,9 +870,9 @@ class MedicalInfoTab(ctk.CTkFrame):
     def addScheduledProcedure(self, patient,ScheduledProcedure):
         patient.addScheduledProcedure(ScheduledProcedure)
         
-class BillingInfoTab(ctk.CTkFrame):
+class BillingInfoTab(ctk.CTkScrollableFrame):
     def __init__(self, parentWidget, patient):
-        super().__init__(parentWidget)
+        super().__init__(parentWidget, orientation= "horizontal")
         
         
         self.addNoteFrame = ctk.CTkFrame(
