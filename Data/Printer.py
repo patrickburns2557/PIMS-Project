@@ -2,7 +2,10 @@ import Data.System
 from Data.dataClasses import Patient
 import GUI.MainWindow
 import pandas as pd
-from os import startfile
+try:
+    from os import startfile
+except :
+    pass
 from datetime import datetime
 
 # constants
@@ -182,7 +185,10 @@ def writeFile(dataFrame):
 
 # opens the report in the OS's text viewer
 def openFile(file):
-    startfile(file)
+    try:
+        startfile(file)
+    except:
+        pass
 
 
 # print a current view
