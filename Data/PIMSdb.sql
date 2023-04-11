@@ -20,6 +20,11 @@ insurance_carrier varchar(50), insurance_account_number varchar(20), insurance_g
 billing_items_name text, billing_items_amount text, amount_paid decimal(10, 2), amount_owed decimal(10, 2), paid_by_insurance decimal(10,2),
 allowed_visitor_amount varchar(3), allowed_visitor_names text);
 
+# adjust variable sizes for dates and family doctor name
+ALTER TABLE patients MODIFY COLUMN date_of_admittance varchar(50);
+ALTER TABLE patients MODIFY COLUMN discharge_date varchar(50);
+ALTER TABLE patients MODIFY COLUMN family_doctor varchar(50);
+
 insert into patients values
 (0, "Garcia", "Sophia", "Maria", 
 "1281 Meadow Ln", "Huntsville", "AL", "35801", 
