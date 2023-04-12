@@ -4,8 +4,8 @@ class myConnector():
     def __init__(self):
         try:
             self.connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
+            host="10.4.134.124",
+            user="presentation",
             password="PIMS2023"
             )
 
