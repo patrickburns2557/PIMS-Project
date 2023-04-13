@@ -88,5 +88,11 @@ class TopBar(ctk.CTkFrame):
         )
         self.logoutButton.grid(row=0,column=5, padx=3, pady=3, sticky="news")
 
+        NewPatientButton = ctk.CTkButton(self, text="Create New Patient", font=("Arial", 20), command=lambda:GUI.MainWindow.switchPatientCreationView(Data.System.getUser()))
+        NewPatientButton.grid(row=0, column=6, padx=2, pady=2)
+
+
+        EditPatientButton = ctk.CTkButton(self, text="Edit Patient", font=("Arial", 20), command=lambda:GUI.MainWindow.switchEditPatientView(Data.System.getUser()))
+        EditPatientButton.grid(row=0, column=7, padx=2, pady=2)
 
         self.grid_columnconfigure(1, weight=1)
