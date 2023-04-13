@@ -5,7 +5,8 @@ import GUI.ScrollablePatientList as spl
 import GUI.PatientDetailedView as pdv
 import GUI.ListView as lv
 import GUI.loginGUI as lgn
-import GUI.NewPatientCreation as npc
+import GUI.NewPatientCreation as NewPatientGui
+import GUI.EditPatientsGui as EditGui
 from Data.dataClasses import *
 
 
@@ -74,6 +75,14 @@ def switchLoginView(user):
 def switchPatientCreationView(user):
     MainWindow.window.currentView.destroy()
 
-    MainWindow.window.currentView = npc.NewPatientView(MainWindow.window, user)
+    MainWindow.window.currentView = NewPatientGui.NewPatientView(MainWindow.window, user)
+    MainWindow.window.currentView.grid(row=1, column=1, sticky="news", columnspan=10)
+    MainWindow.viewType = 0
+    
+ #view to go to EditPatientWindow window 
+def switchEditPatientView(user):
+    MainWindow.window.currentView.destroy()
+
+    MainWindow.window.currentView = EditGui.EditPatientView(MainWindow.window, user, getCurrentPatient())
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
     MainWindow.viewType = 0

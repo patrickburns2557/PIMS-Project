@@ -13,15 +13,15 @@ PADSECTION = 15
 PADLABEL = 2
 PADCOMP = 3
 
-class NewPatientView(ctk.CTkFrame):
-    def __init__(self, parentWidget, user):
+class EditPatientView(ctk.CTkFrame):
+    def __init__(self, parentWidget, user, CurrentPatient):
         super().__init__(parentWidget)
         
         self.NewPatient = Patient()
         
         
          #first tab shown will be the personal info tab
-        self.shownTab = PersonalInfoTab(self, self.NewPatient)
+        self.shownTab = PersonalInfoTab(self, CurrentPatient)
         
         
         
@@ -34,7 +34,7 @@ class NewPatientView(ctk.CTkFrame):
         self.personalButton = ctk.CTkButton(
             self.buttonFrame,
             text="Personal Information",
-            command=lambda:self.switchPersonal(),
+            command=lambda:self.switchPersonal(CurrentPatient),
             font=FONTBUTTON,
             width=270,
             height=40,
@@ -84,7 +84,7 @@ class NewPatientView(ctk.CTkFrame):
         
         
     #Functions to switch between the tabs using the buttons
-    def switchPersonal(self):
+    def switchPersonal(self, CurrentPatient):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="disabled")
@@ -104,7 +104,7 @@ class NewPatientView(ctk.CTkFrame):
             i.destroy()
         self.shownTab.destroy()
 
-        self.shownTab = PersonalInfoTab(self, self.NewPatient)
+        self.shownTab = PersonalInfoTab(self, self.NewPatient, CurrentPatient)
         self.shownTab.grid(row=1, column=0, sticky="news")
 
 
@@ -172,17 +172,17 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         )
         self.addNoteFrame.grid(row=1, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "First Name Entry").grid(row=1, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note   = ctk.StringVar(value = patient.firstName)
         self.addFirstNameEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
             width=350,
-            textvariable=self.note
+            textvariable = self.note
         )
         self.addFirstNameEntry.grid(row=2, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addFirstNameButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -191,7 +191,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addFirstNameButton.grid(row=2, column=1, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
         LabelBorder(self.addNoteFrame, "Middle Name Entry").grid(row=3, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note   = ctk.StringVar(value = patient.middleName)
         self.addMiddleNameEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -201,7 +201,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMiddleNameEntry.grid(row=4, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addMiddleNameButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -211,7 +211,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
             #self.addNoteFrame.grid(row=4, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "Last Name Entry").grid(row=5, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note   = ctk.StringVar(value = patient.lastName)
         self.addLastNameEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -221,7 +221,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addLastNameEntry.grid(row=6, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addLastNameButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -231,7 +231,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
         
         LabelBorder(self.addNoteFrame, "Address Entry").grid(row=1, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note   = ctk.StringVar(value = patient.address)
         self.addAddressEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -241,7 +241,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addAddressEntry.grid(row=2, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addAddressButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -251,7 +251,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
         
         LabelBorder(self.addNoteFrame, "Mobile Phone Entry").grid(row=10, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note = ctk.StringVar(value = patient.mobilePhone)
         self.addMobilePhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -261,7 +261,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMobilePhoneEntry.grid(row=11, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addMobilePhoneButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )   
@@ -271,7 +271,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
              
         
         LabelBorder(self.addNoteFrame, "Home Phone Entry").grid(row=12, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note = ctk.StringVar(value = patient.homePhone)
         self.addHomePhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -281,7 +281,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addHomePhoneEntry.grid(row=13, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addHomePhoneButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -290,7 +290,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
                 
         LabelBorder(self.addNoteFrame, "Work Phone Entry").grid(row=14, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note = ctk.StringVar(value = patient.workPhone)
         self.addWorkPhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -300,7 +300,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addWorkPhoneEntry.grid(row=15, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addWorkPhoneButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -309,7 +309,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
         
         LabelBorder(self.addNoteFrame, "Emergency Contact 1 Name Entry").grid(row=8, column = 0, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note = ctk.StringVar(value = patient.emergencyContactNames[0])
         self.addEmergencyNameEntry1 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -319,7 +319,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyNameEntry1.grid(row=9, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addEmergencyNameButton1 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -328,7 +328,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyNameButton1.grid(row=9, column=1, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
         LabelBorder(self.addNoteFrame, "Emergency Phone Number 1 Entry").grid(row=10, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note = ctk.StringVar(value = patient.emergencyContactNumbers[0])
         self.addEmergencyPhoneEntry1 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -338,7 +338,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry1.grid(row=11, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addEmergencyPhoneButton1 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -347,7 +347,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
         
         LabelBorder(self.addNoteFrame, "Emergency Contact 2 Name Entry").grid(row=12, column = 0, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note = ctk.StringVar(value = patient.emergencyContactNames[1])
         self.addEmergencyNameEntry2 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -357,7 +357,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyNameEntry2.grid(row=13, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addEmergencyNameButton2 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -366,7 +366,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
         
         LabelBorder(self.addNoteFrame, "Emergency Phone Number 2 Entry").grid(row=14, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.note = ctk.StringVar()
+        self.note = ctk.StringVar(value = patient.emergencyContactNumbers[1])
         self.addEmergencyPhoneEntry2 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -376,7 +376,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry2.grid(row=15, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addEmergencyPhoneButton2 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         ) 
@@ -396,7 +396,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyNameEntry3.grid(row=17, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addEmergencyNameButton3 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -414,7 +414,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry3.grid(row=19, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addEmergencyPhoneButton3 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )               
@@ -434,7 +434,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMaxVisitorsEntry.grid(row=6, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addMaxVisitorsButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )    
@@ -453,7 +453,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addAprovedVisitorEntry1.grid(row=8, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addApprovedVisitorButton1 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )   
@@ -474,7 +474,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addAprovedVisitorEntry2.grid(row=10, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addApprovedVisitorButton2 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )         
@@ -493,7 +493,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addAprovedVisitorEntry3.grid(row=12, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addAprovedVisitorEntry3 = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )          
@@ -512,7 +512,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addFacililtyEntry.grid(row=2, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addFacililtyButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )    
@@ -531,7 +531,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addFloorEntry.grid(row=4, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addFloorButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )           
@@ -550,7 +550,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addRoomEntry.grid(row=6, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addRoomButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )               
@@ -569,7 +569,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addBedEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addBedButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -639,7 +639,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addFamilyDoctorEntry.grid(row=2, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addFamilyDoctorButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )   
@@ -658,7 +658,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addAdmittanceDateEntry.grid(row=4, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addAdmitanceDateButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -676,7 +676,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addAdmitanceTimeEntry.grid(row=6, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addAdmitanceTimeButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -694,7 +694,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.AdmitanceReasonEntry.grid(row=8, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addAdmitanceReasonButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -713,7 +713,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addDischargeDateEntry.grid(row=11, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addDischargeDateButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -732,7 +732,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addDischargeTimeEntry.grid(row=14, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addDischargeTimeButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -751,7 +751,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addPrescriptionNameEntry.grid(row=2, column=3, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addPrescriptionNameButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -770,7 +770,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addPrescriptionAmountEntry.grid(row=5, column=3, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addPrescriptionAmountButton   = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -791,7 +791,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addPrescriptionScheduleEntry.grid(row=8, column=3, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addPrescriptionEntryButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -810,7 +810,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addScheduledProcedureEntry.grid(row=11, column=3, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addScheduledProcedureButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -828,7 +828,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addDoctorNoteEntry.grid(row=2, column=5, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addDoctorNoteButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -846,7 +846,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addNurseNoteEntry.grid(row=6, column=5, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addNurseNoteButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )
@@ -904,7 +904,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addInsuranceCarrierEntry.grid(row=2, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addInsuranceCarrierButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )   
@@ -924,7 +924,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addInsurancePolicyAccountEntry.grid(row=5, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addInsurancePolicyAccountButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         ) 
@@ -944,7 +944,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addInsuranceGroupEntry.grid(row=7, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addInsuranceGroupButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )  
@@ -964,7 +964,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addAmountPaidEntry.grid(row=10, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addAmountPaidButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )   
@@ -984,7 +984,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addAmountOwedEntry.grid(row=13, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addAmountOwedButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         )   
@@ -1004,7 +1004,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addChargeOwedEntry.grid(row=2, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         self.addChargeOwedButton = ctk.CTkButton(
             self.addNoteFrame,
-            text="Add",
+            text="Edit",
             font=FONTINFO,
             width=80
         ) 
