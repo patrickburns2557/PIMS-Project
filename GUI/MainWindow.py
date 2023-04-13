@@ -3,10 +3,9 @@ import tkinter.ttk as ttk
 import customtkinter as ctk
 import GUI.ScrollablePatientList as spl
 import GUI.PatientDetailedView as pdv
+import GUI.TopBarGui as tb
 import GUI.ListView as lv
 import GUI.loginGUI as lgn
-import GUI.NewPatientCreation as NewPatientGui
-import GUI.EditPatientsGui as EditGui
 from Data.dataClasses import *
 
 
@@ -31,6 +30,9 @@ class MainWindow(ctk.CTk):
             pass
         self.minsize(1280, 720)
         
+        self.topBar = tb.TopBar(self)
+        self.topBar.grid(row=0, column=0, sticky="ew", columnspan=10)
+
         self.currentView = lgn.LoginView(self, user) # Default view when starting program
         self.currentView.grid(row=1, column=1, sticky="news", columnspan=10)
 
@@ -47,13 +49,21 @@ def switchDetailedView(patient):
 
     MainWindow.viewType = 1
 
-
+# Function to allow other classes to change the current view in the window to PatientList
 def switchPatientList(patientList):
     MainWindow.window.currentView.destroy()
 
     MainWindow.window.currentView = lv.ListView(MainWindow.window, patientList)
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
     MainWindow.viewType = 0
+
+# Function to allow other classes to change the current view in the window to LoginView
+def switchLoginView(user):
+    MainWindow.window.currentView.destroy()
+
+    MainWindow.window.currentView = lgn.LoginView(MainWindow.window, user)
+    MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
+    MainWindow.viewType = -1
 
 # checks if user is looking at patients list or single patient
 def getViewType():
@@ -63,26 +73,10 @@ def getViewType():
 def getCurrentPatient():
     return MainWindow.currentPatient
     
-def switchLoginView(user):
-    MainWindow.window.currentView.destroy()
 
-    MainWindow.window.currentView = lgn.LoginView(MainWindow.window, user)
-    MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
-    MainWindow.viewType = -1
-    
-    
-#view to go to NewPatientCreation window 
-def switchPatientCreationView(user):
-    MainWindow.window.currentView.destroy()
+# Functino to allow other classes to update the top bar, such as when a different user type logs in
+def updateTopBar():
+    MainWindow.window.topBar.destroy()
 
-    MainWindow.window.currentView = NewPatientGui.NewPatientView(MainWindow.window, user)
-    MainWindow.window.currentView.grid(row=1, column=1, sticky="news", columnspan=10)
-    MainWindow.viewType = 0
-    
- #view to go to EditPatientWindow window 
-def switchEditPatientView(user):
-    MainWindow.window.currentView.destroy()
-
-    MainWindow.window.currentView = EditGui.EditPatientView(MainWindow.window, user, getCurrentPatient())
-    MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
-    MainWindow.viewType = 0
+    MainWindow.window.topBar = tb.TopBar(MainWindow.window)
+    MainWindow.window.topBar.grid(row=0, column=0, sticky="ew", columnspan=10)

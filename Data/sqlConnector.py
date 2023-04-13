@@ -31,8 +31,8 @@ class myConnector():
     # update database by column
     def update(self, col, data, id):
         #column name, data being updated, patient id
-        query = "UPDATE patients\n SET " + col + " = " + data + "\nWHERE patient_ID = " + id
-        self.myCursor.execute(query)
+        query = "UPDATE patients\n SET " + col + " = " + "(%s) \nWHERE patient_ID = " + str(id)
+        self.myCursor.execute(query, (data,))
         self.connection.commit()
 
     # returns amount of rows in table
