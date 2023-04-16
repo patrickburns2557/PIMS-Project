@@ -3,12 +3,12 @@ import mysql.connector
 class myConnector():
     def __init__(self):
         try:
-            self.connection = mysql.connector.connect(
-            host="10.4.134.124",
-            user="presentation",
-            password="PIMS2023"
+            
+            self.connection = mysql.connector.connect(  
+            host="localhost",
+            user="root",
+            password="brf6mp3m"
             )
-
             self.myCursor = self.connection.cursor()
             self.myCursor.execute("use patient_information;")
         except:

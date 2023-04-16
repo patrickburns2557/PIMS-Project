@@ -60,3 +60,4 @@ class ListView(ctk.CTkFrame):
         self.scrollable.destroy()
         self.scrollable = spl.ScrollablePatientList(self, filteredList)
         self.scrollable.grid(row=2, column=0, sticky="news", columnspan=3)
+        return filteredList
