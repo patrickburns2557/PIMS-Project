@@ -8,6 +8,7 @@ import GUI.ListView as lv
 import GUI.loginGUI as lgn
 from Data.dataClasses import *
 import GUI.EditPatientsGui as EditGui
+import GUI.NewPatientCreation as CreateGui
 
 
 class MainWindow(ctk.CTk):
@@ -57,8 +58,15 @@ def switchPatientList(patientList):
     MainWindow.window.currentView = lv.ListView(MainWindow.window, patientList)
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
     MainWindow.viewType = 0
-    #view to go to NewPatientCreation window 
+    
 
+#view to go to NewPatientCreation window 
+def switchPatientCreationView(user):
+    MainWindow.window.currentView.destroy()
+
+    MainWindow.window.currentView = CreateGui.NewPatientView(MainWindow.window, user)
+    MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
+    MainWindow.viewType = 0
     
  #view to go to EditPatientWindow window 
 def switchEditPatientView(user):
