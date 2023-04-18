@@ -1,1 +1,0 @@
-#GUI for displaying info about a single patient

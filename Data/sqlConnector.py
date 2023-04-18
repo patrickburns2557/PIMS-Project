@@ -7,7 +7,7 @@ class myConnector():
             self.connection = mysql.connector.connect(  
             host="localhost",
             user="root",
-            password="PIMS2023"
+            password="brf6mp3m"
             )
             self.myCursor = self.connection.cursor()
             self.myCursor.execute("use patient_information;")
