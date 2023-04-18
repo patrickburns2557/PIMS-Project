@@ -70,7 +70,7 @@ class EditPatientView(ctk.CTkFrame):
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)
         self.SaveButton = ctk.CTkButton(
             self.buttonFrame,
-            text="SavePatient",
+            text="Save Patient",
             font=FONTBUTTON,
             width=100,
             height=40,
