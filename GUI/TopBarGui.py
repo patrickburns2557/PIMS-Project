@@ -6,6 +6,8 @@ TOPBARFONT = ("Arial", 20)
 class TopBar(ctk.CTkFrame):
     def __init__(self, parentWidget):
         super().__init__(parentWidget)
+        
+        #Show the user type that's currently logged in
         self.userType = "Not Logged In"
         if Data.System.getUserType() == 0:
             self.userType = "Doctor"
@@ -25,7 +27,7 @@ class TopBar(ctk.CTkFrame):
         )
         self.userTypeLabel.grid(row=0, column=0, padx=3, pady=3, sticky="news")
 
-
+        
         self.spacer = ctk.CTkFrame(
             self,
             width=300,
@@ -34,7 +36,7 @@ class TopBar(ctk.CTkFrame):
         )
         self.spacer.grid(row=0,column=1, padx=3, pady=3, sticky="news")
         
-        
+        #Create a switch and accompanying function to change between light and dark mode
         self.switchAppearanceVar = ctk.StringVar(value="off")
         def switchAppearance():
             if self.switchAppearanceVar.get() == "on":
@@ -52,7 +54,7 @@ class TopBar(ctk.CTkFrame):
         )
         self.switch.grid(row=0, column=2, padx=3, pady=3, sticky="news")
 
-
+        #Create a switch and accompanying function to change between normal and large scaling
         self.switchScaleVar = ctk.StringVar(value="off")
         def switchScaling():
             if self.switchScaleVar.get() == "on":
@@ -70,14 +72,15 @@ class TopBar(ctk.CTkFrame):
         )
         self.switchScale.grid(row=0,column=3, padx=3, pady=3, sticky="news")
 
-
-        self.printButton = ctk.CTkButton(
-            self,
-            text="Print",
-            font=TOPBARFONT,
-            command=lambda:Data.Printer.initPrint(0)
-        )
-        self.printButton.grid(row=0, column=4, padx=3, pady=3, sticky="news")
+        #Only show the print button when logged in
+        if Data.System.getUserType() in range(0,5):
+            self.printButton = ctk.CTkButton(
+                self,
+                text="Print",
+                font=TOPBARFONT,
+                command=lambda:Data.Printer.initPrint(0)
+            )
+            self.printButton.grid(row=0, column=4, padx=3, pady=3, sticky="news")
 
 
         self.logoutButton = ctk.CTkButton(

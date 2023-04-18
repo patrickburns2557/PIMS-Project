@@ -20,8 +20,11 @@ class NewPatientView(ctk.CTkFrame):
         self.NewPatient = Patient()
         
         
-         #first tab shown will be the personal info tab
+        #initialize all tabs to switch between them
         self.PersonalTab = PersonalInfoTab(self, self.NewPatient)
+        self.MedicalTab = MedicalInfoTab(self, self.NewPatient)
+        self.BillingTab = BillingInfoTab(self, self.NewPatient)
+        #first tab shown will be the personal info tab
         self.shownTab = self.PersonalTab
         
         
@@ -108,13 +111,9 @@ class NewPatientView(ctk.CTkFrame):
             self.billingButton.configure(state="normal")
         except AttributeError or NameError:
             pass
-        
-        #Destroy the current tab before loading the new one
-        for i in self.shownTab.winfo_children():
-            i.destroy()
-        self.shownTab.destroy()
 
-        self.PersonalTab = PersonalInfoTab(self, self.NewPatient)
+        #Remove the previous tab to show the new one
+        self.shownTab.grid_remove()
         self.shownTab = self.PersonalTab
         self.shownTab.grid(row=1, column=0, sticky="news")
         
@@ -135,13 +134,9 @@ class NewPatientView(ctk.CTkFrame):
             self.billingButton.configure(state="normal")
         except AttributeError or NameError:
             pass
-
-        #Destroy the current tab before loading the new one
-        for i in self.shownTab.winfo_children():
-            i.destroy()
-        self.shownTab.destroy()
-
-        self.MedicalTab = MedicalInfoTab(self, self.NewPatient)
+        
+        #Remove the previous tab to show the new one
+        self.shownTab.grid_remove()
         self.shownTab = self.MedicalTab
         self.shownTab.grid(row=1, column=0, sticky="news")
 
@@ -161,13 +156,9 @@ class NewPatientView(ctk.CTkFrame):
             self.billingButton.configure(state="disabled")
         except AttributeError or NameError:
             pass
-
-        #Destroy the current tab before loading the new one
-        for i in self.shownTab.winfo_children():
-            i.destroy()
-        self.shownTab.destroy()
         
-        self.BillingTab = BillingInfoTab(self, self.NewPatient)
+        #Remove the previous tab to show the new one
+        self.shownTab.grid_remove()
         self.shownTab = self.BillingTab
         self.shownTab.grid(row=1, column=0, sticky="news")
         
@@ -726,9 +717,12 @@ def finalizePatient(self):
         self.NewPatient.setWorkPhone(self.PersonalTab.WorkPhoneNote.get())
         self.NewPatient.setMobilePhone(self.PersonalTab.MobilePhoneNote.get())
         
-        self.NewPatient.addEmergencyContact(self.PersonalTab.EmergencyName1Note.get(), self.PersonalTab.EmergencyPhone1Note.get())
-        self.NewPatient.addEmergencyContact(self.PersonalTab.EmergencyName2Note.get(), self.PersonalTab.EmergencyPhone2Note.get())
-        self.NewPatient.addEmergencyContact(self.PersonalTab.EmergencyName3Note.get(), self.PersonalTab.EmergencyPhone3Note.get())
+        if self.PersonalTab.EmergencyName1Note.get() != "":
+            self.NewPatient.addEmergencyContact(self.PersonalTab.EmergencyName1Note.get(), self.PersonalTab.EmergencyPhone1Note.get())
+        if self.PersonalTab.EmergencyName2Note.get() != "":
+            self.NewPatient.addEmergencyContact(self.PersonalTab.EmergencyName2Note.get(), self.PersonalTab.EmergencyPhone2Note.get())
+        if self.PersonalTab.EmergencyName3Note.get() != "":
+            self.NewPatient.addEmergencyContact(self.PersonalTab.EmergencyName3Note.get(), self.PersonalTab.EmergencyPhone3Note.get())
         
         Location = [self.PersonalTab.FacilityNote.get(),self.PersonalTab.FloorNote.get(),self.PersonalTab.RoomNote.get(),self.PersonalTab.BedNote.get()]
         self.NewPatient.setLocation(Location)
@@ -736,9 +730,12 @@ def finalizePatient(self):
         
         self.NewPatient.setNumAllowedVisitors(self.PersonalTab.MaxVisitorsNote.get())
         
-        self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor1Note.get())
-        self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor2Note.get())
-        self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor3Note.get())
+        if self.PersonalTab.ApprovedVisitor1Note.get() != "":
+            self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor1Note.get())
+        if self.PersonalTab.ApprovedVisitor1Note.get() != "":
+            self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor2Note.get())
+        if self.PersonalTab.ApprovedVisitor1Note.get() != "":
+            self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor3Note.get())
 
     except AttributeError or NameError or ValueError:
         pass
@@ -746,7 +743,7 @@ def finalizePatient(self):
     try:
         self.NewPatient.setDateAdmittance(self.MedicalTab.AdmittanceDateNote.get())
         self.NewPatient.setTimeAdmittance(self.MedicalTab.AdmittanceTimeNote.get())
-        self.NewPatient.setReasonAdmission(self.MedicalTab.AdmittanceReasonNote)
+        self.NewPatient.setReasonAdmission(self.MedicalTab.AdmittanceReasonNote.get())
         
         self.NewPatient.setFamilyDoctor(self.MedicalTab.FamilyDoctorNote.get())
         
@@ -779,7 +776,8 @@ def finalizePatient(self):
         pass 
     
     #try:
-    Data.System.System.TheSystem.patientList.append(self.NewPatient)
+    Data.System.getPatientList().append(self.NewPatient)
+    MainWindow.switchPatientList(Data.System.getPatientList())
    # except AttributeError or NameError:
         #pass        
     #try:

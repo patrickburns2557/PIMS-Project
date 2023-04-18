@@ -102,9 +102,9 @@ class patientList():
                 amounts[j] = float(amounts[j])
                 patients.addCharge(names[j], amounts[j])
 
-            patients.setAmountOwed((setData("amount_owed")[i])[0])
-            patients.setAmountPaid((setData("amount_paid")[i])[0])
-            patients.setAmountPaidByInsurance((setData("paid_by_insurance")[i])[0])
+            patients.setAmountOwed(float((setData("amount_owed")[i])[0]))
+            patients.setAmountPaid(float((setData("amount_paid")[i])[0]))
+            patients.setAmountPaidByInsurance(float((setData("paid_by_insurance")[i])[0]))
 
             # list of all patient objects
             self.patientRecords.append(patients)
