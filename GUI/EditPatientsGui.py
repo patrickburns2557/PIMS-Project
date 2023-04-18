@@ -6,6 +6,7 @@ import Data.System
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
 
+
 FONTINFO = ("Courier", 18)
 FONTINFOOLD = ("Courier")
 FONTBUTTON = ("Courier", 20)
@@ -64,7 +65,7 @@ class EditPatientView(ctk.CTkFrame):
             font=FONTBUTTON,
             width=100,
             height=40,
-            command=lambda:MainWindow.switchPatientList(Data.System.getPatientList())
+            command=lambda:MainWindow.switchDetailedView(CurrentPatient)
        )
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)
         self.SaveButton = ctk.CTkButton(
@@ -73,7 +74,7 @@ class EditPatientView(ctk.CTkFrame):
             font=FONTBUTTON,
             width=100,
             height=40,
-            command=lambda:finalizePatient(self,CurrentPatient)
+            command=lambda:[finalizePatient(self,CurrentPatient), MainWindow.switchDetailedView(CurrentPatient)]
        )
         self.SaveButton.grid(row=0, column=4, padx=5, pady=5)    
     
