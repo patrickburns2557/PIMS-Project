@@ -1,37 +1,22 @@
-# CS499Project
 Patient Information Management System (PIMS)
 
 # Table of Contents
 
 [Table of Contents]
 
-[About PIMS]
-
-[Details]
-
-[System Requirements]
-
-[Source Code]
-[Contributors]
-
-[Getting Started]
-
-[Header]
-
-[Login Screen]
-
-[Application Views]
-
-[Patient List View]
-
-[Patient Details View]
-
-[Adding Doctor Note]
-
-[Adding Nurse Note]
-
-[Editing Billing Information]
-
+- [About PIMS]
+  - [Details]
+  - [System Requirements]
+  - [Source Code]
+  - [Contributors]
+- [Getting Started]
+  - [Header]
+  - [Login Screen]
+- [Application Views]
+  - [Patient List View]
+  - [Patient Details View]
+    - [Adding Doctor Note]
+    - [Adding Nurse Note]
 
 # 
 
@@ -47,13 +32,31 @@ PIMS is an application for hospitals that easily lets doctors, nurses, office st
 ## System Requirements
 
 - Windows 10 or 11
-- Python 3.10 or above
-- MySQL
 
 
 ## Source Code
 
-- <https://github.com/patrickburns2557/CS499Project> 
+- Github: <https://github.com/patrickburns2557/CS499Project> 
+
+- Python Version
+
+  - 3.10
+
+- Library Requirements Format: &lt;name> == &lt;version>
+
+  - customtkinter==5.1.2
+  - darkdetect==0.8.0
+  - mysql-connector-python==8.0.32
+  - numpy==1.24.2
+  - pandas==2.0.0
+  - Pillow==9.5.0
+  - protobuf==3.20.3
+  - python-dateutil==2.8.2
+  - pytz==2023.3
+  - six==1.16.0
+  - tzdata==2023.3
+
+- To start, run PIMS.py
 
 
 ## Contributors
@@ -67,26 +70,22 @@ PIMS is an application for hospitals that easily lets doctors, nurses, office st
 
 # Getting Started
 
-Launch PIMS
+Run the PIMS executable.
 
 
 ## Header
 
 The top header buttons will remain constant throughout use of the program. They are as follows:
 
-- Create New Patient
-
-  - This button will only function when a user is logged in. It allows the user to start inputting new patient information at any time.
-
-- Dark Mode toggle. 
+- Dark Mode toggle
 
   - Click to toggle between a dark and light theme.
 
-- Increase Scaling toggle. 
+- Increase Scaling toggle
 
   - Click to enlarge all the text in the application.
 
-- Print.
+- Print
 
   - This button will only function when a user is logged in. When viewing the list of patients, it will print all the details a user is allowed to view for every patient. When viewing a single patient, it will print all the details a user is allowed to view for only that patient.
 
@@ -97,7 +96,17 @@ The top header buttons will remain constant throughout use of the program. They 
 
 ## Login Screen
 
-When the application is launched, the user will be greeted by a login screen. It will require a username and password. Consult the IT admin for login credentials (or try username: **test** password: **test**) Click Log In when the user has entered a valid username and password. The user will be brought to the patients list view.
+When the application is launched, the user will be greeted by a login screen. It will require a username and password. Consult the IT admin for login credentials. If you do not have an IT admin try the following credentials:
+
+|             |             |
+| ----------- | ----------- |
+| Username:   | Password:   |
+| doctor      | doctor      |
+| nurse       | nurse       |
+| officestaff | officestaff |
+| volunteer   | volunteer   |
+
+Click Log In when the user has entered a valid username and password. The user will be brought to the patients list view.
 
 To log out and return to the login screen, click the \`logout\` button in the top right corner.
 
@@ -109,15 +118,27 @@ To log out and return to the login screen, click the \`logout\` button in the to
 
 In this view, the user will see a search box, a way to add patients, and a list of patients.
 
+- Create New Patient
+
+  - This button allows the user to start inputting new patient information.
+
+  - There are three tabs of information to fill out
+
+    - Personal
+    - Medical
+    - Billing
+
+  - Enter all desired patient information for each tab.
+
+  - When finished, click ‘SavePatient’.
+
+  - The patient information will be saved, and the user will be taken to the Patient List View
+
 - Search box
 
   - Click on the search box then type in any name. 
   - Click ‘Search’ to only show users with the name you searched for.
   - Delete the text in the search box then click ‘Search’ to show all the users again.
-
-- Add new patient
-
-  - \-
 
 - List of patients
 
@@ -203,7 +224,7 @@ Privileges:
 
   - Will be able to view patient personal information 
   - Will be able to view billing information
-  - Will be able to edit billing information
+  - Will be able to edit personal and billing information
 
 - Volunteers
 
@@ -230,8 +251,3 @@ Privileges:
 - Type a note into the text box
 - Click \`Add\`
 - The note will be appended to the \`Nurse Notes\` section
-
-
-### Editing Billing Information
-
-- \-
