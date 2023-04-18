@@ -34,6 +34,16 @@ class ListView(ctk.CTkFrame):
         )
         self.searchButton.grid(row=0, column=2, sticky="ew", padx=10, pady=6)
         
+        NewPatientButton = ctk.CTkButton(
+            self, 
+            text="Create New Patient",
+            font=("Courier", 18, "bold"),
+            width=10,
+            height=35,
+            command=lambda:GUI.MainWindow.switchPatientCreationView(Data.System.getUser())
+            )
+        NewPatientButton.grid(row=0, column=3,sticky="ew", padx=5, pady=6)
+        
         #Label at the top showing what each info column means
         self.topLabel = spl.PatientListTopLabel(self)
         self.topLabel.grid(row=1, column=0, columnspan=10, sticky="ew")
@@ -60,3 +70,4 @@ class ListView(ctk.CTkFrame):
         self.scrollable.destroy()
         self.scrollable = spl.ScrollablePatientList(self, filteredList)
         self.scrollable.grid(row=2, column=0, sticky="news", columnspan=3)
+        

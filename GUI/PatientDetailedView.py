@@ -73,6 +73,16 @@ class PatientDetailedView(ctk.CTkFrame):
         )
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)
         
+        
+        self.EditPatientButton = ctk.CTkButton(
+            self.buttonFrame,
+            text="Edit Patient",
+            font=FONTBUTTON,
+            width=100,
+            height=40,
+            command=lambda:MainWindow.switchEditPatientView(Data.System.getUser())
+        )
+        self.EditPatientButton.grid(row=0, column=4, padx=5, pady=5)
     
         self.buttonFrame.grid(row=0, column=0, sticky="news", padx=8, pady=8)
         self.shownTab.grid(row=1, column=0, sticky="news")

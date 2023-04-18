@@ -89,4 +89,8 @@ class TopBar(ctk.CTkFrame):
         self.logoutButton.grid(row=0,column=5, padx=3, pady=3, sticky="news")
 
 
+
+
+
+
         self.grid_columnconfigure(1, weight=1)
