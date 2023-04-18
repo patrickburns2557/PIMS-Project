@@ -1,6 +1,6 @@
-Patient Information Management System (PIMS)
+# Patient Information Management System (PIMS)
 
-# Table of Contents
+## Table of Contents
 
 [Table of Contents]
 
