@@ -6,6 +6,7 @@ import Data.System
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
 
+
 FONTINFO = ("Courier", 18)
 FONTINFOOLD = ("Courier")
 FONTBUTTON = ("Courier", 20)
@@ -64,7 +65,7 @@ class EditPatientView(ctk.CTkFrame):
             font=FONTBUTTON,
             width=100,
             height=40,
-            command=lambda:MainWindow.switchPatientList(Data.System.getPatientList())
+            command=lambda:MainWindow.switchDetailedView(CurrentPatient)
        )
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)
         self.SaveButton = ctk.CTkButton(
@@ -73,7 +74,7 @@ class EditPatientView(ctk.CTkFrame):
             font=FONTBUTTON,
             width=100,
             height=40,
-            command=lambda:finalizePatient(self,CurrentPatient)
+            command=lambda:[finalizePatient(self,CurrentPatient), MainWindow.switchDetailedView(CurrentPatient)]
        )
         self.SaveButton.grid(row=0, column=4, padx=5, pady=5)    
     
@@ -610,42 +611,60 @@ def finalizePatient(self,UpdatedPatient):
     except AttributeError or NameError:
         pass
     
-    try:    
-        UpdatedPatient.emergencyContactNames = []
-        UpdatedPatient.emergencyContactNumbers = []
-        
-        UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName1Note.get(), self.PersonalTab.EmergencyPhone1Note.get())
-        UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName2Note.get(), self.PersonalTab.EmergencyPhone2Note.get())
-        UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName3Note.get(), self.PersonalTab.EmergencyPhone3Note.get())
-    except AttributeError or IndexError:
-        pass   
-    
-    #try:    
-       # UpdatedPatient.emergencyContactNames[0] = self.PersonalTab.EmergencyName1Note.get()
-       # UpdatedPatient.emergencyContactNumbers[0] = self.PersonalTab.EmergencyPhone1Note.get()
-   # except AttributeError or IndexError:
-        #pass 
 
-    #try:    
-      #  UpdatedPatient.emergencyContactNames[1] = self.PersonalTab.EmergencyName2Note.get()
-       # UpdatedPatient.emergencyContactNumbers[1] = self.PersonalTab.EmergencyPhone2Note.get()
-   # except AttributeError or IndexError:
-        #pass 
+#emergency contacts    
+    try:    
+        UpdatedPatient.emergencyContactNames[0] = (self.PersonalTab.EmergencyName1Note.get())
+        UpdatedPatient.emergencyContactNumbers[0] = (self.PersonalTab.EmergencyPhone1Note.get()) 
+    except IndexError or AttributeError:
+        if(self.PersonalTab.EmergencyName1Note.get() != "" and self.PersonalTab.EmergencyPhone1Note.get() != ""):
+            UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName1Note.get(), self.PersonalTab.EmergencyPhone1Note.get()) 
+   
+    try:    
+        UpdatedPatient.emergencyContactNames[1] = (self.PersonalTab.EmergencyName2Note.get())
+        UpdatedPatient.emergencyContactNumbers[1] = (self.PersonalTab.EmergencyPhone2Note.get()) 
+    except IndexError or AttributeError:
+        if(self.PersonalTab.EmergencyName2Note.get() != "" and self.PersonalTab.EmergencyPhone2Note.get() != ""):
+            UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName2Note.get(), self.PersonalTab.EmergencyPhone2Note.get()) 
     
-   # try:    
-       # UpdatedPatient.emergencyContactNames[2] = self.PersonalTab.EmergencyName3Note.get()
-       # UpdatedPatient.emergencyContactNumbers[2] = self.PersonalTab.EmergencyPhone3Note.get()
-    #except AttributeError or IndexError:
-       # pass   
-    
+    try:    
+        UpdatedPatient.emergencyContactNames[2] = (self.PersonalTab.EmergencyName3Note.get())
+        UpdatedPatient.emergencyContactNumbers[2] = (self.PersonalTab.EmergencyPhone3Note.get()) 
+    except IndexError or AttributeError:
+        if(self.PersonalTab.EmergencyName3Note.get() != "" and self.PersonalTab.EmergencyPhone3Note.get() != ""):
+            UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName3Note.get(), self.PersonalTab.EmergencyPhone3Note.get()) 
+            
+
+
+
+
+#approved visitors
     try:    
         UpdatedPatient.allowedVisitors[0] = (self.PersonalTab.ApprovedVisitor1Note.get())
+    except IndexError or AttributeError:
+        if((self.PersonalTab.ApprovedVisitor1Note.get()) != ""):
+            UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor1Note.get()) 
+            
+    try:    
         UpdatedPatient.allowedVisitors[1] = (self.PersonalTab.ApprovedVisitor2Note.get())
+    except IndexError or AttributeError:
+        if((self.PersonalTab.ApprovedVisitor2Note.get()) != ""):
+            UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor2Note.get()) 
+            
+    try:    
         UpdatedPatient.allowedVisitors[2] = (self.PersonalTab.ApprovedVisitor3Note.get())
+    except IndexError or AttributeError:
+        if((self.PersonalTab.ApprovedVisitor3Note.get()) != ""):
+            UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor3Note.get()) 
+            
+    try:    
         UpdatedPatient.allowedVisitors[3] = (self.PersonalTab.ApprovedVisitor4Note.get())
-    except AttributeError or IndexError:
-        pass   
+    except IndexError or AttributeError:
+        if((self.PersonalTab.ApprovedVisitor4Note.get()) != ""):
+            UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor4Note.get()) 
     
+    
+
     
     try:  
         UpdatedPatient.setInsuranceCarrier(self.BillingTab.InsuranceCarrierNote.get())
