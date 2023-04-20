@@ -5,6 +5,7 @@ import GUI.ScrollablePatientList as spl
 import Data.System
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
+import Data.addNewInfo
 
 
 FONTINFO = ("Courier", 18)
@@ -679,7 +680,11 @@ def finalizePatient(self,UpdatedPatient):
         
         UpdatedPatient.setAmountPaidByInsurance(float(self.BillingTab.AmountPaidbyInsuranceNote.get()))
     except AttributeError or NameError:
-        pass    
+        pass   
+
+
+    # update patient in database
+    Data.addNewInfo.addNewInfo().updatePatient(UpdatedPatient, False)
  
 #Class to create a label with a border around it
 #isList is a boolean flag to mark if the border is a list item, in which it should use the default INFO font

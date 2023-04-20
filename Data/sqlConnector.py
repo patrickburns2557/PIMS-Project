@@ -35,6 +35,14 @@ class myConnector():
         self.myCursor.execute(query, (data,))
         self.connection.commit()
 
+    # get patient id
+    def getID(self, col, data):
+        query = "SELECT patient_ID FROM patients WHERE (" + col + " = '" + str(data) + "');"
+        self.myCursor.execute(query)
+        id = self.fetch()
+        id = int(id[0][0])
+        return id
+
     # returns amount of rows in table
     def checkRowCount(self):
         query = "SELECT COUNT(*) FROM patients"
