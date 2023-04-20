@@ -669,17 +669,20 @@ def finalizePatient(self,UpdatedPatient):
     try:  
         UpdatedPatient.setInsuranceCarrier(self.BillingTab.InsuranceCarrierNote.get())
         UpdatedPatient.setInsuranceAccountNumber(self.BillingTab.InsuranceAccountNumNote.get())
-        UpdatedPatient.setInsuranceGroupNumber(self.BillingTab.InsuranceGroupNumNote.get())
+        UpdatedPatient.setInsuranceGroupNumber(self.BillingTab.InsuranceGroupNumNote.get())   
         
-        
+    except AttributeError or NameError:
+        pass    
+ 
+    try:
         UpdatedPatient.addCharge(self.BillingTab.ChargeNote.get(), float(self.BillingTab.ChargeAmountNote.get()))
         
         UpdatedPatient.setAmountPaid(float(self.BillingTab.AmountPaidNote.get()))
         UpdatedPatient.setAmountOwed(float(self.BillingTab.AmountOwedNote.get()))
         
         UpdatedPatient.setAmountPaidByInsurance(float(self.BillingTab.AmountPaidbyInsuranceNote.get()))
-    except AttributeError or NameError:
-        pass    
+    except ValueError:
+        print("placeholer fix ")
  
 #Class to create a label with a border around it
 #isList is a boolean flag to mark if the border is a list item, in which it should use the default INFO font
