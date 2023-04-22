@@ -732,9 +732,9 @@ def finalizePatient(self):
         
         if self.PersonalTab.ApprovedVisitor1Note.get() != "":
             self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor1Note.get())
-        if self.PersonalTab.ApprovedVisitor1Note.get() != "":
+        if self.PersonalTab.ApprovedVisitor2Note.get() != "":
             self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor2Note.get())
-        if self.PersonalTab.ApprovedVisitor1Note.get() != "":
+        if self.PersonalTab.ApprovedVisitor3Note.get() != "":
             self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor3Note.get())
 
     except AttributeError or NameError or ValueError:

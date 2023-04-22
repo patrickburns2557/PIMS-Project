@@ -5,6 +5,7 @@ import GUI.ScrollablePatientList as spl
 import Data.System
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
+import re
 
 
 FONTINFO = ("Courier", 18)
@@ -474,8 +475,21 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         )
         self.addBedEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-                            
-        
+
+
+
+#validate_phone_number_pattern = "^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$"
+#re.match(validate_phone_number_pattern, "+1 (615) 243-5172")
+                          
+#def validate(u_input):
+   # if(re.search(regex,u_input) and u_input.isalpha):
+        #print(True)
+        #b1.config(state='active')  
+        #return True        
+    #else:
+        #print(False)
+        #b1.config(state='disabled')  
+        #return False          
 
 
 
@@ -485,7 +499,9 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
 class BillingInfoTab(ctk.CTkScrollableFrame):
     def __init__(self, parentWidget, patient):
         super().__init__(parentWidget, orientation= "horizontal")
-        
+       
+        vcmd = (parentWidget.register(self.validate),
+                '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         
         self.addNoteFrame = ctk.CTkFrame(
             self
@@ -508,6 +524,8 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addInsurancePolicyAccountEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
+            validate = 'key',
+            validatecommand = vcmd,
             width=350,
             textvariable=self.InsuranceAccountNumNote
         )
@@ -519,6 +537,8 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addInsuranceGroupEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
+            validate = 'key',
+            validatecommand = vcmd,
             width=350,
             textvariable=self.InsuranceGroupNumNote
         )
@@ -547,6 +567,8 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addChargeAmountEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
+            validate = 'key',
+            validatecommand = vcmd,
             width=350,
             textvariable=self.ChargeAmountNote
         )
@@ -559,6 +581,8 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addAmountPaidEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
+            validate = 'key',
+            validatecommand = vcmd,
             width=350,
             textvariable=self.AmountPaidNote
         )
@@ -570,6 +594,8 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addAmountPaidInsuranceEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
+            validate = 'key',
+            validatecommand = vcmd,
             width=350,
             textvariable=self.AmountPaidbyInsuranceNote        
 
@@ -581,12 +607,40 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addChargeOwedEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
+            validate = 'key',
+            validatecommand = vcmd,
             width=350,
             textvariable=self.AmountOwedNote
         )
         self.addChargeOwedEntry.grid(row=10, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
+    def validate(self, action, index, value_if_allowed,
+                       prior_value, text, validation_type, trigger_type, widget_name):
+        if value_if_allowed:
+            try:
+                float(value_if_allowed)
+                return True
+            except ValueError:
+                return False
+        else:
+            return False
+    def validate_float(self, action, index, value_if_allowed,
+        prior_value, text, validation_type, trigger_type, widget_name):
+        # action=1 -> insert
+        if(action=='1'):
+            if text in '0123456789.-+':
+                try:
+                    float(value_if_allowed)
+                    return True
+                except ValueError:
+                    return False
+            else:
+                return False
+        else:
+            return True
+        
+    
 def finalizePatient(self,UpdatedPatient):
     try:
         UpdatedPatient.setFirstName(self.PersonalTab.FirstNameNote.get())
