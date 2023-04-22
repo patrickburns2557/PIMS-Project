@@ -5,7 +5,7 @@ import GUI.ScrollablePatientList as spl
 import Data.System 
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
-import Data.addNewInfo
+import Data.validateInfo
 
 FONTINFO = ("Courier", 18)
 FONTINFOOLD = ("Courier")
@@ -778,7 +778,13 @@ def finalizePatient(self):
     
     #try:
     Data.System.getPatientList().append(self.NewPatient)
-    Data.addNewInfo.addNewInfo().updatePatient(self.NewPatient, True)
+
+    # validate patient info before adding to database
+    validate = Data.validateInfo.validateInfo()
+    validate.checkEntry(self.NewPatient)
+    if validate.checkValidity(self.NewPatient, True) == False:
+        print(validate.checkIssue())
+
     MainWindow.switchPatientList(Data.System.getPatientList())
    # except AttributeError or NameError:
         #pass        
