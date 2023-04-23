@@ -1,10 +1,17 @@
 #!/usr/bin/python
 from Data.Printer import *
 from Data.dataClasses import *
+import GUI.MainWindow
+from Data.System import *
 
-#def test_getContext():
-#    newUser = User()
-#    loginSystem.login(newUser, "test", "test")
-#    p = Printer()
-#    assert p.__getContext() == 5
-    
+def test_print():
+    loginSystem.login(System.TheSystem.user, "test", "test")
+    GUI.MainWindow.switchPatientList(System.TheSystem.patientList)
+    initPrint(0)
+    f = open(REPORT_NAME, 'r')
+    lines = f.readlines()
+
+    name = lines[5].split()[1]
+    print(name)
+    assert name == "Benjamin"
+        
