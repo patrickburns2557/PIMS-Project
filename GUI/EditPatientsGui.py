@@ -75,7 +75,7 @@ class EditPatientView(ctk.CTkFrame):
             font=FONTBUTTON,
             width=100,
             height=40,
-            command=lambda:[finalizePatient(self,CurrentPatient), MainWindow.switchDetailedView(CurrentPatient)]
+            command=lambda:finalizePatient(self,CurrentPatient)
        )
         self.SaveButton.grid(row=0, column=4, padx=5, pady=5)    
     
@@ -589,6 +589,9 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
 
 
 def finalizePatient(self,UpdatedPatient):
+    
+    patientCopy = UpdatedPatient
+
     try:
         UpdatedPatient.setFirstName(self.PersonalTab.FirstNameNote.get())
         UpdatedPatient.setMiddleName(self.PersonalTab.MiddleNameNote.get())
@@ -686,8 +689,15 @@ def finalizePatient(self,UpdatedPatient):
     # ensure no information exceeds database character limit
     validate = Data.validateInfo.validateInfo()
     validate.checkEntry(UpdatedPatient)
-    if validate.checkValidity(UpdatedPatient, False) == False:
-        print(validate.checkIssue())
+    truthValid, strIssue = validate.checkValidity(UpdatedPatient, False)
+    if truthValid == False:
+        self.invalidLabel = ctk.CTkLabel(self, text=strIssue, font=("Courier", 18, "bold"))
+        self.invalidLabel.place(relx = 0.5, rely = 0.11, anchor = 'center')
+        UpdatedPatient = patientCopy
+    else:
+        MainWindow.switchDetailedView(UpdatedPatient)
+        MainWindow.switchPatientList(Data.System.getPatientList())
+    
  
 #Class to create a label with a border around it
 #isList is a boolean flag to mark if the border is a list item, in which it should use the default INFO font

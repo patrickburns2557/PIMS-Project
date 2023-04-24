@@ -776,16 +776,18 @@ def finalizePatient(self):
     except AttributeError or NameError or ValueError:
         pass 
     
-    #try:
-    Data.System.getPatientList().append(self.NewPatient)
 
-    # validate patient info before adding to database
+    # ensure no information exceeds database character limit
     validate = Data.validateInfo.validateInfo()
     validate.checkEntry(self.NewPatient)
-    if validate.checkValidity(self.NewPatient, True) == False:
-        print(validate.checkIssue())
+    truthValid, strIssue = validate.checkValidity(self.NewPatient, True)
+    if truthValid == False:
+        self.invalidLabel = ctk.CTkLabel(self, text=strIssue, font=("Courier", 18, "bold"))
+        self.invalidLabel.place(relx = 0.5, rely = 0.11, anchor = 'center')
+    else:
+        Data.System.getPatientList().append(self.NewPatient)
+        MainWindow.switchPatientList(Data.System.getPatientList())
 
-    MainWindow.switchPatientList(Data.System.getPatientList())
    # except AttributeError or NameError:
         #pass        
     #try:

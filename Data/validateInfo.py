@@ -10,6 +10,8 @@ class validateInfo():
        self.issue = ""
 
     def checkEntry(self, patient):
+
+        # check character length of incoming values
         
         if len(patient.firstName) > 20:
             self.issue = "First name exceeds character limit."
@@ -44,17 +46,23 @@ class validateInfo():
         elif len(patient.location[3]) > 10:
             self.issue = "Bed number exceeds character limit."
 
-        elif len(patient.emergencyContactNames[0]) > 50:
-            self.issue = "Emergency contact 1 name exceeds character limit."
+        elif len(patient.emergencyContactNames) >= 1 and len(patient.emergencyContactNames[0]) > 50:
+            self.issue = "Emergency contact 1 name exceeds character limit"
 
-        elif len(patient.emergencyContactNames[1]) > 50:
-            self.issue = "Emergency contact 2 name exceeds character limit."
+        elif len(patient.emergencyContactNames) >= 2 and len(patient.emergencyContactNames[1]) > 50:
+            self.issue = "Emergency contact 2 name exceeds character limit"
 
-        elif len(patient.emergencyContactNumbers[0]) > 20:
-            self.issue = "Emergency contact 1 number exceeds character limit."
+        elif len(patient.emergencyContactNames) == 3 and len(patient.emergencyContactNames[2]) > 50:
+            self.issue = "Emergency contact 3 name exceeds character limit"
 
-        elif len(patient.emergencyContactNames[1]) > 20:
-            self.issue = "Emergency contact 2 number exceeds character limit."
+        elif len(patient.emergencyContactNumbers) >= 1 and len(patient.emergencyContactNumbers[0]) > 20:
+            self.issue = "Emergency contact 1 number exceeds character limit"
+
+        elif len(patient.emergencyContactNumbers) >= 2 and len(patient.emergencyContactNumbers[1]) > 20:
+            self.issue = "Emergency contact 2 number exceeds character limit"
+
+        elif len(patient.emergencyContactNumbers) == 3 and len(patient.emergencyContactNumbers[2]) > 20:
+            self.issue = "Emergency contact 3 number exceeds character limit"
 
         elif len(patient.numAllowedVisitors) > 3:
             self.issue = "Max simultaneous visitors exceeds character limit."
@@ -77,20 +85,57 @@ class validateInfo():
         elif len(patient.insuranceGroupNumber) > 20:
             self.issue = "Insurance group number exceeds character limit."
 
+        # make sure no letters or invalid symbols are entered for phone numbers
 
-    
+        if len(patient.emergencyContactNumbers) != 0:
+            for num in patient.emergencyContactNumbers[0]:
+                num = ord(num) 
+                if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+                    self.issue = "Invalid entry for emergency number 1"
+                    break
+
+        if len(patient.emergencyContactNumbers) == 2:
+            for num in patient.emergencyContactNumbers[1]:
+                num = ord(num) 
+                if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+                    self.issue = "Invalid entry for emergency number 2"
+                    break
+
+        if len(patient.emergencyContactNumbers) == 3:
+            for num in patient.emergencyContactNumbers[2]:
+                num = ord(num) 
+                if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+                    self.issue = "Invalid entry for emergency number 3"
+                    break
+
+        for num in patient.mobilePhone:
+            num = ord(num) 
+            if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+                self.issue = "Invalid entry for mobile phone number"
+                break
+
+        for num in patient.homePhone:
+            num = ord(num) 
+            if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+                self.issue = "Invalid entry for home phone number"
+                break
+
+        for num in patient.workPhone:
+            num = ord(num) 
+            if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+                self.issue = "Invalid entry for work phone number"
+                break
+
     # if no issues found in info, add to database and return true
     def checkValidity(self, patient, new):
         if self.issue == "":
             if new == True:
+                # add new patient to database
                 Data.addNewInfo.addNewInfo().updatePatient(patient, True)
             else:
+                # update existing patient
                 Data.addNewInfo.addNewInfo().updatePatient(patient, False)
-            return True
+            return True, self.issue
         
         else:
-            return False
-        
-
-    def checkIssue(self):
-        return self.issue
+            return False, self.issue

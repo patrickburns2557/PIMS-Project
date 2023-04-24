@@ -31,11 +31,13 @@ class addNewInfo():
         self.db.update("work_phone", patient.workPhone, self.ID)
         self.db.update("mobile_phone", patient.mobilePhone, self.ID)
 
-        if patient.emergencyContactNames:
+        if len(patient.emergencyContactNames) != 0:
             self.db.update("emergency1_name", patient.emergencyContactNames[0], self.ID)
             self.db.update("emergency1_number", patient.emergencyContactNumbers[0], self.ID)
-            self.db.update("emergency2_name", patient.emergencyContactNames[1], self.ID)
-            self.db.update("emergency2_number", patient.emergencyContactNumbers[1], self.ID)
+
+            if len(patient.emergencyContactNames) >= 2:
+                self.db.update("emergency2_name", patient.emergencyContactNames[1], self.ID)
+                self.db.update("emergency2_number", patient.emergencyContactNumbers[1], self.ID)
 
         # update location info
 
@@ -48,10 +50,10 @@ class addNewInfo():
 
         self.visitors = patient.allowedVisitors
         self.visitorString = ""
-        for self.visitor in self.visitors:
-            if self.visitor != self.visitors[0]:
+        for i in range (len(self.visitors)):
+            if i != 0:
                 self.visitorString += "\n"
-            self.visitorString = self.visitorString + self.visitor
+            self.visitorString = self.visitorString + self.visitors[i]
 
         self.db.update("allowed_visitor_names", self.visitorString, self.ID)
 
@@ -63,20 +65,20 @@ class addNewInfo():
 
         self.chargeNames = patient.listCharges
         self.nameString = ""
-        for self.name in self.chargeNames:
-            if self.name != self.chargeNames[0]:
+        for i in range (len(self.chargeNames)):
+            if i != 0:
                 self.nameString += "\n"
-            self.nameString = self.nameString + self.name
+            self.nameString = self.nameString + self.chargeNames[i]
 
         self.db.update("billing_items_name", self.nameString, self.ID)
         
         self.chargeAmounts = patient.listChargesAmount
         self.amountString = ""
-        for self.amount in self.chargeAmounts:
-            if self.amount != self.chargeAmounts[0]:
+        for i in range (len(self.chargeAmounts)):
+            if i != 0:
                 self.amountString += "\n"
-            self.amount = str(self.amount)
-            self.amountString = self.amountString + self.amount
+            self.chargeAmounts[i] = str(self.chargeAmounts[i])
+            self.amountString = self.amountString + self.chargeAmounts[i]
 
         self.db.update("billing_items_amount", self.amountString, self.ID)
 
@@ -97,54 +99,54 @@ class addNewInfo():
 
             self.doctorNotes = patient.doctorNotes
             self.notesString = ""
-            for self.note in self.doctorNotes:
-                if self.note != self.doctorNotes[0]:
+            for i in range (len(self.doctorNotes)):
+                if i != 0:
                     self.notesString += "\n"
-                self.notesString = self.notesString + self.note
+                self.notesString = self.notesString + self.doctorNotes[i]
 
             self.db.update("doctor_treatment_notes", self.notesString, self.ID)
 
             self.nurseNotes = patient.nurseNotes
             self.notesString = ""
-            for self.note in self.nurseNotes:
-                if self.note != self.nurseNotes[0]:
+            for i in range (len(self.nurseNotes)):
+                if i != 0:
                     self.notesString += "\n"
-                self.notesString = self.notesString + self.note
+                self.notesString = self.notesString + self.nurseNotes[i]
 
             self.db.update("nurse_treatment_notes", self.notesString, self.ID)
 
             self.prescriptionName = patient.prescriptionNames
             self.nameString = ""
-            for self.name in self.prescriptionName:
-                if self.name != self.prescriptionName[0]:
+            for i in range (len(self.prescriptionName)):
+                if i != 0:
                     self.nameString += "\n"
-                self.nameString = self.nameString + self.name
+                self.nameString = self.nameString + self.prescriptionName[i]
 
             self.db.update("prescription_name", self.nameString, self.ID)
 
             self.prescriptionAmount = patient.prescriptionAmount
             self.amountString = ""
-            for self.amount in self.prescriptionAmount:
-                if self.amount != self.prescriptionAmount[0]:
+            for i in range (len(self.prescriptionAmount)):
+                if i != 0:
                     self.amountString += "\n"
-                self.amountString = self.amountString + self.amount
+                self.amountString = self.amountString + self.prescriptionAmount[i]
 
             self.db.update("prescription_amount", self.amountString, self.ID)
 
             self.prescriptionSchedule = patient.prescriptionSchedule
             self.scheduleString = ""
-            for self.schedule in self.prescriptionSchedule:
-                if self.schedule != self.prescriptionSchedule[0]:
+            for i in range (len(self.prescriptionSchedule)):
+                if i != 0:
                     self.scheduleString += "\n"
-                self.scheduleString = self.scheduleString + self.schedule
+                self.scheduleString = self.scheduleString + self.prescriptionSchedule[i]
 
             self.db.update("prescription_schedule", self.scheduleString, self.ID)
 
             self.procedures = patient.scheduledProcedures
             self.procedureString = ""
-            for self.procedure in self.procedures:
-                if self.procedure != self.procedures[0]:
+            for i in range (len(self.procedures)):
+                if i != 0:
                     self.procedureString += "\n"
-                self.procedureString = self.procedureString + self.procedure
+                self.procedureString = self.procedureString + self.procedures[i]
 
             self.db.update("scheduled_procedures", self.procedureString, self.ID)

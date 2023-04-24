@@ -56,11 +56,10 @@ class patientList():
                 # allowed visitor amount and names
                 patients.setNumAllowedVisitors((setData("allowed_visitor_amount")[i])[0])
                 visitors = (setData("allowed_visitor_names")[i][0]).split('\n')
-                num = int(patients.numAllowedVisitors)
 
-                for j in range(num):
-                    patients.addAllowedVisitor(visitors[j])
-
+                if len(visitors) != 0:
+                    for visitor in visitors:
+                        patients.addAllowedVisitor(visitor)
 
                 # information that everyone but volunteers may access
                 if userType == 0 or userType == 1 or userType == 2:
@@ -88,9 +87,10 @@ class patientList():
                     names = (setData("billing_items_name")[i][0]).split('\n')
                     amounts = (setData("billing_items_amount")[i][0]).split('\n')
 
-                    for j in range(len(names)):
-                        amounts[j] = float(amounts[j])
-                        patients.addCharge(names[j], amounts[j])
+                    if len(names) != 0 and len(amounts) != 0:
+                        for j in range(len(names)):
+                            amounts[j] = float(amounts[j])
+                            patients.addCharge(names[j], amounts[j])
 
                     patients.setAmountOwed(float((setData("amount_owed")[i])[0]))
                     patients.setAmountPaid(float((setData("amount_paid")[i])[0]))
@@ -122,15 +122,17 @@ class patientList():
                     prescriptionAmounts = (setData("prescription_amount")[i][0]).split('\n')
                     prescriptionTime = (setData("prescription_schedule")[i][0]).split('\n')
 
-                    for j in range(len(prescriptionName)):
-                        patients.addPrescription(prescriptionName[j], prescriptionAmounts[j], prescriptionTime[j])
+                    if len(prescriptionName) != 0 and len(prescriptionAmounts) != 0 and len(prescriptionTime) != 0:
+                        for j in range(len(prescriptionName)):
+                            patients.addPrescription(prescriptionName[j], prescriptionAmounts[j], prescriptionTime[j])
 
                     # schedules procedures info
 
                     procedures = (setData("scheduled_procedures")[i][0]).split(', ')
 
-                    for j in range(len(procedures)):
-                        patients.addScheduledProcedure(procedures[j])
+                    if len(procedures) != 0:
+                        for j in range(len(procedures)):
+                            patients.addScheduledProcedure(procedures[j])
 
 
                 # list of all patient objects
