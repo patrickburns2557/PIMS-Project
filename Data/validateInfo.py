@@ -1,4 +1,5 @@
 import Data.addNewInfo
+import re
 
 # class to ensure all information entered in add/edit patient is valid
 
@@ -87,44 +88,35 @@ class validateInfo():
 
         # make sure no letters or invalid symbols are entered for phone numbers
 
-        if len(patient.emergencyContactNumbers) != 0:
-            for num in patient.emergencyContactNumbers[0]:
-                num = ord(num) 
-                if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
-                    self.issue = "Invalid entry for emergency number 1"
-                    break
+        if len(patient.emergencyContactNumbers) != 0 and patient.emergencyContactNumbers[0] != "":
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.emergencyContactNumbers[0])
+            if check == None:
+                self.issue = "Invalid entry for emergency number 1"
 
-        if len(patient.emergencyContactNumbers) == 2:
-            for num in patient.emergencyContactNumbers[1]:
-                num = ord(num) 
-                if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
-                    self.issue = "Invalid entry for emergency number 2"
-                    break
+        if len(patient.emergencyContactNumbers) >= 2 and patient.emergencyContactNumbers[1] != "":
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.emergencyContactNumbers[1])
+            if check == None:
+                self.issue = "Invalid entry for emergency number 2"
 
-        if len(patient.emergencyContactNumbers) == 3:
-            for num in patient.emergencyContactNumbers[2]:
-                num = ord(num) 
-                if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
-                    self.issue = "Invalid entry for emergency number 3"
-                    break
+        if len(patient.emergencyContactNumbers) >= 3 and patient.emergencyContactNumbers[2] != "":
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.emergencyContactNumbers[2])
+            if check == None:
+                self.issue = "Invalid entry for emergency number 3"
 
-        for num in patient.mobilePhone:
-            num = ord(num) 
-            if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+        if patient.mobilePhone != "":
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.mobilePhone)
+            if check == None:
                 self.issue = "Invalid entry for mobile phone number"
-                break
 
-        for num in patient.homePhone:
-            num = ord(num) 
-            if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+        if patient.homePhone != "":
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.homePhone)
+            if check == None:
                 self.issue = "Invalid entry for home phone number"
-                break
 
-        for num in patient.workPhone:
-            num = ord(num) 
-            if (num < 48 or num > 57) and (num != 40 and num != 41 and num != 45):
+        if patient.workPhone != "":
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.workPhone)
+            if check == None:
                 self.issue = "Invalid entry for work phone number"
-                break
 
     # if no issues found in info, add to database and return true
     def checkValidity(self, patient, new):

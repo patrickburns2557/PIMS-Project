@@ -50,8 +50,12 @@ class patientList():
                 patients.setLocation(location)
 
                 # emergency contacts
-                patients.addEmergencyContact((setData("emergency1_name")[i][0]), (setData("emergency1_number")[i][0]))
-                patients.addEmergencyContact((setData("emergency2_name")[i][0]), (setData("emergency2_number")[i][0]))
+                if (setData("emergency1_name")[i][0]) != None and (setData("emergency1_number")[i][0]) != None:
+                    patients.addEmergencyContact((setData("emergency1_name")[i][0]), (setData("emergency1_number")[i][0]))
+                if (setData("emergency2_name")[i][0]) != None and (setData("emergency2_number")[i][0]) != None:
+                    patients.addEmergencyContact((setData("emergency2_name")[i][0]), (setData("emergency2_number")[i][0]))
+                if (setData("emergency3_name")[i][0]) != None and (setData("emergency3_number")[i][0]) != None:
+                    patients.addEmergencyContact((setData("emergency3_name")[i][0]), (setData("emergency3_number")[i][0]))
 
                 # allowed visitor amount and names
                 patients.setNumAllowedVisitors((setData("allowed_visitor_amount")[i])[0])

@@ -31,13 +31,17 @@ class addNewInfo():
         self.db.update("work_phone", patient.workPhone, self.ID)
         self.db.update("mobile_phone", patient.mobilePhone, self.ID)
 
-        if len(patient.emergencyContactNames) != 0:
+        if len(patient.emergencyContactNames) != 0 and len(patient.emergencyContactNumbers) != 0:
             self.db.update("emergency1_name", patient.emergencyContactNames[0], self.ID)
             self.db.update("emergency1_number", patient.emergencyContactNumbers[0], self.ID)
 
-            if len(patient.emergencyContactNames) >= 2:
-                self.db.update("emergency2_name", patient.emergencyContactNames[1], self.ID)
-                self.db.update("emergency2_number", patient.emergencyContactNumbers[1], self.ID)
+        if len(patient.emergencyContactNames) >= 2 and len(patient.emergencyContactNumbers) >= 2:
+            self.db.update("emergency2_name", patient.emergencyContactNames[1], self.ID)
+            self.db.update("emergency2_number", patient.emergencyContactNumbers[1], self.ID)
+
+        if len(patient.emergencyContactNames) >= 3 and len(patient.emergencyContactNumbers) >= 3:
+            self.db.update("emergency3_name", patient.emergencyContactNames[2], self.ID)
+            self.db.update("emergency3_number", patient.emergencyContactNumbers[2], self.ID)
 
         # update location info
 
