@@ -66,7 +66,7 @@ def switchPatientCreationView(user):
 
     MainWindow.window.currentView = CreateGui.NewPatientView(MainWindow.window, user)
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
-    MainWindow.viewType = 0
+    MainWindow.viewType = 2
     
  #view to go to EditPatientWindow window 
 def switchEditPatientView(user):
@@ -74,7 +74,7 @@ def switchEditPatientView(user):
 
     MainWindow.window.currentView = EditGui.EditPatientView(MainWindow.window, user, getCurrentPatient())
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
-    MainWindow.viewType = 0
+    MainWindow.viewType = 3
 
 
 # Function to allow other classes to change the current view in the window to LoginView
