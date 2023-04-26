@@ -5,6 +5,7 @@ import GUI.ScrollablePatientList as spl
 import Data.System 
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
+import Data.validateInfo
 
 FONTINFO = ("Courier", 18)
 FONTINFOOLD = ("Courier")
@@ -775,9 +776,18 @@ def finalizePatient(self):
     except AttributeError or NameError or ValueError:
         pass 
     
-    #try:
-    Data.System.getPatientList().append(self.NewPatient)
-    MainWindow.switchPatientList(Data.System.getPatientList())
+
+    # ensure no information exceeds database character limit
+    validate = Data.validateInfo.validateInfo()
+    validate.checkEntry(self.NewPatient)
+    truthValid, strIssue = validate.checkValidity(self.NewPatient, True)
+    if truthValid == False:
+        self.invalidLabel = ctk.CTkLabel(self, text=strIssue, font=("Courier", 18, "bold"))
+        self.invalidLabel.place(relx = 0.5, rely = 0.11, anchor = 'center')
+    else:
+        Data.System.getPatientList().append(self.NewPatient)
+        MainWindow.switchPatientList(Data.System.getPatientList())
+
    # except AttributeError or NameError:
         #pass        
     #try:

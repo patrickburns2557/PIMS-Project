@@ -11,15 +11,6 @@ class System():
         self.patientList = []
         self.user = User()
 
-        #If database fails to load, load placeholder data instead
-        try:
-            patientCreator = Data.assignData.patientList()
-            patientCreator.createList()
-            self.patientList = patientCreator.getList()
-        except:
-            print("Loading placeholder data instead.")
-            self.loadPlaceholderData()
-
     def loadPlaceholderData(self):
         p1 = Patient()
         p1.setFirstName("Barry")
@@ -89,6 +80,16 @@ def initialize():
 #Returns current master list of patients
 def getPatientList():
     return System.TheSystem.patientList
+
+def loadDatabase():
+    #If database fails to load, load placeholder data instead
+        try:
+            patientCreator = Data.assignData.patientList()
+            patientCreator.createList()
+            System.TheSystem.patientList = patientCreator.getList()
+        except:
+            print("Loading placeholder data instead.")
+            System.TheSystem.loadPlaceholderData()
 
 #Returns the User object for the currently logged in user
 def getUser():

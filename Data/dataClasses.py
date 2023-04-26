@@ -8,6 +8,7 @@ class Patient():
     def __init__(self):
         
         #PERSONAL INFORMATION
+        self.ID = ""
         self.firstName = ""
         self.middleName = ""
         self.lastName = ""
@@ -58,6 +59,9 @@ class Patient():
     ################################
     # PERSONAL INFORMATION METHODS
     ################################
+    def setID(self, ID):
+        self.ID = ID
+
     def setFirstName(self, firstName):
         self.firstName = firstName
     
