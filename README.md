@@ -36,7 +36,7 @@ PIMS is an application for hospitals that easily lets doctors, nurses, office st
 
 ## Source Code
 
-- Github: <https://github.com/patrickburns2557/CS499Project> 
+- Github: <https://github.com/patrickburns2557/PIMS-Project> 
 
 - Python Version
 
