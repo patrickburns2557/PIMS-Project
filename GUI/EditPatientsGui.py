@@ -22,12 +22,11 @@ class EditPatientView(ctk.CTkFrame):
         #self.NewPatient = Patient()
         
         
-         #first tab shown will be the personal info tab
+        #first tab shown will be the personal info tab
         self.PersonalTab = PersonalInfoTab(self, CurrentPatient)
+        self.BillingTab = BillingInfoTab(self, CurrentPatient)
+        #first tab shown will be the personal info tab
         self.shownTab = self.PersonalTab
-        self.in_personal = 1
-        self.in_billing = 0
-        
         
         
         self.addNoteFrame = ctk.CTkFrame(
@@ -101,19 +100,10 @@ class EditPatientView(ctk.CTkFrame):
         except AttributeError or NameError:
             pass
         
-        #Destroy the current tab before loading the new one
-        for i in self.shownTab.winfo_children():
-            i.destroy()
-        self.shownTab.destroy()
-        
-        if(self.in_billing == 1 ):
-            self.BillingTab = self.shownTab
-
-        self.PersonalTab = PersonalInfoTab(self, CurrentPatient)
+        #Remove the previous tab to show the new one
+        self.shownTab.grid_remove()
         self.shownTab = self.PersonalTab
         self.shownTab.grid(row=1, column=0, sticky="news")
-        self.in_personal = 1
-        self.in_billing = 0
 
 
  
@@ -134,19 +124,10 @@ class EditPatientView(ctk.CTkFrame):
         except AttributeError or NameError:
             pass
 
-        #Destroy the current tab before loading the new one
-        for i in self.shownTab.winfo_children():
-            i.destroy()
-        self.shownTab.destroy()
-        
-        if(self.in_personal == 1 ):
-            self.PersonalTab = self.shownTab
-        
-        self.BillingTab = BillingInfoTab(self, CurrentPatient)
+        #Remove the previous tab to show the new one
+        self.shownTab.grid_remove()
         self.shownTab = self.BillingTab
         self.shownTab.grid(row=1, column=0, sticky="news")
-        self.in_billing = 1
-        self.in_personal = 0
         
         
 #############################################
