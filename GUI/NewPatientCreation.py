@@ -19,6 +19,7 @@ class NewPatientView(ctk.CTkFrame):
         super().__init__(parentWidget)
         
         self.NewPatient = Patient()
+
         
         self.buttonFrame = ctk.CTkFrame(self)        
         self.SaveButton = ctk.CTkButton(
@@ -98,11 +99,10 @@ class NewPatientView(ctk.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
         
     def turnOnSave(self):
-        #print("hsdfsd " + str(self))
         self.SaveButton.configure(state = "normal")
             
     def turnOffSave(self):
-            self.SaveButton.configure(state = "disabled")       
+        self.SaveButton.configure(state = "disabled")       
         
     #Functions to switch between the tabs using the buttons
     def switchPersonal(self):
@@ -184,6 +184,15 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         vcmd = (self.register(self.validatephone), '%P', '%W')
         
         self.parentWidget = parentWidget
+        
+        
+        self.valid1 = False  
+        self.valid2 = False
+        self.valid3 = False     
+        self.valid4 = False
+        self.valid5 = False
+        self.valid6 = False          
+        
         
         self.label_error = ttk.Label(self, foreground='red')
         self.label_error.grid(row=8, column=8, sticky=tk.W, padx=5)   
@@ -489,23 +498,30 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
             self.invalidePhone(EntryName)
             return False
         
-        self.parentWidget.turnOnSave()  
         try:
             if(EntryName.find('8') > -1):
+                self.valid1 = True
                 self.addMobilePhoneEntry.configure(fg_color = "white")
             if(EntryName.find('9') > -1):
+                self.valid2 = True
                 self.addHomePhoneEntry.configure(fg_color = "white")
             if(EntryName.find('10') > -1):
+                self.valid3 = True
                 self.addWorkPhoneEntry.configure(fg_color = "white")
             if(EntryName.find('12') > -1):
+                self.valid4 = True
                 self.addEmergencyPhoneEntry1.configure(fg_color = "white")
             if(EntryName.find('14') > -1):
+                self.valid5 = True
                 self.addEmergencyPhoneEntry2.configure(fg_color = "white")
             if(EntryName.find('16') > -1):
+                self.valid6 = True
                 self.addEmergencyPhoneEntry3.configure(fg_color = "white")
         except AttributeError:
             pass
         self.label_error.configure(text = "")
+        if(self.valid1 ==True and self.valid2 ==True and self.valid3 ==True and self.valid4 ==True and self.valid5 ==True and self.valid6 ==True):
+            self.parentWidget.turnOnSave() 
         return True
 
 
@@ -514,16 +530,22 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.parentWidget.turnOffSave()
         try:
             if(EntryName.find('8') > -1):
+                self.valid1 = False
                 self.addMobilePhoneEntry.configure(fg_color = "red")
             if(EntryName.find('9') > -1):
+                self.valid2 = False
                 self.addHomePhoneEntry.configure(fg_color = "red")
             if(EntryName.find('10') > -1):
+                self.valid3 = False
                 self.addWorkPhoneEntry.configure(fg_color = "red")
             if(EntryName.find('12') > -1):
+                self.valid4 = False
                 self.addEmergencyPhoneEntry1.configure(fg_color = "red")
             if(EntryName.find('14') > -1):
+                self.valid5 = False
                 self.addEmergencyPhoneEntry2.configure(fg_color = "red")
             if(EntryName.find('16') > -1):
+                self.valid6 = False
                 self.addEmergencyPhoneEntry3.configure(fg_color = "red")
         except AttributeError:
             pass                            
