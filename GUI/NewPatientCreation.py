@@ -20,6 +20,17 @@ class NewPatientView(ctk.CTkFrame):
         
         self.NewPatient = Patient()
         
+        self.buttonFrame = ctk.CTkFrame(self)        
+        self.SaveButton = ctk.CTkButton(
+            self.buttonFrame,
+            text="Save Patient",
+            font=FONTBUTTON,
+            width=100,
+            height=40,
+            command=lambda:finalizePatient(self,)
+       )
+        self.SaveButton.grid(row=0, column=4, padx=5, pady=5)        
+        
         
         #initialize all tabs to switch between them
         self.PersonalTab = PersonalInfoTab(self, self.NewPatient)
@@ -34,7 +45,6 @@ class NewPatientView(ctk.CTkFrame):
         )
         #Create frame and buttons for switching tabs
         #Will need to setup later to only show relavant tabs based on which user is logged in.
-        self.buttonFrame = ctk.CTkFrame(self)
         self.personalButton = ctk.CTkButton(
             self.buttonFrame,
             text="Personal Information",
@@ -80,22 +90,19 @@ class NewPatientView(ctk.CTkFrame):
        )
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)
     
-        self.SaveButton = ctk.CTkButton(
-            self.buttonFrame,
-            text="SavePatient",
-            font=FONTBUTTON,
-            width=100,
-            height=40,
-            command=lambda:finalizePatient(self,)
-       )
-        self.SaveButton.grid(row=0, column=4, padx=5, pady=5)
+
     
         self.buttonFrame.grid(row=0, column=0, sticky="news", padx=8, pady=8)
         self.shownTab.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         
-        
+    def turnOnSave(self):
+        #print("hsdfsd " + str(self))
+        self.SaveButton.configure(state = "normal")
+            
+    def turnOffSave(self):
+            self.SaveButton.configure(state = "disabled")       
         
     #Functions to switch between the tabs using the buttons
     def switchPersonal(self):
@@ -176,6 +183,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
         vcmd = (self.register(self.validatephone), '%P', '%W')
         
+        self.parentWidget = parentWidget
         
         self.label_error = ttk.Label(self, foreground='red')
         self.label_error.grid(row=8, column=8, sticky=tk.W, padx=5)   
@@ -264,7 +272,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMobilePhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
+            validate='focus',
             validatecommand = vcmd,
             width=350,
             textvariable=self.MobilePhoneNote
@@ -278,7 +286,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addHomePhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
+            validate='focus',
             validatecommand = vcmd,
             width=350,
             textvariable=self.HomePhoneNote
@@ -291,7 +299,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addWorkPhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
+            validate='focus',
             validatecommand = vcmd,
             width=350,
             textvariable=self.WorkPhoneNote
@@ -316,7 +324,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry1 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
+            validate='focus',
             validatecommand = vcmd,
             width=350,
             textvariable=self.EmergencyPhone1Note
@@ -342,7 +350,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry2 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
+            validate='focus',
             validatecommand = vcmd,
             width=350,
             textvariable=self.EmergencyPhone2Note
@@ -367,7 +375,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry3 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
+            validate='focus',
             validatecommand = vcmd,
             width=350,
             textvariable=self.EmergencyPhone3Note
@@ -467,7 +475,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         )
         self.addBedEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-    def validatephone(self, value, W):
+    def validatephone(self, value, EntryName):
         """
         Validat the phone entry
         :param value:
@@ -478,21 +486,22 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         pattern = "^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$"
         #pattern = "^(+\d{1,2}\s?)?(?\d{3})?[\s.-]?\d{3}[\s.-]?\d{4}$"
         if re.fullmatch(pattern, value) is None:
-            self.invalidePhone(W)
+            self.invalidePhone(EntryName)
             return False
         
+        self.parentWidget.turnOnSave()  
         try:
-            if(W == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry8.!entry"):
+            if(EntryName.find('8') > -1):
                 self.addMobilePhoneEntry.configure(fg_color = "white")
-            if(W == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry9.!entry"):
+            if(EntryName.find('9') > -1):
                 self.addHomePhoneEntry.configure(fg_color = "white")
-            if(W == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry10.!entry"):
+            if(EntryName.find('10') > -1):
                 self.addWorkPhoneEntry.configure(fg_color = "white")
-            if(W == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry12.!entry"):
+            if(EntryName.find('12') > -1):
                 self.addEmergencyPhoneEntry1.configure(fg_color = "white")
-            if(W == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry14.!entry"):
+            if(EntryName.find('14') > -1):
                 self.addEmergencyPhoneEntry2.configure(fg_color = "white")
-            if(W == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry16.!entry"):
+            if(EntryName.find('16') > -1):
                 self.addEmergencyPhoneEntry3.configure(fg_color = "white")
         except AttributeError:
             pass
@@ -502,18 +511,19 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
 
     def invalidePhone(self, EntryName):
         self.label_error.configure(text = "Please enter valid Phone Numbers")
+        self.parentWidget.turnOffSave()
         try:
-            if(EntryName == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry8.!entry"):
+            if(EntryName.find('8') > -1):
                 self.addMobilePhoneEntry.configure(fg_color = "red")
-            if(EntryName == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry9.!entry"):
+            if(EntryName.find('9') > -1):
                 self.addHomePhoneEntry.configure(fg_color = "red")
-            if(EntryName == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry10.!entry"):
+            if(EntryName.find('10') > -1):
                 self.addWorkPhoneEntry.configure(fg_color = "red")
-            if(EntryName == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry12.!entry"):
+            if(EntryName.find('12') > -1):
                 self.addEmergencyPhoneEntry1.configure(fg_color = "red")
-            if(EntryName == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry14.!entry"):
+            if(EntryName.find('14') > -1):
                 self.addEmergencyPhoneEntry2.configure(fg_color = "red")
-            if(EntryName == ".!newpatientview.!ctkframe.!canvas.!personalinfotab.!ctkframe.!ctkentry16.!entry"):
+            if(EntryName.find('16') > -1):
                 self.addEmergencyPhoneEntry3.configure(fg_color = "red")
         except AttributeError:
             pass                            
