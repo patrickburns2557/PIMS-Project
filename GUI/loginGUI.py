@@ -73,6 +73,7 @@ class LoginView(ctk.CTkFrame):
         username = self.username.get()
         password = self.password.get()
         if loginSystem.login(self.user, username, password):
+            Data.System.loadDatabase()
             GUI.MainWindow.switchPatientList(Data.System.getPatientList())
             GUI.MainWindow.updateTopBar() #update user type in TopBar
         else:

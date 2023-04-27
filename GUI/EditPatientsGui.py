@@ -1,11 +1,11 @@
 import tkinter as tk
-from tkinter import ttk
+import tkinter.ttk as ttk
 import customtkinter as ctk
 import GUI.ScrollablePatientList as spl
 import Data.System
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
-import re
+import Data.validateInfo
 
 
 FONTINFO = ("Courier", 18)
@@ -20,39 +20,25 @@ class EditPatientView(ctk.CTkFrame):
         super().__init__(parentWidget)
         
         #self.NewPatient = Patient()
-    
-        
-        self.buttonFrame = ctk.CTkFrame(self)
-        
-        self.SaveButton = ctk.CTkButton(
-            self.buttonFrame,
-            text="Save Patient",
-            font=FONTBUTTON,
-            width=100,
-            height=40,
-            command=lambda:[finalizePatient(self,CurrentPatient), MainWindow.switchDetailedView(CurrentPatient)]
-        )
-        self.SaveButton.grid(row=0, column=4, padx=5, pady=5)   
         
         
-         #first tab shown will be the personal info tab
+        #first tab shown will be the personal info tab
         self.PersonalTab = PersonalInfoTab(self, CurrentPatient)
-        self.shownTab = self.PersonalTab
-        self.in_personal = 1
-        self.in_billing = 0
         self.BillingTab = BillingInfoTab(self, CurrentPatient)
+        #first tab shown will be the personal info tab
+        self.shownTab = self.PersonalTab
         
         
         self.addNoteFrame = ctk.CTkFrame(
             self
         )
         #Create frame and buttons for switching tabs
-        
-        
+        #Will need to setup later to only show relavant tabs based on which user is logged in.
+        self.buttonFrame = ctk.CTkFrame(self)
         self.personalButton = ctk.CTkButton(
             self.buttonFrame,
             text="Personal Information",
-            command=lambda:self.switchPersonal(),
+            command=lambda:self.switchPersonal(CurrentPatient),
             font=FONTBUTTON,
             width=270,
             height=40,
@@ -66,7 +52,7 @@ class EditPatientView(ctk.CTkFrame):
             self.billingButton = ctk.CTkButton(
                 self.buttonFrame,
                 text="Billing Information",
-                command=lambda:self.switchBilling(),
+                command=lambda:self.switchBilling(CurrentPatient),
                 font=FONTBUTTON,
                 width=270,
                 height=40,
@@ -82,34 +68,38 @@ class EditPatientView(ctk.CTkFrame):
             command=lambda:MainWindow.switchDetailedView(CurrentPatient)
        )
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)
-         
+        self.SaveButton = ctk.CTkButton(
+            self.buttonFrame,
+            text="Save Patient",
+            font=FONTBUTTON,
+            width=100,
+            height=40,
+            command=lambda:finalizePatient(self,CurrentPatient)
+       )
+        self.SaveButton.grid(row=0, column=4, padx=5, pady=5)    
     
         self.buttonFrame.grid(row=0, column=0, sticky="news", padx=8, pady=8)
         self.shownTab.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         
-    #functions to turn save button off and on
-    def turnOnSave(self):
-        self.SaveButton.configure(state = "normal")
-            
-    def turnOffSave(self):
-        self.SaveButton.configure(state = "disabled")
-        
         
     #Functions to switch between the tabs using the buttons
-    def switchPersonal(self):
+    def switchPersonal(self, CurrentPatient):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="disabled")
         except AttributeError or NameError:
             pass
-
+        try:
+            self.medicalButton.configure(state="normal")
+        except AttributeError or NameError:
+            pass
         try:
             self.billingButton.configure(state="normal")
         except AttributeError or NameError:
             pass
-
+        
         #Remove the previous tab to show the new one
         self.shownTab.grid_remove()
         self.shownTab = self.PersonalTab
@@ -119,7 +109,7 @@ class EditPatientView(ctk.CTkFrame):
  
 
 
-    def switchBilling(self):
+    def switchBilling(self, CurrentPatient):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="normal")
@@ -133,16 +123,11 @@ class EditPatientView(ctk.CTkFrame):
             self.billingButton.configure(state="disabled")
         except AttributeError or NameError:
             pass
-        
+
         #Remove the previous tab to show the new one
         self.shownTab.grid_remove()
         self.shownTab = self.BillingTab
         self.shownTab.grid(row=1, column=0, sticky="news")
-        self.in_billing = 1
-        self.in_personal = 0
-        
-        
-        
         
         
 #############################################
@@ -153,23 +138,6 @@ class EditPatientView(ctk.CTkFrame):
 class PersonalInfoTab(ctk.CTkScrollableFrame):
     def __init__(self, parentWidget, patient):
         super().__init__(parentWidget, orientation= "horizontal")
-        #variable to check if all entries are valid
-        self.valid1 = True  
-        self.valid2 = True
-        self.valid3 = True     
-        self.valid4 = True
-        self.valid5 = True
-        self.valid6 = True       
-       
-        self.parentWidget = parentWidget
-       
-        #self.Edit = EditPatientView
-        
-        vcmd = (self.register(self.validatephone), '%P', '%W')
-        #ivcmd = (self.register(self.on_invalid),)  
-        
-        self.label_error = ttk.Label(self, foreground='red')
-        self.label_error.grid(row=8, column=8, sticky=tk.W, padx=5)      
     
         self.addNoteFrame = ctk.CTkFrame(
             self
@@ -198,7 +166,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMiddleNameEntry.grid(row=4, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
     
-        
+            #self.addNoteFrame.grid(row=4, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "Last Name Entry").grid(row=5, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.LastNameNote = ctk.StringVar(value = patient.lastName)
         self.addLastNameEntry = ctk.CTkEntry(
@@ -255,8 +223,6 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.MobilePhoneNote = ctk.StringVar(value = patient.mobilePhone)
         self.addMobilePhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
-            validate='focusout',
-            validatecommand = vcmd,
             font=FONTINFO,
             width=350,
             textvariable=self.MobilePhoneNote
@@ -269,8 +235,6 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.HomePhoneNote = ctk.StringVar(value = patient.homePhone)
         self.addHomePhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
-            validate='focusout',
-            validatecommand = vcmd,
             font=FONTINFO,
             width=350,
             textvariable=self.HomePhoneNote
@@ -282,8 +246,6 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.WorkPhoneNote = ctk.StringVar(value = patient.workPhone)
         self.addWorkPhoneEntry = ctk.CTkEntry(
             self.addNoteFrame,
-            validate='focusout',
-            validatecommand = vcmd,
             font=FONTINFO,
             width=350,
             textvariable=self.WorkPhoneNote
@@ -313,8 +275,6 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
             self.EmergencyPhone1Note = ctk.StringVar()
         self.addEmergencyPhoneEntry1 = ctk.CTkEntry(
             self.addNoteFrame,
-            validate='focusout',
-            validatecommand = vcmd,
             font=FONTINFO,
             width=350,
             textvariable=self.EmergencyPhone1Note
@@ -346,8 +306,6 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry2 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
-            validatecommand = vcmd,
             width=350,
             textvariable=self.EmergencyPhone2Note
         )
@@ -378,8 +336,6 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addEmergencyPhoneEntry3 = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate='focusout',
-            validatecommand = vcmd,
             width=350,
             textvariable=self.EmergencyPhone3Note
         )
@@ -499,81 +455,9 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
             textvariable=self.BedNote
         )
         self.addBedEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
-    
 
-
-    def validatephone(self, value, EntryName ):
-
-        """
-        Validat the phone entry
-        :param value:
-        :return:
-        """
-
-        pattern = "^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$"
-        if re.fullmatch(pattern, value) is None:
-            self.invalidePhone(EntryName)
-            return False
+                            
         
-
-
-        try:
-            if(EntryName.find('8') > -1):
-                self.valid1 = True
-                self.addMobilePhoneEntry.configure(fg_color = "white")
-            if(EntryName.find('9') > -1):
-                self.valid2 = True
-                self.addHomePhoneEntry.configure(fg_color = "white")
-            if(EntryName.find('10') > -1):
-                self.valid3 = True
-                self.addWorkPhoneEntry.configure(fg_color = "white")
-            if(EntryName.find('12') > -1):
-                self.valid4 = True
-                self.addEmergencyPhoneEntry1.configure(fg_color = "white")
-            if(EntryName.find('14') > -1):
-                self.valid5 = True
-                self.addEmergencyPhoneEntry2.configure(fg_color = "white")
-            if(EntryName.find('16') > -1):
-                self.valid6 = True
-                self.addEmergencyPhoneEntry3.configure(fg_color = "white")
-        except AttributeError:
-            pass
-        self.label_error.configure(text = "")
-        
-        if(self.valid1 ==True and self.valid2 ==True and self.valid3 ==True and self.valid4 ==True and self.valid5 ==True and self.valid6 ==True):
-            self.parentWidget.turnOnSave()
-        return True
-
-
-    def invalidePhone(self, EntryName):
-        self.label_error.configure(text = "Please enter valid Phone Numbers")
-        self.parentWidget.turnOffSave()
-
-        try:
-            if(EntryName.find('8') > -1):
-                self.valid1 = False
-                self.addMobilePhoneEntry.configure(fg_color = "red")
-            if(EntryName.find('9') > -1):
-                self.valid2 = False
-                self.addHomePhoneEntry.configure(fg_color = "red")
-            if(EntryName.find('10') > -1):
-                self.valid3 = False
-                self.addWorkPhoneEntry.configure(fg_color = "red")
-            if(EntryName.find('12') > -1):
-                self.valid4 = False
-                self.addEmergencyPhoneEntry1.configure(fg_color = "red")
-            if(EntryName.find('14') > -1):
-                self.valid5 = False
-                self.addEmergencyPhoneEntry2.configure(fg_color = "red")
-            if(EntryName.find('16') > -1):
-                self.valid6 = False
-                self.addEmergencyPhoneEntry3.configure(fg_color = "red")
-        except AttributeError:
-            pass
-
-
-                          
-
 
 
 
@@ -583,9 +467,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
 class BillingInfoTab(ctk.CTkScrollableFrame):
     def __init__(self, parentWidget, patient):
         super().__init__(parentWidget, orientation= "horizontal")
-       
-        vcmd = (parentWidget.register(self.validate),
-                '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        
         
         self.addNoteFrame = ctk.CTkFrame(
             self
@@ -608,8 +490,6 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addInsurancePolicyAccountEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
             width=350,
             textvariable=self.InsuranceAccountNumNote
         )
@@ -621,149 +501,78 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addInsuranceGroupEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
             width=350,
             textvariable=self.InsuranceGroupNumNote
         )
         self.addInsuranceGroupEntry.grid(row=7, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        LabelBorder(self.addNoteFrame, "Amount Paid").grid(row=1, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountPaidNote = ctk.StringVar(value = patient.amountPaid)
-        self.addAmountPaidEntry = ctk.CTkEntry(
-            self.addNoteFrame,
-            font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
-            width=350,
-            textvariable=self.AmountPaidNote
-        )
-        self.addAmountPaidEntry.grid(row=2, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
- 
-        LabelBorder(self.addNoteFrame, "Amount paid by Insurance").grid(row=3, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountPaidbyInsuranceNote = ctk.StringVar(value = patient.amountPaidByInsurance)
-        self.addAmountPaidInsuranceEntry = ctk.CTkEntry(
-            self.addNoteFrame,
-            font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
-            width=350,
-            textvariable=self.AmountPaidbyInsuranceNote        
-
-        )
-        self.addAmountPaidInsuranceEntry.grid(row=4, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
-        LabelBorder(self.addNoteFrame, "Amount Owed").grid(row=5, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountOwedNote = ctk.StringVar(value = patient.amountOwed)
-        self.addChargeOwedEntry = ctk.CTkEntry(
-            self.addNoteFrame,
-            font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
-            width=350,
-            textvariable=self.AmountOwedNote
-        )
-        self.addChargeOwedEntry.grid(row=6, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
-        LabelBorder(self.addNoteFrame, "Charge").grid(row=7, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.addChargeDesNote = ctk.StringVar(value =0 )
+  
+        
+        LabelBorder(self.addNoteFrame, "Add a Charge").grid(row=1, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        try:
+            self.ChargeNote = ctk.StringVar(value = patient.listCharges[0])
+        except IndexError:
+            self.ChargeNote = ctk.StringVar(value = 0)
         self.addChargeEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
             width=350,
-            textvariable=self.addChargeDesNote
+            textvariable=self.ChargeNote
         )
-        self.addChargeEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
-        
-
+        self.addChargeEntry.grid(row=2, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
                 
-        LabelBorder(self.addNoteFrame, "Charge Amount").grid(row=9, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.addChargeAmountNote = ctk.StringVar(value =0.0 )
+        LabelBorder(self.addNoteFrame, "Add a Charge Amount").grid(row=3, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        try:
+            self.ChargeAmountNote = ctk.StringVar(value = patient.listChargesAmount[0])
+        except IndexError:
+            self.ChargeAmountNote = ctk.StringVar(value = 0)
         self.addChargeAmountEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
             width=350,
-            textvariable=self.addChargeAmountNote
+            textvariable=self.ChargeAmountNote
         )
-        self.addChargeAmountEntry.grid(row=10, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+        self.addChargeAmountEntry.grid(row=4, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        self.addChargeButton = ctk.CTkButton(
+ 
+
+        LabelBorder(self.addNoteFrame, "Amount Paid").grid(row=5, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.AmountPaidNote = ctk.StringVar(value = patient.amountPaid)
+        self.addAmountPaidEntry = ctk.CTkEntry(
             self.addNoteFrame,
-            text="Add Charge and Charge Amount",
-            #command=lambda: [patient.addCharge("fsdf", self.ChargeAmountNote.get()), parentWidget.switchBilling()],
-            command = lambda: self.addChargeNoteFun(patient, self.addChargeDesNote.get(), self.addChargeAmountNote.get(), parentWidget),
             font=FONTINFO,
-            width=80
+            width=350,
+            textvariable=self.AmountPaidNote
         )
-        self.addChargeButton.grid(row=11, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
-        
-        self.addChargeRefresh(patient)
-        
-    def addChargeRefresh(self, patient):
-        self.listChargesFrame = ctk.CTkFrame(
-            self
+        self.addAmountPaidEntry.grid(row=6, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+
+ 
+        LabelBorder(self.addNoteFrame, "Amount paid by Insurance").grid(row=7, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.AmountPaidbyInsuranceNote = ctk.StringVar(value = patient.amountPaidByInsurance)
+        self.addAmountPaidInsuranceEntry = ctk.CTkEntry(
+            self.addNoteFrame,
+            font=FONTINFO,
+            width=350,
+            textvariable=self.AmountPaidbyInsuranceNote        
+
         )
-        self.listChargesFrame.grid(row=1, column=6, sticky="nw", padx=PADSECTION, pady=PADSECTION, rowspan=10)
-        self.ChargeNameNoteList = []
-        self.ChargeAmountNoteList = []
-        LabelBorder(self.listChargesFrame, "List of Charges").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL, columnspan=2)
-        for i in range(len(patient.listCharges)):
-            self.ChargeNameNote = ctk.StringVar(value = patient.listCharges[i])
-            self.singleChargeFrame = ctk.CTkFrame(self.listChargesFrame)
-            self.chargeName = ctk.CTkEntry(
-                self.singleChargeFrame,
-                textvariable= self.ChargeNameNote,
-                justify=ctk.LEFT,
-                font=FONTINFO
-            )
-            self.ChargeNameNoteList.append(self.ChargeNameNote)
-            self.ChargeAmountNote = ctk.StringVar(value = "{:.2f}".format(patient.listChargesAmount[i]))
-            self.chargeName.grid(row=0, column=0, sticky="w", padx=PADCOMP)
-            self.chargeAmount = ctk.CTkEntry(
-                self.singleChargeFrame,
-                textvariable= self.ChargeAmountNote,
-                justify=ctk.RIGHT,
-                font=FONTINFO
-            )
-            self.ChargeAmountNoteList.append(self.ChargeAmountNote)
-            self.chargeAmount.grid(row=0, column=1, sticky="e", padx=10)
-            self.singleChargeFrame.grid(row=i+1, column=0, sticky="ew", padx=PADCOMP, pady=PADCOMP)
-            self.singleChargeFrame.grid_columnconfigure(0, weight=1)  
+        self.addAmountPaidInsuranceEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-    def addChargeNoteFun(self, patient, chargeNote, chargesAmountNote, parentWidget):
-        patient.addCharge(chargeNote, float(chargesAmountNote))
-        self.addChargeRefresh(patient)
+        LabelBorder(self.addNoteFrame, "Amount Owed").grid(row=9, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        self.AmountOwedNote = ctk.StringVar(value = patient.amountOwed)
+        self.addChargeOwedEntry = ctk.CTkEntry(
+            self.addNoteFrame,
+            font=FONTINFO,
+            width=350,
+            textvariable=self.AmountOwedNote
+        )
+        self.addChargeOwedEntry.grid(row=10, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-    def validate(self, action, index, value_if_allowed,
-                       prior_value, text, validation_type, trigger_type, widget_name):
-        if value_if_allowed:
-            try:
-                float(value_if_allowed)
-                return True
-            except ValueError:
-                return False
-        else:
-            return False
-    def validate_float(self, action, index, value_if_allowed,
-        prior_value, text, validation_type, trigger_type, widget_name):
-        # action=1 -> insert
-        if(action=='1'):
-            if text in ' 0123456789.-+':
-                try:
-                    float(value_if_allowed)
-                    return True
-                except ValueError:
-                    return False
-            else:
-                return False
-        else:
-            return True
-        
-    
+
 def finalizePatient(self,UpdatedPatient):
+    
+    patientCopy = UpdatedPatient
+
     try:
         UpdatedPatient.setFirstName(self.PersonalTab.FirstNameNote.get())
         UpdatedPatient.setMiddleName(self.PersonalTab.MiddleNameNote.get())
@@ -845,28 +654,31 @@ def finalizePatient(self,UpdatedPatient):
     try:  
         UpdatedPatient.setInsuranceCarrier(self.BillingTab.InsuranceCarrierNote.get())
         UpdatedPatient.setInsuranceAccountNumber(self.BillingTab.InsuranceAccountNumNote.get())
-        UpdatedPatient.setInsuranceGroupNumber(self.BillingTab.InsuranceGroupNumNote.get())   
+        UpdatedPatient.setInsuranceGroupNumber(self.BillingTab.InsuranceGroupNumNote.get())
         
-    except AttributeError or NameError:
-        pass    
- 
-    try:
-        for i in range(len(UpdatedPatient.listCharges)):
-            UpdatedPatient.listCharges[i] = self.BillingTab.ChargeNameNoteList[i].get()
-            UpdatedPatient.listChargesAmount[i] = float(self.BillingTab.ChargeAmountNoteList[i].get())       
-    except IndexError or AttributeError:
-        pass
-    
-    
-    
-    
-    try:        
+        
+        UpdatedPatient.addCharge(self.BillingTab.ChargeNote.get(), float(self.BillingTab.ChargeAmountNote.get()))
+        
         UpdatedPatient.setAmountPaid(float(self.BillingTab.AmountPaidNote.get()))
         UpdatedPatient.setAmountOwed(float(self.BillingTab.AmountOwedNote.get()))
         
         UpdatedPatient.setAmountPaidByInsurance(float(self.BillingTab.AmountPaidbyInsuranceNote.get()))
-    except ValueError:
-        pass
+    except AttributeError or NameError:
+        pass   
+
+
+    # ensure no information exceeds database character limit
+    validate = Data.validateInfo.validateInfo()
+    validate.checkEntry(UpdatedPatient)
+    truthValid, strIssue = validate.checkValidity(UpdatedPatient, False)
+    if truthValid == False:
+        self.invalidLabel = ctk.CTkLabel(self, text=strIssue, font=("Courier", 18, "bold"))
+        self.invalidLabel.place(relx = 0.5, rely = 0.11, anchor = 'center')
+        UpdatedPatient = patientCopy
+    else:
+        MainWindow.switchDetailedView(UpdatedPatient)
+        MainWindow.switchPatientList(Data.System.getPatientList())
+    
  
 #Class to create a label with a border around it
 #isList is a boolean flag to mark if the border is a list item, in which it should use the default INFO font
