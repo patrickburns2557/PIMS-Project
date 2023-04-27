@@ -186,12 +186,12 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.parentWidget = parentWidget
         
         
-        self.valid1 = False  
-        self.valid2 = False
-        self.valid3 = False     
-        self.valid4 = False
-        self.valid5 = False
-        self.valid6 = False          
+        self.valid1 = True  
+        self.valid2 = True
+        self.valid3 = True     
+        self.valid4 = True
+        self.valid5 = True
+        self.valid6 = True          
         
         
         self.label_error = ttk.Label(self, foreground='red')
