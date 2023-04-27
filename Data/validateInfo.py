@@ -68,6 +68,13 @@ class validateInfo():
         elif len(patient.numAllowedVisitors) > 3:
             self.issue = "Max simultaneous visitors exceeds character limit."
 
+        elif len(patient.numAllowedVisitors) > 0:
+            for num in patient.numAllowedVisitors:
+                amount = ord(num)
+                if amount < 48 or amount > 57:
+                    self.issue = "Invalid entry for max simulataneous visitors."
+                
+
         elif len(patient.mobilePhone) > 20:
             self.issue = "Mobile phone number exceeds character limit."
 
