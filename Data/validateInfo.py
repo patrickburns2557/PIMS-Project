@@ -130,10 +130,17 @@ class validateInfo():
         if self.issue == "":
             if new == True:
                 # add new patient to database
-                Data.addNewInfo.addNewInfo().updatePatient(patient, True)
+                try:
+                    Data.addNewInfo.addNewInfo().updatePatient(patient, True)
+                except:
+                    pass
             else:
                 # update existing patient
-                Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+                try:
+                    Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+                except:
+                    pass
+
             return True, self.issue
         
         else:
