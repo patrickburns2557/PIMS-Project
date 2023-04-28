@@ -670,7 +670,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addChargeOwedEntry.grid(row=6, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         LabelBorder(self.addNoteFrame, "Charge").grid(row=7, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.addChargeDesNote = ctk.StringVar(value =0 )
+        self.addChargeDesNote = ctk.StringVar( )
         self.addChargeEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -682,7 +682,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
 
                 
         LabelBorder(self.addNoteFrame, "Charge Amount").grid(row=9, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.addChargeAmountNote = ctk.StringVar(value =0.0 )
+        self.addChargeAmountNote = ctk.StringVar( )
         self.addChargeAmountEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -856,7 +856,6 @@ def finalizePatient(self,UpdatedPatient):
         UpdatedPatient.setInsuranceGroupNumber(self.BillingTab.InsuranceGroupNumNote.get())
         
         
-        UpdatedPatient.addCharge(self.BillingTab.ChargeNote.get(), float(self.BillingTab.ChargeAmountNote.get()))
         
         UpdatedPatient.setAmountPaid(float(self.BillingTab.AmountPaidNote.get()))
         UpdatedPatient.setAmountOwed(float(self.BillingTab.AmountOwedNote.get()))

@@ -757,7 +757,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
   
         
         LabelBorder(self.addNoteFrame, "Charge").grid(row=1, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.ChargeNote = ctk.StringVar(value =0 )
+        self.ChargeNote = ctk.StringVar( )
         self.addChargeEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -769,7 +769,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
 
                 
         LabelBorder(self.addNoteFrame, "Charge Amount").grid(row=3, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.ChargeAmountNote = ctk.StringVar(value =0.0 )
+        self.ChargeAmountNote = ctk.StringVar()
         self.addChargeAmountEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -792,7 +792,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
  
 
         LabelBorder(self.addNoteFrame, "Amount Paid").grid(row=8, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountPaidNote = ctk.StringVar(value =0.0 )
+        self.AmountPaidNote = ctk.StringVar( )
         self.addAmountPaidEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -818,7 +818,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addAmountPaidInsuranceEntry.grid(row=11, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         LabelBorder(self.addNoteFrame, "Amount Owed").grid(row=12, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountOwedNote = ctk.StringVar(value = 0.0 )
+        self.AmountOwedNote = ctk.StringVar( )
         self.addChargeOwedEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -942,7 +942,6 @@ def finalizePatient(self):
         self.NewPatient.setInsuranceAccountNumber(self.BillingTab.InsuranceAccountNumNote.get())
         self.NewPatient.setInsuranceGroupNumber(self.BillingTab.InsuranceGroupNumNote.get())
         
-        self.NewPatient.addCharge(self.BillingTab.ChargeNote.get(), float(self.BillingTab.ChargeAmountNote.get()))
         
         self.NewPatient.setAmountPaid(float(self.BillingTab.AmountPaidNote.get()))
         self.NewPatient.setAmountOwed(float(self.BillingTab.AmountOwedNote.get()))
