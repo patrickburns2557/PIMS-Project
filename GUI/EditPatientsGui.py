@@ -663,17 +663,6 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         )
         self.addAmountPaidInsuranceEntry.grid(row=4, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        LabelBorder(self.addNoteFrame, "Amount Owed").grid(row=5, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountOwedNote = ctk.StringVar(value = patient.amountOwed)
-        self.addChargeOwedEntry = ctk.CTkEntry(
-            self.addNoteFrame,
-            font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
-            width=350,
-            textvariable=self.AmountOwedNote
-        )
-        self.addChargeOwedEntry.grid(row=6, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         LabelBorder(self.addNoteFrame, "Charge").grid(row=7, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.addChargeDesNote = ctk.StringVar( )
@@ -867,7 +856,7 @@ def finalizePatient(self,UpdatedPatient):
         
         
         UpdatedPatient.setAmountPaid(float(self.BillingTab.AmountPaidNote.get()))
-        UpdatedPatient.setAmountOwed(float(self.BillingTab.AmountOwedNote.get()))
+        UpdatedPatient.updateAmountOwed()
         
         UpdatedPatient.setAmountPaidByInsurance(float(self.BillingTab.AmountPaidbyInsuranceNote.get()))
     except AttributeError or NameError:

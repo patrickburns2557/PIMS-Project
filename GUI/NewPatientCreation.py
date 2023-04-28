@@ -813,7 +813,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
 
  
         LabelBorder(self.addNoteFrame, "Amount paid by Insurance").grid(row=10, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountPaidbyInsuranceNote = ctk.StringVar(value =0.0 )
+        self.AmountPaidbyInsuranceNote = ctk.StringVar( )
         self.addAmountPaidInsuranceEntry = ctk.CTkEntry(
             self.addNoteFrame,
             font=FONTINFO,
@@ -825,17 +825,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         )
         self.addAmountPaidInsuranceEntry.grid(row=11, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        LabelBorder(self.addNoteFrame, "Amount Owed").grid(row=12, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
-        self.AmountOwedNote = ctk.StringVar( )
-        self.addChargeOwedEntry = ctk.CTkEntry(
-            self.addNoteFrame,
-            font=FONTINFO,
-            validate = 'key',
-            validatecommand = vcmd,
-            width=350,
-            textvariable=self.AmountOwedNote
-        )
-        self.addChargeOwedEntry.grid(row=13, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+
         
     #will refresh the charge table    
     def addChargeRefresh(self, patient):
@@ -954,7 +944,7 @@ def finalizePatient(self):
         
         
         self.NewPatient.setAmountPaid(float(self.BillingTab.AmountPaidNote.get()))
-        self.NewPatient.setAmountOwed(float(self.BillingTab.AmountOwedNote.get()))
+        self.NewPatient.updateAmountOwed()
         
         self.NewPatient.setAmountPaidByInsurance(float(self.BillingTab.AmountPaidbyInsuranceNote.get()))
     except AttributeError or NameError or ValueError:
