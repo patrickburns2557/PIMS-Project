@@ -21,7 +21,7 @@ class NewPatientView(ctk.CTkFrame):
         
         self.NewPatient = Patient()
 
-        
+        #button to call the save function patient
         self.buttonFrame = ctk.CTkFrame(self)        
         self.SaveButton = ctk.CTkButton(
             self.buttonFrame,
@@ -82,6 +82,7 @@ class NewPatientView(ctk.CTkFrame):
             )
             self.billingButton.grid(row=0, column=3, padx=5, pady=5)
 
+        #button to return to the pateint detailed view
         self.returnButton = ctk.CTkButton(
             self.buttonFrame,
             text="Back",
@@ -98,10 +99,12 @@ class NewPatientView(ctk.CTkFrame):
         self.shownTab.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
-        
+    
+    #function that will allow the patient to be saved
     def turnOnSave(self):
         self.SaveButton.configure(state = "normal")
-            
+     
+    #function that will stop the patient from being able to be saved with invalid patient       
     def turnOffSave(self):
         self.SaveButton.configure(state = "disabled")       
         
@@ -187,7 +190,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         
         self.parentWidget = parentWidget
         
-        
+        #variables to know if each of the phone number entries are valid
         self.valid1 = True  
         self.valid2 = True
         self.valid3 = True     
@@ -195,13 +198,15 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.valid5 = True
         self.valid6 = True          
         
-        
+        #error message for invalid phone number
         self.label_error = ttk.Label(self, foreground='red')
-        self.label_error.grid(row=8, column=8, sticky=tk.W, padx=5)   
+        self.label_error.grid(row=8, column=3, sticky=tk.W, padx=5)   
     
         self.addNoteFrame = ctk.CTkFrame(
             self
         )
+        #Entries for Personal Info Tab 
+        
         self.addNoteFrame.grid(row=1, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "First Name Entry").grid(row=1, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.FirstNameNote = ctk.StringVar()
@@ -225,7 +230,6 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMiddleNameEntry.grid(row=4, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
     
-            #self.addNoteFrame.grid(row=4, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "Last Name Entry").grid(row=5, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.LastNameNote = ctk.StringVar()
         self.addLastNameEntry = ctk.CTkEntry(
@@ -486,6 +490,8 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         )
         self.addBedEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
+    #gets called when phone number entries are focused in or out
+    #if invalid phone number then call invalidPhone
     def validatephone(self, value, EntryName):
         """
         Validat the phone entry
@@ -493,9 +499,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         :return:
         """
 
-        #pattern = "^(+\d{1,2}\s?)?(?\d{3})?[\s.-]?\d{3}[\s.-]?\d{4}$"
         pattern = "^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
-        #pattern = "^(+\d{1,2}\s?)?(?\d{3})?[\s.-]?\d{3}[\s.-]?\d{4}$"
         if re.fullmatch(pattern, value) is None:
             self.invalidePhone(EntryName)
             return False
@@ -522,11 +526,13 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         except AttributeError:
             pass
         self.label_error.configure(text = "")
+        #if all the phone numbers entries are valid then turn on the save button
         if(self.valid1 ==True and self.valid2 ==True and self.valid3 ==True and self.valid4 ==True and self.valid5 ==True and self.valid6 ==True):
             self.parentWidget.turnOnSave() 
         return True
 
-
+    #called when a phone number entry is invalid
+    #will turn off the save button and set the entry to red
     def invalidePhone(self, EntryName):
         self.label_error.configure(text = "Please enter valid Phone Numbers")
         self.parentWidget.turnOffSave()
@@ -569,6 +575,7 @@ class MedicalInfoTab(ctk.CTkScrollableFrame, ):
         self.addNoteFrame = ctk.CTkFrame(
             self
         )
+        #medical tab info entries
         self.addNoteFrame.grid(row=3, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "Family Doctor").grid(row=1, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.FamilyDoctorNote = ctk.StringVar()
@@ -710,13 +717,14 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
     def __init__(self, parentWidget, patient):
         super().__init__(parentWidget, orientation= "horizontal")
         
-        
+        #valid command for only numbers in number entries
         vcmd = (parentWidget.register(self.validate),
                 '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         
         self.addNoteFrame = ctk.CTkFrame(
             self
         )
+        #entries for billing info tab
         self.addNoteFrame.grid(row=1, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "Insurance Carrier").grid(row=1, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.InsuranceCarrierNote = ctk.StringVar()
@@ -829,7 +837,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         )
         self.addChargeOwedEntry.grid(row=13, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
-        
+    #will refresh the charge table    
     def addChargeRefresh(self, patient):
         self.chargesNoteFrame = ctk.CTkFrame(
             self
@@ -844,11 +852,12 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
             )
             self.ChargesNote.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)        
         
-        
+    #will add a charge and charge amount to the patient
     def addChargeNote(self, patient, chargeNote, chargesAmountNote, parentWidget):
         patient.addCharge(chargeNote, float(chargesAmountNote))
         self.addChargeRefresh(patient)
-        
+    
+    #validation that will limit entries to only floats  
     def validate(self, action, index, value_if_allowed,
                        prior_value, text, validation_type, trigger_type, widget_name):
         if value_if_allowed:
@@ -859,6 +868,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
                 return False
         else:
             return False
+    #validation that will limit entries to only flaots
     def validate_float(self, action, index, value_if_allowed,
         prior_value, text, validation_type, trigger_type, widget_name):
         # action=1 -> insert

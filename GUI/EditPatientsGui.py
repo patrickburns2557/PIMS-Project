@@ -166,18 +166,20 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.valid6 = True       
        
         self.parentWidget = parentWidget
-       
-        #self.Edit = EditPatientView
+    
         
+        #validation command for phone numbers
         vcmd = (self.register(self.validatephone), '%P', '%W')
         #ivcmd = (self.register(self.on_invalid),)  
         
+        #label error for invalid phone numbers
         self.label_error = ttk.Label(self, foreground='red')
-        self.label_error.grid(row=8, column=8, sticky=tk.W, padx=5)      
+        self.label_error.grid(row=8, column=3, sticky=tk.W, padx=5)      
     
         self.addNoteFrame = ctk.CTkFrame(
             self
         )
+        #entries for personal info tab
         self.addNoteFrame.grid(row=1, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "First Name Entry").grid(row=1, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.FirstNameNote = ctk.StringVar(value = patient.firstName)
@@ -505,7 +507,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addBedEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
     
 
-
+    #validation for phone numbers
     def validatephone(self, value, EntryName ):
 
         """
@@ -513,8 +515,9 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         :param value:
         :return:
         """
-
+        #pattern for phone nubers
         pattern = "^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+        #if phone numbers are not valid then call invalid phone
         if re.fullmatch(pattern, value) is None:
             self.invalidePhone(EntryName)
             return False
@@ -544,11 +547,12 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
             pass
         self.label_error.configure(text = "")
         
+        #if all entries are valid
         if(self.valid1 ==True and self.valid2 ==True and self.valid3 ==True and self.valid4 ==True and self.valid5 ==True and self.valid6 ==True):
             self.parentWidget.turnOnSave()
         return True
 
-
+    #function called when the phone entries are invalid
     def invalidePhone(self, EntryName):
         self.label_error.configure(text = "Please enter valid Phone Numbers")
         self.parentWidget.turnOffSave()
@@ -587,12 +591,14 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
     def __init__(self, parentWidget, patient):
         super().__init__(parentWidget, orientation= "horizontal")
        
+       #validation for only floats commands
         vcmd = (parentWidget.register(self.validate),
                 '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         
         self.addNoteFrame = ctk.CTkFrame(
             self
         )
+        #billing info tab
         self.addNoteFrame.grid(row=1, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.addNoteFrame, "Insurance Carrier").grid(row=1, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.InsuranceCarrierNote = ctk.StringVar(value = patient.insuranceCarrier)
@@ -704,7 +710,8 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         self.addChargeButton.grid(row=11, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
         self.addChargeRefresh(patient)
-        
+    
+    #will add a charge to the patient 
     def addChargeRefresh(self, patient):
         self.listChargesFrame = ctk.CTkFrame(
             self
@@ -736,10 +743,11 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
             self.singleChargeFrame.grid(row=i+1, column=0, sticky="ew", padx=PADCOMP, pady=PADCOMP)
             self.singleChargeFrame.grid_columnconfigure(0, weight=1)  
 
+    #add charge 
     def addChargeNoteFun(self, patient, chargeNote, chargesAmountNote, parentWidget):
         patient.addCharge(chargeNote, float(chargesAmountNote))
         self.addChargeRefresh(patient)
-
+    #validation for only floats
     def validate(self, action, index, value_if_allowed,
                        prior_value, text, validation_type, trigger_type, widget_name):
         if value_if_allowed:
@@ -750,6 +758,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
                 return False
         else:
             return False
+    #validation for only flaots
     def validate_float(self, action, index, value_if_allowed,
         prior_value, text, validation_type, trigger_type, widget_name):
         # action=1 -> insert
