@@ -140,7 +140,7 @@ class addNewInfo:
 
             self.db.update("scheduled_procedures", self.procedureString, self.ID)
 
-        elif new == False and user == 0:
+        elif new is False and user == 0:
 
             self.doctorNotes = patient.doctorNotes
             self.notesString = ""
@@ -151,7 +151,7 @@ class addNewInfo:
 
             self.db.update("doctor_treatment_notes", self.notesString, self.ID)
 
-        elif new == False and user == 1:
+        elif new is False and user == 1:
 
             self.nurseNotes = patient.nurseNotes
             self.notesString = ""

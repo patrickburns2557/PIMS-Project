@@ -58,23 +58,23 @@ class System:
         self.patientList.append(p1)
 
         p = Patient()
-        p.setFirstName("Richard");
-        p.setLastname("jackson");
+        p.setFirstName("Richard")
+        p.setLastname("jackson")
         p.setLocation(["Facility 3", "Floor 1", "Room 12", "Bed 2"])
         self.patientList.append(p)
         p = Patient()
-        p.setFirstName("Amy");
-        p.setLastname("Jones");
+        p.setFirstName("Amy")
+        p.setLastname("Jones")
         p.setLocation(["Facility 1", "Floor 4", "Room 419", "Bed 1"])
         self.patientList.append(p)
         p = Patient()
-        p.setFirstName("patrick");
-        p.setLastname("burns");
+        p.setFirstName("patrick")
+        p.setLastname("burns")
         p.setLocation(["Facility 1", "Floor 3", "Room 363", "Bed 3"])
         self.patientList.append(p)
         p = Patient()
-        p.setFirstName("My First Name");
-        p.setLastname("MyLastName");
+        p.setFirstName("My First Name")
+        p.setLastname("MyLastName")
         p.setLocation(["My Facility", "My Floor", "My Room", "My Bed"])
         self.patientList.append(p)
         for i in range(20):
@@ -82,8 +82,8 @@ class System:
             last = "last " + str(i)
             location = "location " + str(i)
             p = Patient()
-            p.setFirstName(first);
-            p.setLastname(last);
+            p.setFirstName(first)
+            p.setLastname(last)
             p.setLocation([location, "floor", "room", "bed"])
             self.patientList.append(p)
 

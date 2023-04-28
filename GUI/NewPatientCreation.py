@@ -513,7 +513,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
             pass
         self.label_error.configure(text="")
         # if all the phone numbers entries are valid then turn on the save button
-        if self.valid1 == True and self.valid2 == True and self.valid3 == True and self.valid4 == True and self.valid5 == True and self.valid6 == True:
+        if self.valid1 is True and self.valid2 is True and self.valid3 is True and self.valid4 is True and self.valid5 is True and self.valid6 is True:
             self.parentWidget.turnOnSave()
         return True
 
