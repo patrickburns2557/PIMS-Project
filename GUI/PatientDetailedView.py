@@ -99,15 +99,15 @@ class PatientDetailedView(ctk.CTkFrame):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="disabled")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
         try:
             self.medicalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
         try:
             self.billingButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
         
         #Destroy the current tab before loading the new one
@@ -124,15 +124,15 @@ class PatientDetailedView(ctk.CTkFrame):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
         try:
             self.medicalButton.configure(state="disabled")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
         try:
             self.billingButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
 
         #Destroy the current tab before loading the new one
@@ -149,15 +149,15 @@ class PatientDetailedView(ctk.CTkFrame):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
         try:
             self.medicalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
         try:
             self.billingButton.configure(state="disabled")
-        except AttributeError or NameError:
+        except (AttributeError, NameError):
             pass
 
         #Destroy the current tab before loading the new one

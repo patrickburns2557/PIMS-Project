@@ -113,15 +113,15 @@ class NewPatientView(ctk.CTkFrame):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="disabled")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         try:
             self.medicalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         try:
             self.billingButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
 
         #Remove the previous tab to show the new one
@@ -136,15 +136,15 @@ class NewPatientView(ctk.CTkFrame):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         try:
             self.medicalButton.configure(state="disabled")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         try:
             self.billingButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         
         #Remove the previous tab to show the new one
@@ -158,15 +158,15 @@ class NewPatientView(ctk.CTkFrame):
         #Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         try:
             self.medicalButton.configure(state="normal")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         try:
             self.billingButton.configure(state="disabled")
-        except AttributeError or NameError:
+        except (ValueError, NameError, AttributeError):
             pass
         
         #Remove the previous tab to show the new one
@@ -844,7 +844,10 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         
     #will add a charge and charge amount to the patient
     def addChargeNote(self, patient, chargeNote, chargesAmountNote, parentWidget):
-        patient.addCharge(chargeNote, float(chargesAmountNote))
+        try:
+            patient.addCharge(chargeNote, float(chargesAmountNote))
+        except ValueError:
+            pass
         self.addChargeRefresh(patient)
     
     #validation that will limit entries to only floats  
@@ -913,7 +916,7 @@ def finalizePatient(self):
         if self.PersonalTab.ApprovedVisitor1Note.get() != "":
             self.NewPatient.addAllowedVisitor(self.PersonalTab.ApprovedVisitor3Note.get())
 
-    except AttributeError or NameError or ValueError:
+    except (ValueError, NameError, AttributeError):
         pass
     
     try:
@@ -932,7 +935,7 @@ def finalizePatient(self):
         self.NewPatient.addPrescription(self.MedicalTab.PrescriptionNameNote.get(), self.MedicalTab.PrescriptionAmountNote.get(), self.MedicalTab.PrescriptionScheduleNot.get())
 
         self.NewPatient.addScheduledProcedure(self.MedicalTab.ScheduledProceduresNote.get())
-    except AttributeError or NameError or ValueError:
+    except (ValueError, NameError, AttributeError):
         pass    
 
     
@@ -947,7 +950,7 @@ def finalizePatient(self):
         self.NewPatient.updateAmountOwed()
         
         self.NewPatient.setAmountPaidByInsurance(float(self.BillingTab.AmountPaidbyInsuranceNote.get()))
-    except AttributeError or NameError or ValueError:
+    except (ValueError, NameError, AttributeError):
         pass 
     
 
