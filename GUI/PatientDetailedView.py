@@ -4,6 +4,7 @@ import customtkinter as ctk
 from Data.dataClasses import *
 import GUI.MainWindow as MainWindow
 import Data.System
+import Data.addNewInfo
 
 BGCOLOR = "#E4E4E4"
 BUTTONSELECTED = "#D9D9D9"
@@ -450,9 +451,11 @@ class MedicalInfoTab(ctk.CTkFrame):
 
     def addNurseNote(self, patient, nurseNote):
         patient.addNurseNote(nurseNote)
+        Data.addNewInfo.addNewInfo().updatePatient(patient, False)
         self.master.switchMedical()
     def addDoctorNote(self, patient, doctorNote):
         patient.addDoctorNote(doctorNote)
+        Data.addNewInfo.addNewInfo().updatePatient(patient, False)
         self.master.switchMedical()
 
 

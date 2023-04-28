@@ -117,8 +117,16 @@ class patientList():
 
                     # treatment notes
 
-                    patients.addDoctorNote((setData("doctor_treatment_notes")[i][0]))
-                    patients.addNurseNote((setData("nurse_treatment_notes")[i][0]))
+                    doctorNotes = (setData("doctor_treatment_notes")[i][0]).split('\n')
+                    nurseNotes = (setData("nurse_treatment_notes")[i][0]).split('\n')
+
+                    if len(doctorNotes) != 0:
+                        for note in range(len(doctorNotes)):
+                            patients.addDoctorNote(doctorNotes[note])
+
+                    if len(nurseNotes) != 0:
+                        for note in range(len(nurseNotes)):
+                            patients.addNurseNote(nurseNotes[note])
 
                     # prescription info
 
