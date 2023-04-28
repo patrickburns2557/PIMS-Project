@@ -68,6 +68,13 @@ class validateInfo():
         elif len(patient.numAllowedVisitors) > 3:
             self.issue = "Max simultaneous visitors exceeds character limit."
 
+        elif len(patient.numAllowedVisitors) > 0:
+            for num in patient.numAllowedVisitors:
+                amount = ord(num)
+                if amount < 48 or amount > 57:
+                    self.issue = "Invalid entry for max simulataneous visitors."
+                
+
         elif len(patient.mobilePhone) > 20:
             self.issue = "Mobile phone number exceeds character limit."
 
@@ -123,10 +130,19 @@ class validateInfo():
         if self.issue == "":
             if new == True:
                 # add new patient to database
-                Data.addNewInfo.addNewInfo().updatePatient(patient, True)
+                # make sure database is loaded
+                try:
+                    Data.addNewInfo.addNewInfo().updatePatient(patient, True)
+                except:
+                    # dont access database if placeholder data is being used
+                    pass
             else:
                 # update existing patient
-                Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+                try:
+                    Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+                except:
+                    pass
+
             return True, self.issue
         
         else:

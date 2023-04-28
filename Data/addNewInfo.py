@@ -81,8 +81,8 @@ class addNewInfo():
         for i in range (len(self.chargeAmounts)):
             if i != 0:
                 self.amountString += "\n"
-            self.chargeAmounts[i] = str(self.chargeAmounts[i])
-            self.amountString = self.amountString + self.chargeAmounts[i]
+            amounts = str(self.chargeAmounts[i])
+            self.amountString = self.amountString + amounts
 
         self.db.update("billing_items_amount", self.amountString, self.ID)
 

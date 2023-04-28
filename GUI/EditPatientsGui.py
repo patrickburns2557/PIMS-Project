@@ -672,6 +672,8 @@ def finalizePatient(self,UpdatedPatient):
     validate.checkEntry(UpdatedPatient)
     truthValid, strIssue = validate.checkValidity(UpdatedPatient, False)
     if truthValid == False:
+        if hasattr(self, 'invalidLabel'):
+            self.invalidLabel.destroy()
         self.invalidLabel = ctk.CTkLabel(self, text=strIssue, font=("Courier", 18, "bold"))
         self.invalidLabel.place(relx = 0.5, rely = 0.11, anchor = 'center')
         UpdatedPatient = patientCopy
