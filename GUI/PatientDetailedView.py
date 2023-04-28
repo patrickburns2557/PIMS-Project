@@ -1,38 +1,36 @@
-import tkinter as tk
-import tkinter.ttk as ttk
 import customtkinter as ctk
-from Data.dataClasses import *
-import GUI.MainWindow as MainWindow
+
 import Data.System
 import Data.addNewInfo
+import GUI.MainWindow as MainWindow
 
 BGCOLOR = "#E4E4E4"
 BUTTONSELECTED = "#D9D9D9"
 BUTTONUNSELECTED = "#F0F0F0"
 FONTNAME = ("Courier", 32, "bold")
 FONTINFO = ("Courier", 18)
-FONTINFOOLD = ("Courier")
+FONTINFOOLD = "Courier"
 FONTBUTTON = ("Courier", 20)
 PADSECTION = 15
 PADLABEL = 2
-PADCOMP = 3 #Component padding
+PADCOMP = 3  # Component padding
 
-#Class for showing all the information for a selected patient
+
+# Class for showing all the information for a selected patient
 class PatientDetailedView(ctk.CTkFrame):
     def __init__(self, parentWidget, patient):
         super().__init__(parentWidget)
         self.patient = patient
-        #first tab shown will be the personal info tab
+        # first tab shown will be the personal info tab
         self.shownTab = PersonalInfoTab(self, patient)
-        
 
-        #Create frame and buttons for switching tabs
-        #Will need to setup later to only show relavant tabs based on which user is logged in.
+        # Create frame and buttons for switching tabs
+        # Will need to setup later to only show relavant tabs based on which user is logged in.
         self.buttonFrame = ctk.CTkFrame(self)
         self.personalButton = ctk.CTkButton(
             self.buttonFrame,
             text="Personal Information",
-            command=lambda:self.switchPersonal(),
+            command=lambda: self.switchPersonal(),
             font=FONTBUTTON,
             width=270,
             height=40,
@@ -40,24 +38,24 @@ class PatientDetailedView(ctk.CTkFrame):
         )
         self.personalButton.grid(row=0, column=1, padx=5, pady=5)
 
-        #Only show the medical tab to Doctor and Nurse user types
+        # Only show the medical tab to Doctor and Nurse user types
         if Data.System.getUserType() == 0 or Data.System.getUserType() == 1:
             self.medicalButton = ctk.CTkButton(
                 self.buttonFrame,
                 text="Medical Information",
-                command=lambda:self.switchMedical(),
+                command=lambda: self.switchMedical(),
                 font=FONTBUTTON,
                 width=270,
                 height=40,
             )
             self.medicalButton.grid(row=0, column=2, padx=5, pady=5)
-        
-        #Only show billing tab for Doctor, Nurse, and Office Staff user types
+
+        # Only show billing tab for Doctor, Nurse, and Office Staff user types
         if Data.System.getUserType() == 0 or Data.System.getUserType() == 1 or Data.System.getUserType() == 2:
             self.billingButton = ctk.CTkButton(
                 self.buttonFrame,
                 text="Billing Information",
-                command=lambda:self.switchBilling(),
+                command=lambda: self.switchBilling(),
                 font=FONTBUTTON,
                 width=270,
                 height=40,
@@ -70,12 +68,11 @@ class PatientDetailedView(ctk.CTkFrame):
             font=FONTBUTTON,
             width=100,
             height=40,
-            command=lambda:MainWindow.switchPatientList(Data.System.getPatientList())
+            command=lambda: MainWindow.switchPatientList(Data.System.getPatientList())
         )
         self.returnButton.grid(row=0, column=0, padx=5, pady=5)
-        
-        
-        #Only show the edit patient button for Office Staff user type
+
+        # Only show the edit patient button for Office Staff user type
         if Data.System.getUserType() == 2:
             self.EditPatientButton = ctk.CTkButton(
                 self.buttonFrame,
@@ -83,20 +80,18 @@ class PatientDetailedView(ctk.CTkFrame):
                 font=FONTBUTTON,
                 width=100,
                 height=40,
-                command=lambda:MainWindow.switchEditPatientView(Data.System.getUser())
+                command=lambda: MainWindow.switchEditPatientView(Data.System.getUser())
             )
             self.EditPatientButton.grid(row=0, column=4, padx=5, pady=5)
-    
+
         self.buttonFrame.grid(row=0, column=0, sticky="news", padx=8, pady=8)
         self.shownTab.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
 
-
-
-    #Functions to switch between the tabs using the buttons
+    # Functions to switch between the tabs using the buttons
     def switchPersonal(self):
-        #Some tab buttons may not exist depending on the type of user logged in
+        # Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="disabled")
         except (AttributeError, NameError):
@@ -109,8 +104,8 @@ class PatientDetailedView(ctk.CTkFrame):
             self.billingButton.configure(state="normal")
         except (AttributeError, NameError):
             pass
-        
-        #Destroy the current tab before loading the new one
+
+        # Destroy the current tab before loading the new one
         for i in self.shownTab.winfo_children():
             i.destroy()
         self.shownTab.destroy()
@@ -118,10 +113,8 @@ class PatientDetailedView(ctk.CTkFrame):
         self.shownTab = PersonalInfoTab(self, self.patient)
         self.shownTab.grid(row=1, column=0, sticky="news")
 
-
-
     def switchMedical(self):
-        #Some tab buttons may not exist depending on the type of user logged in
+        # Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="normal")
         except (AttributeError, NameError):
@@ -135,7 +128,7 @@ class PatientDetailedView(ctk.CTkFrame):
         except (AttributeError, NameError):
             pass
 
-        #Destroy the current tab before loading the new one
+        # Destroy the current tab before loading the new one
         for i in self.shownTab.winfo_children():
             i.destroy()
         self.shownTab.destroy()
@@ -143,10 +136,8 @@ class PatientDetailedView(ctk.CTkFrame):
         self.shownTab = MedicalInfoTab(self, self.patient)
         self.shownTab.grid(row=1, column=0, sticky="news")
 
-
-
     def switchBilling(self):
-        #Some tab buttons may not exist depending on the type of user logged in
+        # Some tab buttons may not exist depending on the type of user logged in
         try:
             self.personalButton.configure(state="normal")
         except (AttributeError, NameError):
@@ -160,19 +151,13 @@ class PatientDetailedView(ctk.CTkFrame):
         except (AttributeError, NameError):
             pass
 
-        #Destroy the current tab before loading the new one
+        # Destroy the current tab before loading the new one
         for i in self.shownTab.winfo_children():
             i.destroy()
         self.shownTab.destroy()
-        
+
         self.shownTab = BillingInfoTab(self, self.patient)
         self.shownTab.grid(row=1, column=0, sticky="news")
-
-
-
-
-
-
 
 
 #############################################
@@ -196,10 +181,10 @@ class PersonalInfoTab(ctk.CTkFrame):
         )
         self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint(1)).grid(
+        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda: Data.Printer.initPrint(1)).grid(
             row=0, column=1, sticky="w", padx=PADLABEL, pady=PADLABEL)
 
-        #Don't show address of patient if volunteer is logged in
+        # Don't show address of patient if volunteer is logged in
         if Data.System.getUserType() != 3:
             self.addressFrame = ctk.CTkFrame(
                 self
@@ -208,21 +193,22 @@ class PersonalInfoTab(ctk.CTkFrame):
             LabelBorder(self.addressFrame, "Address").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
             self.address = ctk.CTkLabel(
                 self.addressFrame,
-                text=patient.address[0] + "\n" + patient.address[1] + ", " + patient.address[2] + "\n" + patient.address[3],
+                text=patient.address[0] + "\n" + patient.address[1] + ", " + patient.address[2] + "\n" +
+                     patient.address[3],
                 anchor="w",
                 justify=ctk.LEFT,
                 font=FONTINFO
             )
             self.address.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
-        #Don't show phone numbers of patient if volunteer is logged in
+        # Don't show phone numbers of patient if volunteer is logged in
         if Data.System.getUserType() != 3:
             self.phoneFrame = ctk.CTkFrame(
                 self
             )
             self.phoneFrame.grid(row=1, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION)
-            LabelBorder(self.phoneFrame, "Phone Numbers").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+            LabelBorder(self.phoneFrame, "Phone Numbers").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                               pady=PADLABEL)
             self.phone = ctk.CTkLabel(
                 self.phoneFrame,
                 text="Mobile:" + patient.mobilePhone + "\nHome:  " + patient.homePhone + "\nWork:  " + patient.workPhone,
@@ -232,24 +218,24 @@ class PersonalInfoTab(ctk.CTkFrame):
             )
             self.phone.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
         self.emergContactFrame = ctk.CTkFrame(
             self
         )
-        #Change location of emergency contacts in grid if volunteer is logged in
+        # Change location of emergency contacts in grid if volunteer is logged in
         if Data.System.getUserType() == 3:
             self.emergContactFrame.grid(row=1, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         else:
             self.emergContactFrame.grid(row=2, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
-        LabelBorder(self.emergContactFrame, "Emergency Contacts").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.emergContactFrame, "Emergency Contacts").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                                       pady=PADLABEL)
         for i in range(len(patient.emergencyContactNames)):
             self.contact = LabelBorder(
                 self.emergContactFrame,
-                label=str(i+1) + ".)\n  Name:   " + patient.emergencyContactNames[i] + "\n  Number: " + patient.emergencyContactNumbers[i],
+                label=str(i + 1) + ".)\n  Name:   " + patient.emergencyContactNames[i] + "\n  Number: " +
+                      patient.emergencyContactNumbers[i],
                 isList=True
             )
-            self.contact.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
+            self.contact.grid(row=i + 1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         self.locationFrame = ctk.CTkFrame(
             self
@@ -258,18 +244,18 @@ class PersonalInfoTab(ctk.CTkFrame):
         LabelBorder(self.locationFrame, "Location").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.location = ctk.CTkLabel(
             self.locationFrame,
-            text="Facility: " + patient.location[0] + "\nFloor:    " + patient.location[1] + "\nRoom:     " + patient.location[2] + "\nBed:      " + patient.location[3],
+            text="Facility: " + patient.location[0] + "\nFloor:    " + patient.location[1] + "\nRoom:     " +
+                 patient.location[2] + "\nBed:      " + patient.location[3],
             anchor="w",
             justify=ctk.LEFT,
             font=FONTINFO
         )
         self.location.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
         self.visitationFrame = ctk.CTkFrame(
             self
         )
-        #Change location of visitation frame if volunteer is logged in
+        # Change location of visitation frame if volunteer is logged in
         if Data.System.getUserType() == 3:
             self.visitationFrame.grid(row=1, column=1, sticky="wn", padx=PADSECTION, pady=PADSECTION)
         else:
@@ -294,11 +280,10 @@ class PersonalInfoTab(ctk.CTkFrame):
         for i in range(len(patient.allowedVisitors)):
             self.visitor = LabelBorder(
                 self.visitationFrame,
-                label=str(i+1) + ".) " + patient.allowedVisitors[i],
+                label=str(i + 1) + ".) " + patient.allowedVisitors[i],
                 isList=True
             )
-            self.visitor.grid(row=i+3, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
-        
+            self.visitor.grid(row=i + 3, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
 class MedicalInfoTab(ctk.CTkFrame):
@@ -308,7 +293,7 @@ class MedicalInfoTab(ctk.CTkFrame):
         self.nameFrame = ctk.CTkFrame(
             self
         )
-        self.nameFrame.grid(row=0, column=0, columnspan=10, sticky="nw", padx=PADSECTION, pady= PADSECTION)
+        self.nameFrame.grid(row=0, column=0, columnspan=10, sticky="nw", padx=PADSECTION, pady=PADSECTION)
         LabelBorder(self.nameFrame, "Name").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.name = ctk.CTkLabel(
             self.nameFrame,
@@ -317,14 +302,15 @@ class MedicalInfoTab(ctk.CTkFrame):
         )
         self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint(2)).grid(
+        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda: Data.Printer.initPrint(2)).grid(
             row=0, column=1, sticky="w", padx=PADLABEL, pady=PADLABEL)
 
         self.famDoctorFrame = ctk.CTkFrame(
             self
         )
         self.famDoctorFrame.grid(row=1, column=0, sticky="nw", padx=PADSECTION, pady=PADSECTION)
-        LabelBorder(self.famDoctorFrame, "Family Doctor").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.famDoctorFrame, "Family Doctor").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                               pady=PADLABEL)
         self.famDoctor = ctk.CTkLabel(
             self.famDoctorFrame,
             text=patient.familyDoctor,
@@ -333,7 +319,6 @@ class MedicalInfoTab(ctk.CTkFrame):
             font=FONTINFO
         )
         self.famDoctor.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
 
         self.admittanceFrame = ctk.CTkFrame(
             self
@@ -349,7 +334,6 @@ class MedicalInfoTab(ctk.CTkFrame):
         )
         self.admittance.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
         self.dischargeFrame = ctk.CTkFrame(
             self
         )
@@ -364,50 +348,50 @@ class MedicalInfoTab(ctk.CTkFrame):
         )
         self.discharge.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
         self.prescriptionFrame = ctk.CTkFrame(
             self
         )
         self.prescriptionFrame.grid(row=1, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION, rowspan=2)
-        LabelBorder(self.prescriptionFrame, "Prescriptions").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.prescriptionFrame, "Prescriptions").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                                  pady=PADLABEL)
         for i in range(len(patient.prescriptionNames)):
             self.prescription = LabelBorder(
                 self.prescriptionFrame,
-                label=str(i+1) + ".)\n  Name:     " + patient.prescriptionNames[i] + "\n  Amount:   " + patient.prescriptionAmount[i] + "\n  Schedule: " + patient.prescriptionSchedule[i],
+                label=str(i + 1) + ".)\n  Name:     " + patient.prescriptionNames[i] + "\n  Amount:   " +
+                      patient.prescriptionAmount[i] + "\n  Schedule: " + patient.prescriptionSchedule[i],
                 isList=True
             )
-            self.prescription.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
-        
+            self.prescription.grid(row=i + 1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         self.proceduresFrame = ctk.CTkFrame(
             self
         )
         self.proceduresFrame.grid(row=3, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION)
-        LabelBorder(self.proceduresFrame, "Scheduled Procedures").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.proceduresFrame, "Scheduled Procedures").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                                       pady=PADLABEL)
         for i in range(len(patient.scheduledProcedures)):
             self.procedure = LabelBorder(
                 self.proceduresFrame,
-                label=str(i+1) + ".) " + patient.scheduledProcedures[i],
+                label=str(i + 1) + ".) " + patient.scheduledProcedures[i],
                 isList=True
             )
-            self.procedure.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
+            self.procedure.grid(row=i + 1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         self.doctorNoteFrame = ctk.CTkFrame(
             self
         )
         self.doctorNoteFrame.grid(row=1, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
-        LabelBorder(self.doctorNoteFrame, "Doctor Notes").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.doctorNoteFrame, "Doctor Notes").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                               pady=PADLABEL)
         for i in range(len(patient.doctorNotes)):
             self.doctorNote = LabelBorder(
                 self.doctorNoteFrame,
-                label=str(i+1) + ".) " + patient.doctorNotes[i],
+                label=str(i + 1) + ".) " + patient.doctorNotes[i],
                 isList=True
             )
-            self.doctorNote.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
+            self.doctorNote.grid(row=i + 1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
-        self.nurseNoteFrame =ctk.CTkFrame(
+        self.nurseNoteFrame = ctk.CTkFrame(
             self
         )
         self.nurseNoteFrame.grid(row=2, column=2, sticky="nw", padx=PADSECTION, pady=PADSECTION)
@@ -415,11 +399,10 @@ class MedicalInfoTab(ctk.CTkFrame):
         for i in range(len(patient.nurseNotes)):
             self.nurseNote = LabelBorder(
                 self.nurseNoteFrame,
-                label=str(i+1) + ".) " + patient.nurseNotes[i],
+                label=str(i + 1) + ".) " + patient.nurseNotes[i],
                 isList=True
             )
-            self.nurseNote.grid(row=i+1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
+            self.nurseNote.grid(row=i + 1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         self.addNoteFrame = ctk.CTkFrame(
             self
@@ -440,27 +423,23 @@ class MedicalInfoTab(ctk.CTkFrame):
             font=FONTINFO,
             width=80
         )
-        
-        #The added note will be assigned to either Doctor's Notes or Nurse's notes depending on the type of user logged in
+
+        # The added note will be assigned to either Doctor's Notes or Nurse's notes depending on the type of user logged in
         if Data.System.getUserType() == 0:
             self.addNoteButton.configure(command=lambda: self.addDoctorNote(patient, self.note.get()))
         elif Data.System.getUserType() == 1:
             self.addNoteButton.configure(command=lambda: self.addNurseNote(patient, self.note.get()))
         self.addNoteButton.grid(row=1, column=1, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
     def addNurseNote(self, patient, nurseNote):
         patient.addNurseNote(nurseNote)
         Data.addNewInfo.addNewInfo().updatePatient(patient, False)
         self.master.switchMedical()
+
     def addDoctorNote(self, patient, doctorNote):
         patient.addDoctorNote(doctorNote)
         Data.addNewInfo.addNewInfo().updatePatient(patient, False)
         self.master.switchMedical()
-
-
-        
-
 
 
 class BillingInfoTab(ctk.CTkFrame):
@@ -479,14 +458,15 @@ class BillingInfoTab(ctk.CTkFrame):
         )
         self.name.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda:Data.Printer.initPrint(3)).grid(
+        ctk.CTkButton(self.nameFrame, text="Print", font=("Arial", 20), command=lambda: Data.Printer.initPrint(3)).grid(
             row=0, column=1, sticky="w", padx=PADLABEL, pady=PADLABEL)
 
         self.insuranceFrame = ctk.CTkFrame(
             self
         )
         self.insuranceFrame.grid(row=1, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        LabelBorder(self.insuranceFrame, "Insurance Carrier").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.insuranceFrame, "Insurance Carrier").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                                   pady=PADLABEL)
         self.insuranceName = ctk.CTkLabel(
             self.insuranceFrame,
             text=patient.insuranceCarrier,
@@ -496,12 +476,12 @@ class BillingInfoTab(ctk.CTkFrame):
         )
         self.insuranceName.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
         self.policyInfoFrame = ctk.CTkFrame(
             self
         )
         self.policyInfoFrame.grid(row=2, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        LabelBorder(self.policyInfoFrame, "Insurance Policy Info").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.policyInfoFrame, "Insurance Policy Info").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                                        pady=PADLABEL)
         self.policyInfo = ctk.CTkLabel(
             self.policyInfoFrame,
             text="Account Number: " + patient.insuranceAccountNumber + "\nGroup Number:   " + patient.insuranceGroupNumber,
@@ -510,7 +490,6 @@ class BillingInfoTab(ctk.CTkFrame):
             font=FONTINFO
         )
         self.policyInfo.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
-
 
         self.amountPaidFrame = ctk.CTkFrame(
             self
@@ -526,12 +505,12 @@ class BillingInfoTab(ctk.CTkFrame):
         )
         self.amountPaid.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-
         self.amountPaidInsuranceFrame = ctk.CTkFrame(
             self
         )
         self.amountPaidInsuranceFrame.grid(row=4, column=0, sticky="w", padx=PADSECTION, pady=PADSECTION)
-        LabelBorder(self.amountPaidInsuranceFrame, "Amount Paid By Insurance").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.amountPaidInsuranceFrame, "Amount Paid By Insurance").grid(row=0, column=0, sticky="w",
+                                                                                    padx=PADLABEL, pady=PADLABEL)
         self.amountPaidInsurance = ctk.CTkLabel(
             self.amountPaidInsuranceFrame,
             text="${:.2f}".format(patient.amountPaidByInsurance),
@@ -542,7 +521,7 @@ class BillingInfoTab(ctk.CTkFrame):
         self.amountPaidInsurance.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         try:
-            patient.updateAmountOwed() #Update amount owed before printing it in GUI
+            patient.updateAmountOwed()  # Update amount owed before printing it in GUI
         except:
             pass
         self.amountOwedFrame = ctk.CTkFrame(
@@ -559,12 +538,12 @@ class BillingInfoTab(ctk.CTkFrame):
         )
         self.amountOwed.grid(row=1, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        
         self.listChargesFrame = ctk.CTkFrame(
             self
         )
         self.listChargesFrame.grid(row=1, column=1, sticky="nw", padx=PADSECTION, pady=PADSECTION, rowspan=10)
-        LabelBorder(self.listChargesFrame, "List of Charges").grid(row=0, column=0, sticky="w", padx=PADLABEL, pady=PADLABEL, columnspan=2)
+        LabelBorder(self.listChargesFrame, "List of Charges").grid(row=0, column=0, sticky="w", padx=PADLABEL,
+                                                                   pady=PADLABEL, columnspan=2)
         for i in range(len(patient.listCharges)):
             self.singleChargeFrame = ctk.CTkFrame(self.listChargesFrame)
             self.chargeName = ctk.CTkLabel(
@@ -584,13 +563,12 @@ class BillingInfoTab(ctk.CTkFrame):
                 font=FONTINFO
             )
             self.chargeAmount.grid(row=0, column=1, sticky="e", padx=10)
-            self.singleChargeFrame.grid(row=i+1, column=0, sticky="ew", padx=PADCOMP, pady=PADCOMP)
+            self.singleChargeFrame.grid(row=i + 1, column=0, sticky="ew", padx=PADCOMP, pady=PADCOMP)
             self.singleChargeFrame.grid_columnconfigure(0, weight=1)
 
 
-
-#Class to create a label with a border around it
-#isList is a boolean flag to mark if the border is a list item, in which it should use the default INFO font
+# Class to create a label with a border around it
+# isList is a boolean flag to mark if the border is a list item, in which it should use the default INFO font
 #   Assumes false as the default
 class LabelBorder(ctk.CTkFrame):
     def __init__(self, parentWidget, label, isList=False):

@@ -1,8 +1,8 @@
 #!/usr/bin/python
-from Data.Printer import *
-from Data.dataClasses import *
 import GUI.MainWindow
+from Data.Printer import *
 from Data.System import *
+
 
 def test_print():
     loginSystem.login(System.TheSystem.user, "test", "test")
@@ -14,4 +14,3 @@ def test_print():
     name = lines[5].split()[1]
     print(name)
     assert name == "Benjamin"
-        

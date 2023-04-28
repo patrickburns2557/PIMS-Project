@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from Data.assignData import *
-from Data.System import *
+
 
 def test_loadPatientList():
     list = patientList()

@@ -4,13 +4,14 @@ import GUI.MainWindow
 import Data.System
 from PIL import Image
 
+
 class LoginView(ctk.CTkFrame):
     def __init__(self, parentWidget, user):
         super().__init__(parentWidget)
         self.username = ctk.StringVar()
         self.password = ctk.StringVar()
         self.user = user
-        
+
         self.logo = ctk.CTkImage(
             light_image=Image.open("logo.png"),
             size=(300, 300)
@@ -50,7 +51,7 @@ class LoginView(ctk.CTkFrame):
         self.personalButton = ctk.CTkButton(
             self,
             text="Login",
-            command=lambda:self.processLogin(),
+            command=lambda: self.processLogin(),
             font=("Courier", 20),
             width=270,
             height=40,
@@ -67,7 +68,7 @@ class LoginView(ctk.CTkFrame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(3, weight=1)
 
-        self.master.after(100, lambda:self.usernameEntry.focus_set())
+        self.master.after(100, lambda: self.usernameEntry.focus_set())
 
     def processLogin(self, event=None):
         username = self.username.get()
@@ -75,7 +76,8 @@ class LoginView(ctk.CTkFrame):
         if loginSystem.login(self.user, username, password):
             Data.System.loadDatabase()
             GUI.MainWindow.switchPatientList(Data.System.getPatientList())
-            GUI.MainWindow.updateTopBar() #update user type in TopBar
+            GUI.MainWindow.updateTopBar()  # update user type in TopBar
         else:
-            self.incorrectLabel = ctk.CTkLabel(self, text="Incorrect username or password", font=("Courier", 18, "bold"))
+            self.incorrectLabel = ctk.CTkLabel(self, text="Incorrect username or password",
+                                               font=("Courier", 18, "bold"))
             self.incorrectLabel.grid(row=4, column=1, padx=5, pady=5, columnspan=2)

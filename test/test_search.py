@@ -3,6 +3,7 @@ import GUI.MainWindow
 from Data.System import *
 from GUI.ListView import *
 
+
 def test_search():
     print(System.TheSystem.patientList[0].firstName)
     GUI.MainWindow.switchPatientList(System.TheSystem.patientList)

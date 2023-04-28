@@ -2,12 +2,14 @@ import Data.assignData
 import GUI.MainWindow
 from Data.dataClasses import *
 
-#Class to hold the patient master list and the currently logged in user
-class System():
-    TheSystem = None #Class variable to hold itself in so that other classes can make calls to the System class and access it
+
+# Class to hold the patient master list and the currently logged in user
+class System:
+    TheSystem = None  # Class variable to hold itself in so that other classes can make calls to the System class and access it
+
     def __init__(self):
-        System.TheSystem = self #Store self into class variable upon creation
-        
+        System.TheSystem = self  # Store self into class variable upon creation
+
         self.patientList = []
         self.user = User()
 
@@ -49,57 +51,74 @@ class System():
         p1.setAmountPaid(481.1891024)
         p1.setAmountPaidByInsurance(15.81870)
         p1.addCharge("Broken leg repaired", 890.1333)
-        p1.addCharge("Really long charge name that would need to be wrapped around to display properly without going off of the screen", 3101.31)
+        p1.addCharge(
+            "Really long charge name that would need to be wrapped around to display properly without going off of the screen",
+            3101.31)
         p1.addCharge("Expensive Medicine administered", 443.145)
         self.patientList.append(p1)
 
         p = Patient()
-        p.setFirstName("Richard") ; p.setLastname("jackson") ; p.setLocation(["Facility 3", "Floor 1", "Room 12", "Bed 2"])
+        p.setFirstName("Richard");
+        p.setLastname("jackson");
+        p.setLocation(["Facility 3", "Floor 1", "Room 12", "Bed 2"])
         self.patientList.append(p)
         p = Patient()
-        p.setFirstName("Amy") ; p.setLastname("Jones") ; p.setLocation(["Facility 1", "Floor 4", "Room 419", "Bed 1"])
+        p.setFirstName("Amy");
+        p.setLastname("Jones");
+        p.setLocation(["Facility 1", "Floor 4", "Room 419", "Bed 1"])
         self.patientList.append(p)
         p = Patient()
-        p.setFirstName("patrick") ; p.setLastname("burns") ; p.setLocation(["Facility 1", "Floor 3", "Room 363", "Bed 3"])
+        p.setFirstName("patrick");
+        p.setLastname("burns");
+        p.setLocation(["Facility 1", "Floor 3", "Room 363", "Bed 3"])
         self.patientList.append(p)
         p = Patient()
-        p.setFirstName("My First Name") ; p.setLastname("MyLastName") ; p.setLocation(["My Facility", "My Floor", "My Room", "My Bed"])
+        p.setFirstName("My First Name");
+        p.setLastname("MyLastName");
+        p.setLocation(["My Facility", "My Floor", "My Room", "My Bed"])
         self.patientList.append(p)
         for i in range(20):
             first = "first " + str(i)
             last = "last " + str(i)
             location = "location " + str(i)
             p = Patient()
-            p.setFirstName(first) ; p.setLastname(last) ; p.setLocation([location, "floor", "room", "bed"])
+            p.setFirstName(first);
+            p.setLastname(last);
+            p.setLocation([location, "floor", "room", "bed"])
             self.patientList.append(p)
 
-#create a system object to initialize TheSystem variable above
+
+# create a system object to initialize TheSystem variable above
 def initialize():
     system = System()
 
-#Returns current master list of patients
+
+# Returns current master list of patients
 def getPatientList():
     return System.TheSystem.patientList
 
-def loadDatabase():
-    #If database fails to load, load placeholder data instead
-        try:
-            patientCreator = Data.assignData.patientList()
-            patientCreator.createList()
-            System.TheSystem.patientList = patientCreator.getList()
-        except:
-            print("Loading placeholder data instead.")
-            System.TheSystem.loadPlaceholderData()
 
-#Returns the User object for the currently logged in user
+def loadDatabase():
+    # If database fails to load, load placeholder data instead
+    try:
+        patientCreator = Data.assignData.patientList()
+        patientCreator.createList()
+        System.TheSystem.patientList = patientCreator.getList()
+    except:
+        print("Loading placeholder data instead.")
+        System.TheSystem.loadPlaceholderData()
+
+
+# Returns the User object for the currently logged in user
 def getUser():
     return System.TheSystem.user
 
-#Returns the type of the currently logged in user
+
+# Returns the type of the currently logged in user
 def getUserType():
     return System.TheSystem.user.getUserType()
 
+
 def logoutUser():
     System.TheSystem.user = User()
-    GUI.MainWindow.updateTopBar() #update user type in TopBar
-    
+    GUI.MainWindow.updateTopBar()  # update user type in TopBar

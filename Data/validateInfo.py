@@ -1,31 +1,32 @@
 import Data.addNewInfo
 import re
 
+
 # class to ensure all information entered in add/edit patient is valid
 
 
-class validateInfo():
+class validateInfo:
 
     def __init__(self):
 
-       self.issue = ""
+        self.issue = ""
 
     def checkEntry(self, patient):
 
         # check character length of incoming values
-        
+
         if len(patient.firstName) > 20:
             self.issue = "First name exceeds character limit."
-        
+
         elif len(patient.middleName) > 20:
             self.issue = "Middle name exceeds character limit."
-        
+
         elif len(patient.lastName) > 20:
             self.issue = "Last name exceeds character limit."
 
         elif len(patient.address[0]) > 50:
             self.issue = "Street name exceeds character limit."
-        
+
         elif len(patient.address[1]) > 20:
             self.issue = "City exceeds character limit."
 
@@ -73,7 +74,7 @@ class validateInfo():
                 amount = ord(num)
                 if amount < 48 or amount > 57:
                     self.issue = "Invalid entry for max simulataneous visitors."
-                
+
 
         elif len(patient.mobilePhone) > 20:
             self.issue = "Mobile phone number exceeds character limit."
@@ -96,39 +97,42 @@ class validateInfo():
         # make sure no letters or invalid symbols are entered for phone numbers
 
         if len(patient.emergencyContactNumbers) != 0 and patient.emergencyContactNumbers[0] != "":
-            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.emergencyContactNumbers[0])
-            if check == None:
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
+                              patient.emergencyContactNumbers[0])
+            if check is None:
                 self.issue = "Invalid entry for emergency number 1"
 
         if len(patient.emergencyContactNumbers) >= 2 and patient.emergencyContactNumbers[1] != "":
-            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.emergencyContactNumbers[1])
-            if check == None:
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
+                              patient.emergencyContactNumbers[1])
+            if check is None:
                 self.issue = "Invalid entry for emergency number 2"
 
         if len(patient.emergencyContactNumbers) >= 3 and patient.emergencyContactNumbers[2] != "":
-            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.emergencyContactNumbers[2])
-            if check == None:
+            check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
+                              patient.emergencyContactNumbers[2])
+            if check is None:
                 self.issue = "Invalid entry for emergency number 3"
 
         if patient.mobilePhone != "":
             check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.mobilePhone)
-            if check == None:
+            if check is None:
                 self.issue = "Invalid entry for mobile phone number"
 
         if patient.homePhone != "":
             check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.homePhone)
-            if check == None:
+            if check is None:
                 self.issue = "Invalid entry for home phone number"
 
         if patient.workPhone != "":
             check = re.search("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", patient.workPhone)
-            if check == None:
+            if check is None:
                 self.issue = "Invalid entry for work phone number"
 
     # if no issues found in info, add to database and return true
     def checkValidity(self, patient, new):
         if self.issue == "":
-            if new == True:
+            if new:
                 # add new patient to database
                 # make sure database is loaded
                 try:
@@ -144,6 +148,6 @@ class validateInfo():
                     pass
 
             return True, self.issue
-        
+
         else:
             return False, self.issue
