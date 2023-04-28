@@ -637,7 +637,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
         )
         self.addInsuranceGroupEntry.grid(row=7, column=0, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        LabelBorder(self.addNoteFrame, "Amount Paid").grid(row=1, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Amount Paid").grid(row=7, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.AmountPaidNote = ctk.StringVar(value = patient.amountPaid)
         self.addAmountPaidEntry = ctk.CTkEntry(
             self.addNoteFrame,
@@ -647,10 +647,10 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
             width=350,
             textvariable=self.AmountPaidNote
         )
-        self.addAmountPaidEntry.grid(row=2, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+        self.addAmountPaidEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
  
-        LabelBorder(self.addNoteFrame, "Amount paid by Insurance").grid(row=3, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Amount paid by Insurance").grid(row=9, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.AmountPaidbyInsuranceNote = ctk.StringVar(value = patient.amountPaidByInsurance)
         self.addAmountPaidInsuranceEntry = ctk.CTkEntry(
             self.addNoteFrame,
@@ -661,10 +661,10 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
             textvariable=self.AmountPaidbyInsuranceNote        
 
         )
-        self.addAmountPaidInsuranceEntry.grid(row=4, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+        self.addAmountPaidInsuranceEntry.grid(row=10, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
-        LabelBorder(self.addNoteFrame, "Charge").grid(row=7, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Charge").grid(row=1, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.addChargeDesNote = ctk.StringVar( )
         self.addChargeEntry = ctk.CTkEntry(
             self.addNoteFrame,
@@ -672,11 +672,11 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
             width=350,
             textvariable=self.addChargeDesNote
         )
-        self.addChargeEntry.grid(row=8, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+        self.addChargeEntry.grid(row=2, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
 
                 
-        LabelBorder(self.addNoteFrame, "Charge Amount").grid(row=9, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Charge Amount").grid(row=3, column=4, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.addChargeAmountNote = ctk.StringVar( )
         self.addChargeAmountEntry = ctk.CTkEntry(
             self.addNoteFrame,
@@ -686,7 +686,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
             width=350,
             textvariable=self.addChargeAmountNote
         )
-        self.addChargeAmountEntry.grid(row=10, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+        self.addChargeAmountEntry.grid(row=4, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         self.addChargeButton = ctk.CTkButton(
             self.addNoteFrame,
@@ -696,7 +696,7 @@ class BillingInfoTab(ctk.CTkScrollableFrame):
             font=FONTINFO,
             width=80
         )
-        self.addChargeButton.grid(row=11, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
+        self.addChargeButton.grid(row=5, column=4, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
         self.addChargeRefresh(patient)
     
