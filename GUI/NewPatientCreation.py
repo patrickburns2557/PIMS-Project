@@ -494,7 +494,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         """
 
         #pattern = "^(+\d{1,2}\s?)?(?\d{3})?[\s.-]?\d{3}[\s.-]?\d{4}$"
-        pattern = "^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$"
+        pattern = "^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
         #pattern = "^(+\d{1,2}\s?)?(?\d{3})?[\s.-]?\d{3}[\s.-]?\d{4}$"
         if re.fullmatch(pattern, value) is None:
             self.invalidePhone(EntryName)
