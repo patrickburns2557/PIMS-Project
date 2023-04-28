@@ -3,4 +3,6 @@ import Data.System
 
 Data.System.initialize()
 
-window = GUI.MainWindow.MainWindow(Data.System.getPatientList(), Data.System.getUser())
+Data.System.loadDatabase()
+
+GUI.MainWindow.MainWindow(Data.System.getPatientList(), Data.System.getUser())
