@@ -25,11 +25,6 @@ ALTER TABLE patients MODIFY COLUMN date_of_admittance varchar(50);
 ALTER TABLE patients MODIFY COLUMN discharge_date varchar(50);
 ALTER TABLE patients MODIFY COLUMN family_doctor varchar(50);
 
-# add columns for third emergency contact
-ALTER TABLE patients 
-add column emergency3_name varchar(50),
-add column emergency3_number varchar(20);
-
 insert into patients values
 (0, "Garcia", "Sophia", "Maria", 
 "1281 Meadow Ln", "Huntsville", "AL", "35801", 
@@ -191,3 +186,8 @@ insert into patients values
 "Carboplatin\nCisplatin\nWedge resection\nChemotherapy", "533.05\n607.37\n5600.82\n10000.90",
 6742.14, 10000.00, 10000.00,
 "4","Ryan Herring\nLila Fitzpatrick\nOlivia White\nEthan Johnson");
+
+# add columns for third emergency contact
+ALTER TABLE patients 
+add column emergency3_name varchar(50),
+add column emergency3_number varchar(20);
