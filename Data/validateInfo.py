@@ -130,9 +130,11 @@ class validateInfo():
         if self.issue == "":
             if new == True:
                 # add new patient to database
+                # make sure database is loaded
                 try:
                     Data.addNewInfo.addNewInfo().updatePatient(patient, True)
                 except:
+                    # dont access database if placeholder data is being used
                     pass
             else:
                 # update existing patient
