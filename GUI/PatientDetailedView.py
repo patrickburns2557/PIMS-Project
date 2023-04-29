@@ -1,5 +1,3 @@
-import tkinter as tk
-import tkinter.ttk as ttk
 import customtkinter as ctk
 from Data.dataClasses import *
 import GUI.MainWindow as MainWindow
@@ -11,7 +9,6 @@ BUTTONSELECTED = "#D9D9D9"
 BUTTONUNSELECTED = "#F0F0F0"
 FONTNAME = ("Courier", 32, "bold")
 FONTINFO = ("Courier", 18)
-FONTINFOOLD = ("Courier")
 FONTBUTTON = ("Courier", 20)
 PADSECTION = 15
 PADLABEL = 2
@@ -451,11 +448,19 @@ class MedicalInfoTab(ctk.CTkFrame):
 
     def addNurseNote(self, patient, nurseNote):
         patient.addNurseNote(nurseNote)
-        Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+        try:
+            Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+        except:
+            # Don't add if not connected to database
+            pass
         self.master.switchMedical()
     def addDoctorNote(self, patient, doctorNote):
         patient.addDoctorNote(doctorNote)
-        Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+        try:
+            Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+        except:
+            # Don't add if not connected to database
+            pass
         self.master.switchMedical()
 
 

@@ -2,8 +2,12 @@ import Data.System
 from Data.dataClasses import Patient
 import GUI.MainWindow
 import pandas as pd
-from os import startfile
 from datetime import datetime
+try:
+    from os import startfile
+except:
+    #this library doesn't exist on linux
+    pass
 
 # constants
 REPORT_NAME = "PatientReport.txt"
@@ -182,7 +186,11 @@ def writeFile(dataFrame):
 
 # opens the report in the OS's text viewer
 def openFile(file):
-    startfile(file)
+    try:
+        startfile(file)
+    except:
+        #This library doesn't exist on linux
+        pass
 
 
 # print a current view

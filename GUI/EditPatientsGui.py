@@ -1,7 +1,4 @@
-import tkinter as tk
-import tkinter.ttk as ttk
 import customtkinter as ctk
-import GUI.ScrollablePatientList as spl
 import Data.System
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
@@ -10,7 +7,6 @@ import re
 
 
 FONTINFO = ("Courier", 18)
-FONTINFOOLD = ("Courier")
 FONTBUTTON = ("Courier", 20)
 PADSECTION = 15
 PADLABEL = 2
@@ -173,8 +169,8 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         #ivcmd = (self.register(self.on_invalid),)  
         
         #label error for invalid phone numbers
-        self.label_error = ttk.Label(self, foreground='red')
-        self.label_error.grid(row=8, column=3, sticky=tk.W, padx=5)      
+        self.label_error = ctk.CTkLabel(self, text_color='red', text="")
+        self.label_error.grid(row=8, column=3, sticky="w", padx=5)      
     
         self.addNoteFrame = ctk.CTkFrame(
             self
@@ -801,21 +797,21 @@ def finalizePatient(self,UpdatedPatient):
     try:    
         UpdatedPatient.emergencyContactNames[0] = (self.PersonalTab.EmergencyName1Note.get())
         UpdatedPatient.emergencyContactNumbers[0] = (self.PersonalTab.EmergencyPhone1Note.get()) 
-    except (ValueError, NameError, AttributeError):
+    except:
         if(self.PersonalTab.EmergencyName1Note.get() != "" and self.PersonalTab.EmergencyPhone1Note.get() != ""):
             UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName1Note.get(), self.PersonalTab.EmergencyPhone1Note.get()) 
    
     try:    
         UpdatedPatient.emergencyContactNames[1] = (self.PersonalTab.EmergencyName2Note.get())
         UpdatedPatient.emergencyContactNumbers[1] = (self.PersonalTab.EmergencyPhone2Note.get()) 
-    except (ValueError, NameError, AttributeError):
+    except:
         if(self.PersonalTab.EmergencyName2Note.get() != "" and self.PersonalTab.EmergencyPhone2Note.get() != ""):
             UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName2Note.get(), self.PersonalTab.EmergencyPhone2Note.get()) 
     
     try:    
         UpdatedPatient.emergencyContactNames[2] = (self.PersonalTab.EmergencyName3Note.get())
         UpdatedPatient.emergencyContactNumbers[2] = (self.PersonalTab.EmergencyPhone3Note.get()) 
-    except (ValueError, NameError, AttributeError):
+    except:
         if(self.PersonalTab.EmergencyName3Note.get() != "" and self.PersonalTab.EmergencyPhone3Note.get() != ""):
             UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName3Note.get(), self.PersonalTab.EmergencyPhone3Note.get()) 
             

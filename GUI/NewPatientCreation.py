@@ -1,7 +1,4 @@
-import tkinter as tk
-import tkinter.ttk as ttk
 import customtkinter as ctk
-import GUI.ScrollablePatientList as spl
 import Data.System 
 import GUI.MainWindow as MainWindow
 from Data.dataClasses import Patient
@@ -9,7 +6,6 @@ import Data.validateInfo
 import re
 
 FONTINFO = ("Courier", 18)
-FONTINFOOLD = ("Courier")
 FONTBUTTON = ("Courier", 20)
 PADSECTION = 15
 PADLABEL = 2
@@ -199,8 +195,8 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.valid6 = True          
         
         #error message for invalid phone number
-        self.label_error = ttk.Label(self, foreground='red')
-        self.label_error.grid(row=8, column=3, sticky=tk.W, padx=5)   
+        self.label_error = ctk.CTkLabel(self, text_color='red', text="")
+        self.label_error.grid(row=8, column=3, sticky="w", padx=5)   
     
         self.addNoteFrame = ctk.CTkFrame(
             self

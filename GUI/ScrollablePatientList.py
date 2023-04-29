@@ -1,5 +1,3 @@
-import tkinter as tk
-import tkinter.ttk as ttk
 import customtkinter as ctk
 import GUI.MainWindow
 
@@ -79,8 +77,6 @@ class SinglePatientListWidget(ctk.CTkFrame):
                 text="LAST NAME",
                 width=200,
                 font=("Courier", 18, "bold")
-                #anchor="w",
-                #justify=tk.LEFT
             )
             self.lastNameLabel.pack(padx=2, pady=2)
 

@@ -11,18 +11,22 @@ class LoginView(ctk.CTkFrame):
         self.password = ctk.StringVar()
         self.user = user
         
-        self.logo = ctk.CTkImage(
-            light_image=Image.open("logo.png"),
-            size=(300, 300)
-        )
-        self.logoLabel = ctk.CTkLabel(
-            self,
-            text="",
-            image=self.logo,
-            anchor="center",
-            justify="center"
-        )
-        self.logoLabel.grid(row=0, column=0, padx=10, pady=30, columnspan=10, sticky="ew")
+        try:
+            self.logo = ctk.CTkImage(
+                light_image=Image.open("logo.png"),
+                size=(300, 300)
+            )
+            self.logoLabel = ctk.CTkLabel(
+                self,
+                text="",
+                image=self.logo,
+                anchor="center",
+                justify="center"
+            )
+            self.logoLabel.grid(row=0, column=0, padx=10, pady=30, columnspan=10, sticky="ew")
+        except:
+            # Ignore if the image fails to load (usually happens when running on linux)
+            pass
 
         self.usernameLabel = ctk.CTkLabel(self, text="Username:", font=("Courier", 18, "bold"))
         self.usernameLabel.grid(row=1, column=1, padx=10)

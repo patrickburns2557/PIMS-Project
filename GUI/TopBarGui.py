@@ -2,7 +2,9 @@ import customtkinter as ctk
 import Data.System
 import Data.Printer
 import GUI.MainWindow
+
 TOPBARFONT = ("Arial", 20)
+
 class TopBar(ctk.CTkFrame):
     def __init__(self, parentWidget):
         super().__init__(parentWidget)

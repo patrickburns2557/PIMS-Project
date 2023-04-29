@@ -1,7 +1,4 @@
-import tkinter as tk
-import tkinter.ttk as ttk
 import customtkinter as ctk
-import GUI.ScrollablePatientList as spl
 import GUI.PatientDetailedView as pdv
 import GUI.TopBarGui as tb
 import GUI.ListView as lv
@@ -23,14 +20,14 @@ class MainWindow(ctk.CTk):
         MainWindow.window = self #Store self into class variable upon creation
         MainWindow.viewType = self
 
-        self.geometry("1280x720")
+        self.geometry("1320x720")
         self.title("Patient Information Management System (PIMS)")
         #Skip loading window icon if it fails since it's not strictly necessary
         try:
             self.iconbitmap('./logo.ico')
         except:
             pass
-        self.minsize(1280, 720)
+        self.minsize(1320, 720)
         
         self.topBar = tb.TopBar(self)
         self.topBar.grid(row=0, column=0, sticky="ew", columnspan=10)

@@ -1,5 +1,3 @@
-import tkinter as tk
-import tkinter.ttk as ttk
 import customtkinter as ctk
 import GUI.ScrollablePatientList as spl
 import Data.System
