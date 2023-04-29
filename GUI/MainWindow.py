@@ -97,7 +97,7 @@ def getCurrentPatient():
     return MainWindow.currentPatient
 
 
-# Functino to allow other classes to update the top bar, such as when a different user type logs in
+# Function to allow other classes to update the top bar, such as when a different user type logs in
 def updateTopBar():
     MainWindow.window.topBar.destroy()
 

@@ -3,7 +3,7 @@ import GUI.MainWindow
 from Data.dataClasses import *
 
 
-# Class to hold the patient master list and the currently logged in user
+# Class to hold the patient master list and the currently logged-in user
 class System:
     TheSystem = None  # Class variable to hold itself in so that other classes can make calls to the System class and access it
 
@@ -109,12 +109,12 @@ def loadDatabase():
         System.TheSystem.loadPlaceholderData()
 
 
-# Returns the User object for the currently logged in user
+# Returns the User object for the currently logged-in user
 def getUser():
     return System.TheSystem.user
 
 
-# Returns the type of the currently logged in user
+# Returns the type of the currently logged-in user
 def getUserType():
     return System.TheSystem.user.getUserType()
 

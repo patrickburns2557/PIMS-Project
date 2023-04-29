@@ -3,7 +3,7 @@ import Data.System
 import Data.Printer
 import GUI.MainWindow
 
-TOPBARFONT = ("Arial", 20)
+TOP_BAR_FONT = ("Arial", 20)
 
 
 class TopBar(ctk.CTkFrame):
@@ -26,7 +26,7 @@ class TopBar(ctk.CTkFrame):
             text="Logged in as: " + str(self.userType),
             anchor="w",
             justify=ctk.LEFT,
-            font=TOPBARFONT
+            font=TOP_BAR_FONT
         )
         self.userTypeLabel.grid(row=0, column=0, padx=3, pady=3, sticky="news")
 
@@ -54,7 +54,7 @@ class TopBar(ctk.CTkFrame):
             variable=self.switchAppearanceVar,
             onvalue="on",
             offvalue="off",
-            font=TOPBARFONT
+            font=TOP_BAR_FONT
         )
         self.switch.grid(row=0, column=2, padx=3, pady=3, sticky="news")
 
@@ -74,7 +74,7 @@ class TopBar(ctk.CTkFrame):
             variable=self.switchScaleVar,
             onvalue="on",
             offvalue="off",
-            font=TOPBARFONT
+            font=TOP_BAR_FONT
         )
         self.switchScale.grid(row=0, column=3, padx=3, pady=3, sticky="news")
 
@@ -83,7 +83,7 @@ class TopBar(ctk.CTkFrame):
             self.printButton = ctk.CTkButton(
                 self,
                 text="Print",
-                font=TOPBARFONT,
+                font=TOP_BAR_FONT,
                 command=lambda: Data.Printer.initPrint(0)
             )
             self.printButton.grid(row=0, column=4, padx=3, pady=3, sticky="news")
@@ -91,7 +91,7 @@ class TopBar(ctk.CTkFrame):
         self.logoutButton = ctk.CTkButton(
             self,
             text="Logout",
-            font=TOPBARFONT,
+            font=TOP_BAR_FONT,
             command=lambda: [Data.System.logoutUser(), GUI.MainWindow.switchLoginView(Data.System.getUser())]
         )
         self.logoutButton.grid(row=0, column=5, padx=3, pady=3, sticky="news")
