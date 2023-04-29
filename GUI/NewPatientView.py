@@ -407,7 +407,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMaxVisitorsEntry.grid(row=11, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
-        LabelBorder(self.addNoteFrame, "Approved Vistor 1 Entry").grid(row=12, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Approved Visitor 1 Entry").grid(row=12, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.ApprovedVisitor1Note = ctk.StringVar()
         self.addAprovedVisitorEntry1 = ctk.CTkEntry(
             self.addNoteFrame,
@@ -418,7 +418,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addAprovedVisitorEntry1.grid(row=13, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
         
-        LabelBorder(self.addNoteFrame, "Approved Vistor 2 Entry").grid(row=14, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Approved Visitor 2 Entry").grid(row=14, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.ApprovedVisitor2Note = ctk.StringVar()
         self.addAprovedVisitorEntry2 = ctk.CTkEntry(
             self.addNoteFrame,
@@ -431,7 +431,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addAprovedVisitorEntry2.grid(row=15, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
             
-        LabelBorder(self.addNoteFrame, "Approved Vistor 3 Entry").grid(row=16, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Approved Visitor 3 Entry").grid(row=16, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
         self.ApprovedVisitor3Note = ctk.StringVar()
         self.addAprovedVisitorEntry3 = ctk.CTkEntry(
             self.addNoteFrame,

@@ -2,10 +2,10 @@ import customtkinter as ctk
 import GUI.PatientDetailedView as pdv
 import GUI.TopBarGui as tb
 import GUI.ListView as lv
-import GUI.loginGUI as lgn
+import GUI.LoginView as lgn
 from Data.dataClasses import *
-import GUI.EditPatientsGui as EditGui
-import GUI.NewPatientCreation as CreateGui
+import GUI.EditPatientView as EditGui
+import GUI.NewPatientView as CreateGui
 
 
 class MainWindow(ctk.CTk):
@@ -57,7 +57,7 @@ def switchPatientList(patientList):
     MainWindow.viewType = 0
     
 
-#view to go to NewPatientCreation window 
+#view to go to NewPatientView window 
 def switchPatientCreationView(user):
     MainWindow.window.currentView.destroy()
 
@@ -65,7 +65,7 @@ def switchPatientCreationView(user):
     MainWindow.window.currentView.grid(row=1, column=0, sticky="news", columnspan=10)
     MainWindow.viewType = 2
     
- #view to go to EditPatientWindow window 
+ #view to go to EditPatientView window 
 def switchEditPatientView(user):
     MainWindow.window.currentView.destroy()
 

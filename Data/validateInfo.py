@@ -72,7 +72,7 @@ class validateInfo():
             for num in patient.numAllowedVisitors:
                 amount = ord(num)
                 if amount < 48 or amount > 57:
-                    self.issue = "Invalid entry for max simulataneous visitors."
+                    self.issue = "Invalid entry for max simultaneous visitors."
                 
 
         elif len(patient.mobilePhone) > 20:

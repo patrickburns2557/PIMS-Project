@@ -401,7 +401,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.addMaxVisitorsEntry.grid(row=11, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
 
-        LabelBorder(self.addNoteFrame, "Approved Vistor 1 Entry").grid(row=12, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Approved Visitor 1 Entry").grid(row=12, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
         try:
             self.ApprovedVisitor1Note = ctk.StringVar(value = patient.allowedVisitors[0])
         except IndexError:
@@ -414,7 +414,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         )
         self.addAprovedVisitorEntry1.grid(row=13, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
 
-        LabelBorder(self.addNoteFrame, "Approved Vistor 2 Entry").grid(row=14, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Approved Visitor 2 Entry").grid(row=14, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
         try:
             self.ApprovedVisitor2Note = ctk.StringVar(value = patient.allowedVisitors[1])
         except IndexError:
@@ -431,7 +431,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
  
             
 
-        LabelBorder(self.addNoteFrame, "Approved Vistor 3 Entry").grid(row=16, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Approved Visitor 3 Entry").grid(row=16, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
         try:
             self.ApprovedVisitor3Note = ctk.StringVar(value = patient.allowedVisitors[2])
         except IndexError:
@@ -444,7 +444,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         )
         self.addAprovedVisitorEntry3.grid(row=17, column=2, sticky="w", padx=PADCOMP, pady=PADCOMP)
         
-        LabelBorder(self.addNoteFrame, "Approved Vistor 4 Entry").grid(row=18, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
+        LabelBorder(self.addNoteFrame, "Approved Visitor 4 Entry").grid(row=18, column=2, sticky="w", padx=PADLABEL, pady=PADLABEL)
         try:
             self.ApprovedVisitor4Note = ctk.StringVar(value = patient.allowedVisitors[3])
         except IndexError:
@@ -822,25 +822,25 @@ def finalizePatient(self,UpdatedPatient):
 #approved visitors
     try:    
         UpdatedPatient.allowedVisitors[0] = (self.PersonalTab.ApprovedVisitor1Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if((self.PersonalTab.ApprovedVisitor1Note.get()) != ""):
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor1Note.get()) 
             
     try:    
         UpdatedPatient.allowedVisitors[1] = (self.PersonalTab.ApprovedVisitor2Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if((self.PersonalTab.ApprovedVisitor2Note.get()) != ""):
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor2Note.get()) 
             
     try:    
         UpdatedPatient.allowedVisitors[2] = (self.PersonalTab.ApprovedVisitor3Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if((self.PersonalTab.ApprovedVisitor3Note.get()) != ""):
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor3Note.get()) 
             
     try:    
         UpdatedPatient.allowedVisitors[3] = (self.PersonalTab.ApprovedVisitor4Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if((self.PersonalTab.ApprovedVisitor4Note.get()) != ""):
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor4Note.get()) 
     
