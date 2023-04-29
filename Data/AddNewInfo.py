@@ -1,12 +1,12 @@
 import Data.System
-from Data.sqlConnector import *
+from Data.SqlConnector import *
 
 
-class addNewInfo:
+class AddNewInfo:
 
     def __init__(self):
 
-        self.db = myConnector()
+        self.db = MyConnector()
 
     def updatePatient(self, patient, new):
 

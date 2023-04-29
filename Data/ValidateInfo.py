@@ -5,7 +5,7 @@ import re
 # class to ensure all information entered in add/edit patient is valid
 
 
-class validateInfo:
+class ValidateInfo:
 
     def __init__(self):
 
@@ -135,14 +135,14 @@ class validateInfo:
                 # add new patient to database
                 # make sure database is loaded
                 try:
-                    Data.AddNewInfo.addNewInfo().updatePatient(patient, True)
+                    Data.AddNewInfo.AddNewInfo().updatePatient(patient, True)
                 except:
                     # don't access database if placeholder data is being used
                     pass
             else:
                 # update existing patient
                 try:
-                    Data.AddNewInfo.addNewInfo().updatePatient(patient, False)
+                    Data.AddNewInfo.AddNewInfo().updatePatient(patient, False)
                 except:
                     pass
 

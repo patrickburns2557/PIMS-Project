@@ -101,9 +101,9 @@ def getPatientList():
 def loadDatabase():
     # If database fails to load, load placeholder data instead
     try:
-        patientCreator = Data.AssignData.patientList()
+        patientCreator = Data.AssignData.PatientList()
         patientCreator.createList()
-        System.TheSystem.patientList = patientCreator.getList()
+        System.TheSystem.PatientList = patientCreator.getList()
     except:
         print("Loading placeholder data instead.")
         System.TheSystem.loadPlaceholderData()

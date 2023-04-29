@@ -4,7 +4,7 @@ import GUI.MainWindow
 import pandas as pd
 try:
     from os import startfile
-except :
+except:
     pass
 from datetime import datetime
 

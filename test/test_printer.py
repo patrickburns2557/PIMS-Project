@@ -5,8 +5,8 @@ from Data.System import *
 
 
 def test_print():
-    loginSystem.login(System.TheSystem.user, "test", "test")
-    GUI.MainWindow.switchPatientList(System.TheSystem.patientList)
+    LoginSystem.login(System.TheSystem.user, "test", "test")
+    GUI.MainWindow.switchPatientList(System.TheSystem.PatientList)
     initPrint(0)
     f = open(REPORT_NAME, 'r')
     lines = f.readlines()

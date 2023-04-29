@@ -4,12 +4,12 @@ from Data.System import *
 
 
 def test_switchDetailedView():
-    GUI.MainWindow.switchDetailedView(System.TheSystem.patientList[0])
+    GUI.MainWindow.switchDetailedView(System.TheSystem.PatientList[0])
     assert GUI.MainWindow.getViewType() == 1
 
 
 def test_switchPatientList():
-    GUI.MainWindow.switchPatientList(System.TheSystem.patientList)
+    GUI.MainWindow.switchPatientList(System.TheSystem.PatientList)
     assert GUI.MainWindow.getViewType() == 0
 
 

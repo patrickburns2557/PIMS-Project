@@ -766,14 +766,14 @@ def finalizePatient(self, UpdatedPatient):
         UpdatedPatient.setNumAllowedVisitors(self.PersonalTab.MaxVisitorsNote.get())
 
 
-    except (ValueError, NameError, AttributeError):
+    except:
         pass
 
     # emergency contacts
     try:
         UpdatedPatient.emergencyContactNames[0] = (self.PersonalTab.EmergencyName1Note.get())
         UpdatedPatient.emergencyContactNumbers[0] = (self.PersonalTab.EmergencyPhone1Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if self.PersonalTab.EmergencyName1Note.get() != "" and self.PersonalTab.EmergencyPhone1Note.get() != "":
             UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName1Note.get(),
                                                self.PersonalTab.EmergencyPhone1Note.get())
@@ -781,7 +781,7 @@ def finalizePatient(self, UpdatedPatient):
     try:
         UpdatedPatient.emergencyContactNames[1] = (self.PersonalTab.EmergencyName2Note.get())
         UpdatedPatient.emergencyContactNumbers[1] = (self.PersonalTab.EmergencyPhone2Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if self.PersonalTab.EmergencyName2Note.get() != "" and self.PersonalTab.EmergencyPhone2Note.get() != "":
             UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName2Note.get(),
                                                self.PersonalTab.EmergencyPhone2Note.get())
@@ -789,7 +789,7 @@ def finalizePatient(self, UpdatedPatient):
     try:
         UpdatedPatient.emergencyContactNames[2] = (self.PersonalTab.EmergencyName3Note.get())
         UpdatedPatient.emergencyContactNumbers[2] = (self.PersonalTab.EmergencyPhone3Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if self.PersonalTab.EmergencyName3Note.get() != "" and self.PersonalTab.EmergencyPhone3Note.get() != "":
             UpdatedPatient.addEmergencyContact(self.PersonalTab.EmergencyName3Note.get(),
                                                self.PersonalTab.EmergencyPhone3Note.get())
@@ -797,25 +797,25 @@ def finalizePatient(self, UpdatedPatient):
         # approved visitors
     try:
         UpdatedPatient.allowedVisitors[0] = (self.PersonalTab.ApprovedVisitor1Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if (self.PersonalTab.ApprovedVisitor1Note.get()) != "":
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor1Note.get())
 
     try:
         UpdatedPatient.allowedVisitors[1] = (self.PersonalTab.ApprovedVisitor2Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if (self.PersonalTab.ApprovedVisitor2Note.get()) != "":
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor2Note.get())
 
     try:
         UpdatedPatient.allowedVisitors[2] = (self.PersonalTab.ApprovedVisitor3Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if (self.PersonalTab.ApprovedVisitor3Note.get()) != "":
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor3Note.get())
 
     try:
         UpdatedPatient.allowedVisitors[3] = (self.PersonalTab.ApprovedVisitor4Note.get())
-    except (ValueError, NameError, AttributeError):
+    except:
         if (self.PersonalTab.ApprovedVisitor4Note.get()) != "":
             UpdatedPatient.allowedVisitors.append(self.PersonalTab.ApprovedVisitor4Note.get())
 
@@ -828,11 +828,11 @@ def finalizePatient(self, UpdatedPatient):
         UpdatedPatient.updateAmountOwed()
 
         UpdatedPatient.setAmountPaidByInsurance(float(self.BillingTab.AmountPaidByInsuranceNote.get()))
-    except (ValueError, NameError, AttributeError):
+    except:
         pass
 
         # ensure no information exceeds database character limit
-    validate = Data.ValidateInfo.validateInfo()
+    validate = Data.ValidateInfo.ValidateInfo()
     validate.checkEntry(UpdatedPatient)
     truthValid, strIssue = validate.checkValidity(UpdatedPatient, False)
     if not truthValid:

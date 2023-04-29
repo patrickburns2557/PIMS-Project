@@ -185,7 +185,7 @@ class User:
         return self.userType
 
 
-class loginSystem:
+class LoginSystem:
     def login(user, username, password):
         auth = password.encode()
         auth_hash = hashlib.md5(auth).hexdigest()

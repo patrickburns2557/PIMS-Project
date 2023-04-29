@@ -11,5 +11,5 @@ def test_user():
 
 def test_login():
     newUser = User()
-    validLogin = loginSystem.login(newUser, "test", "test")
+    validLogin = LoginSystem.login(newUser, "test", "test")
     assert validLogin is True

@@ -433,7 +433,7 @@ class MedicalInfoTab(ctk.CTkFrame):
     def addNurseNote(self, patient, nurseNote):
         patient.addNurseNote(nurseNote)
         try:
-            Data.AddNewInfo.addNewInfo().updatePatient(patient, False)
+            Data.AddNewInfo.AddNewInfo().updatePatient(patient, False)
         except:
             # don't add if not connected to db
             pass
@@ -442,7 +442,7 @@ class MedicalInfoTab(ctk.CTkFrame):
     def addDoctorNote(self, patient, doctorNote):
         patient.addDoctorNote(doctorNote)
         try:
-            Data.AddNewInfo.addNewInfo().updatePatient(patient, False)
+            Data.AddNewInfo.AddNewInfo().updatePatient(patient, False)
         except:
             # don't add if not connected to db
             pass

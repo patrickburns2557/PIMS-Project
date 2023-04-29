@@ -1,15 +1,15 @@
 # create list of patient objects from database info
 import Data.System
-from Data.sqlConnector import *
+from Data.SqlConnector import *
 from Data.DataClasses import *
 
 
-class patientList:
+class PatientList:
 
     def __init__(self):
 
         # access database
-        self.db = myConnector()
+        self.db = MyConnector()
 
         # list of patient objects
         self.patientRecords = []

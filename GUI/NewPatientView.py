@@ -923,7 +923,7 @@ def finalizePatient(self):
         pass
 
         # ensure no information exceeds database character limit
-    validate = Data.ValidateInfo.validateInfo()
+    validate = Data.ValidateInfo.ValidateInfo()
     validate.checkEntry(self.NewPatient)
     truthValid, strIssue = validate.checkValidity(self.NewPatient, True)
     if not truthValid:

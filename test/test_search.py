@@ -5,7 +5,7 @@ from GUI.ListView import *
 
 
 def test_search():
-    print(System.TheSystem.patientList[0].firstName)
-    GUI.MainWindow.switchPatientList(System.TheSystem.patientList)
+    print(System.TheSystem.PatientList[0].firstName)
+    GUI.MainWindow.switchPatientList(System.TheSystem.PatientList)
     result = GUI.MainWindow.MainWindow.window.currentView.searchPatient("Garcia")
     assert result[0].firstName == "Sophia"
