@@ -5,7 +5,7 @@ import tkinter.ttk as ttk
 import customtkinter as ctk
 
 import Data.System
-import Data.validateInfo
+import Data.ValidateInfo
 import GUI.MainWindow as MainWindow
 
 FONT_INFO = ("Courier", 18)
@@ -529,7 +529,7 @@ class PersonalInfoTab(ctk.CTkScrollableFrame):
         self.label_error.configure(text="")
 
         # if all entries are valid
-        if self.valid1 == True and self.valid2 == True and self.valid3 == True and self.valid4 == True and self.valid5 == True and self.valid6 == True:
+        if self.valid1 is True and self.valid2 is True and self.valid3 is True and self.valid4 is True and self.valid5 is True and self.valid6 is True:
             self.parentWidget.turnOnSave()
         return True
 
@@ -832,7 +832,7 @@ def finalizePatient(self, UpdatedPatient):
         pass
 
         # ensure no information exceeds database character limit
-    validate = Data.validateInfo.validateInfo()
+    validate = Data.ValidateInfo.validateInfo()
     validate.checkEntry(UpdatedPatient)
     truthValid, strIssue = validate.checkValidity(UpdatedPatient, False)
     if not truthValid:

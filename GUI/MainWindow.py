@@ -1,11 +1,11 @@
 import customtkinter as ctk
 
-import GUI.EditPatientsGui as EditGui
+import GUI.EditPatientsView as EditGui
 import GUI.ListView as lv
-import GUI.NewPatientCreation as CreateGui
+import GUI.NewPatientView as CreateGui
 import GUI.PatientDetailedView as pdv
 import GUI.TopBarGui as tb
-import GUI.loginGUI as lgn
+import GUI.LoginView as lgn
 
 
 class MainWindow(ctk.CTk):

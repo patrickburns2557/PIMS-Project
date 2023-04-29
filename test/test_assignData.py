@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from Data.assignData import *
+from Data.AssignData import *
 
 
 def test_loadPatientList():

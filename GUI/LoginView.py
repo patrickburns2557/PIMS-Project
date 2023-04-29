@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from Data.dataClasses import *
+from Data.DataClasses import *
 import GUI.MainWindow
 import Data.System
 from PIL import Image

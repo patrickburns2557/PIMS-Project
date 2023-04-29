@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from Data.dataClasses import *
+from Data.DataClasses import *
 
 
 def test_user():
@@ -12,4 +12,4 @@ def test_user():
 def test_login():
     newUser = User()
     validLogin = loginSystem.login(newUser, "test", "test")
-    assert validLogin == True
+    assert validLogin is True

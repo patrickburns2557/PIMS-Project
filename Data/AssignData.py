@@ -1,7 +1,7 @@
 # create list of patient objects from database info
 import Data.System
 from Data.sqlConnector import *
-from Data.dataClasses import *
+from Data.DataClasses import *
 
 
 class patientList:

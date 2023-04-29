@@ -1,5 +1,5 @@
 import Data.System
-from Data.dataClasses import Patient
+from Data.DataClasses import Patient
 import GUI.MainWindow
 import pandas as pd
 from os import startfile

@@ -51,7 +51,7 @@ class SinglePatientListWidget(ctk.CTkFrame):
                 command=lambda: GUI.MainWindow.switchDetailedView(self.patient)
             )
             self.middleNameButton.pack(padx=2, pady=2)
-        except:  # placeholder text if the first name fails to load
+        except:  # placeholder text if the first name fails to load.
             self.middleNameLabel = ctk.CTkLabel(
                 self.middleNameFrame,
                 text="MIDDLE NAME",

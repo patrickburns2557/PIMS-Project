@@ -5,9 +5,9 @@ import tkinter.ttk as ttk
 import customtkinter as ctk
 
 import Data.System
-import Data.validateInfo
+import Data.ValidateInfo
 import GUI.MainWindow as MainWindow
-from Data.dataClasses import Patient
+from Data.DataClasses import Patient
 
 FONT_INFO = ("Courier", 18)
 FONT_BUTTON = ("Courier", 20)
@@ -923,7 +923,7 @@ def finalizePatient(self):
         pass
 
         # ensure no information exceeds database character limit
-    validate = Data.validateInfo.validateInfo()
+    validate = Data.ValidateInfo.validateInfo()
     validate.checkEntry(self.NewPatient)
     truthValid, strIssue = validate.checkValidity(self.NewPatient, True)
     if not truthValid:

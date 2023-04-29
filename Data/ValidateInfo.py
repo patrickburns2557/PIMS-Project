@@ -1,4 +1,4 @@
-import Data.addNewInfo
+import Data.AddNewInfo
 import re
 
 
@@ -135,14 +135,14 @@ class validateInfo:
                 # add new patient to database
                 # make sure database is loaded
                 try:
-                    Data.addNewInfo.addNewInfo().updatePatient(patient, True)
+                    Data.AddNewInfo.addNewInfo().updatePatient(patient, True)
                 except:
                     # don't access database if placeholder data is being used
                     pass
             else:
                 # update existing patient
                 try:
-                    Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+                    Data.AddNewInfo.addNewInfo().updatePatient(patient, False)
                 except:
                     pass
 

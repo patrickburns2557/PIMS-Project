@@ -21,7 +21,7 @@ class ListView(ctk.CTkFrame):
             )
             NewPatientButton.grid(row=0, column=0, sticky="ew", padx=5, pady=6)
 
-        # Variable to hold the text in the search box
+        # Variable to hold the text in the search box.
         self.search = ctk.StringVar()
 
         self.searchText = ctk.CTkLabel(self, text="Name:", font=("Courier", 18, "bold"))

@@ -10,7 +10,7 @@ class TopBar(ctk.CTkFrame):
     def __init__(self, parentWidget):
         super().__init__(parentWidget)
 
-        # Show the user type that's currently logged in
+        # Show the user type that's currently logged in.
         self.userType = "Not Logged In"
         if Data.System.getUserType() == 0:
             self.userType = "Doctor"

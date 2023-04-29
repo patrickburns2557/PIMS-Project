@@ -1,6 +1,6 @@
-import Data.assignData
+import Data.AssignData
 import GUI.MainWindow
-from Data.dataClasses import *
+from Data.DataClasses import *
 
 
 # Class to hold the patient master list and the currently logged-in user
@@ -101,7 +101,7 @@ def getPatientList():
 def loadDatabase():
     # If database fails to load, load placeholder data instead
     try:
-        patientCreator = Data.assignData.patientList()
+        patientCreator = Data.AssignData.patientList()
         patientCreator.createList()
         System.TheSystem.patientList = patientCreator.getList()
     except:

@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 import Data.System
-import Data.addNewInfo
+import Data.AddNewInfo
 import GUI.MainWindow as MainWindow
 
 BG_COLOR = "#E4E4E4"
@@ -432,12 +432,20 @@ class MedicalInfoTab(ctk.CTkFrame):
 
     def addNurseNote(self, patient, nurseNote):
         patient.addNurseNote(nurseNote)
-        Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+        try:
+            Data.AddNewInfo.addNewInfo().updatePatient(patient, False)
+        except:
+            # don't add if not connected to db
+            pass
         self.master.switchMedical()
 
     def addDoctorNote(self, patient, doctorNote):
         patient.addDoctorNote(doctorNote)
-        Data.addNewInfo.addNewInfo().updatePatient(patient, False)
+        try:
+            Data.AddNewInfo.addNewInfo().updatePatient(patient, False)
+        except:
+            # don't add if not connected to db
+            pass
         self.master.switchMedical()
 
 
