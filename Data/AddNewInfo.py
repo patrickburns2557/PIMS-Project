@@ -1,18 +1,18 @@
-from Data.sqlConnector import *
-from Data.dataClasses import *
 import Data.System
+from Data.SqlConnector import *
 
-class addNewInfo():
+
+class AddNewInfo:
 
     def __init__(self):
 
-        self.db = myConnector()
+        self.db = MyConnector()
 
     def updatePatient(self, patient, new):
 
         user = Data.System.getUserType()
 
-        if new == True:
+        if new:
             self.ID = self.db.checkRowCount()
             # add row for patient if new
             self.db.execute("INSERT into patients (patient_ID) VALUES (" + str(self.ID) + ")")
@@ -57,7 +57,7 @@ class addNewInfo():
 
         self.visitors = patient.allowedVisitors
         self.visitorString = ""
-        for i in range (len(self.visitors)):
+        for i in range(len(self.visitors)):
             if i != 0:
                 self.visitorString += "\n"
             self.visitorString = self.visitorString + self.visitors[i]
@@ -72,16 +72,16 @@ class addNewInfo():
 
         self.chargeNames = patient.listCharges
         self.nameString = ""
-        for i in range (len(self.chargeNames)):
+        for i in range(len(self.chargeNames)):
             if i != 0:
                 self.nameString += "\n"
             self.nameString = self.nameString + self.chargeNames[i]
 
         self.db.update("billing_items_name", self.nameString, self.ID)
-        
+
         self.chargeAmounts = patient.listChargesAmount
         self.amountString = ""
-        for i in range (len(self.chargeAmounts)):
+        for i in range(len(self.chargeAmounts)):
             if i != 0:
                 self.amountString += "\n"
             amounts = str(self.chargeAmounts[i])
@@ -94,7 +94,7 @@ class addNewInfo():
         self.db.update("paid_by_insurance", patient.amountPaidByInsurance, self.ID)
 
         # only update medical info if new patient is being added
-        if new == True:
+        if new:
 
             self.db.update("date_of_admittance", patient.dateAdmittance, self.ID)
             self.db.update("time_of_admittance", patient.timeAdmittance, self.ID)
@@ -106,7 +106,7 @@ class addNewInfo():
 
             self.prescriptionName = patient.prescriptionNames
             self.nameString = ""
-            for i in range (len(self.prescriptionName)):
+            for i in range(len(self.prescriptionName)):
                 if i != 0:
                     self.nameString += "\n"
                 self.nameString = self.nameString + self.prescriptionName[i]
@@ -115,7 +115,7 @@ class addNewInfo():
 
             self.prescriptionAmount = patient.prescriptionAmount
             self.amountString = ""
-            for i in range (len(self.prescriptionAmount)):
+            for i in range(len(self.prescriptionAmount)):
                 if i != 0:
                     self.amountString += "\n"
                 self.amountString = self.amountString + self.prescriptionAmount[i]
@@ -124,7 +124,7 @@ class addNewInfo():
 
             self.prescriptionSchedule = patient.prescriptionSchedule
             self.scheduleString = ""
-            for i in range (len(self.prescriptionSchedule)):
+            for i in range(len(self.prescriptionSchedule)):
                 if i != 0:
                     self.scheduleString += "\n"
                 self.scheduleString = self.scheduleString + self.prescriptionSchedule[i]
@@ -133,29 +133,29 @@ class addNewInfo():
 
             self.procedures = patient.scheduledProcedures
             self.procedureString = ""
-            for i in range (len(self.procedures)):
+            for i in range(len(self.procedures)):
                 if i != 0:
                     self.procedureString += "\n"
                 self.procedureString = self.procedureString + self.procedures[i]
 
             self.db.update("scheduled_procedures", self.procedureString, self.ID)
 
-        elif new == False and user == 0:
+        elif new is False and user == 0:
 
             self.doctorNotes = patient.doctorNotes
             self.notesString = ""
-            for i in range (len(self.doctorNotes)):
+            for i in range(len(self.doctorNotes)):
                 if i != 0:
                     self.notesString += "\n"
                 self.notesString = self.notesString + self.doctorNotes[i]
 
             self.db.update("doctor_treatment_notes", self.notesString, self.ID)
 
-        elif new == False and user == 1:
+        elif new is False and user == 1:
 
             self.nurseNotes = patient.nurseNotes
             self.notesString = ""
-            for i in range (len(self.nurseNotes)):
+            for i in range(len(self.nurseNotes)):
                 if i != 0:
                     self.notesString += "\n"
                 self.notesString = self.notesString + self.nurseNotes[i]

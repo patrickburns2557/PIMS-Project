@@ -1,5 +1,6 @@
 #!/usr/bin/python
-from Data.dataClasses import *
+from Data.DataClasses import *
+
 
 def test_user():
     newUser = User()
@@ -7,7 +8,8 @@ def test_user():
     type = newUser.getUserType()
     assert type == 0
 
+
 def test_login():
     newUser = User()
-    validLogin = loginSystem.login(newUser, "test", "test")
-    assert validLogin == True
+    validLogin = LoginSystem.login(newUser, "test", "test")
+    assert validLogin is True

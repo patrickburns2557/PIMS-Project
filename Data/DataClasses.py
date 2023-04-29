@@ -1,61 +1,57 @@
-#classes for the program
-#Users, patients, login, etc...
-#we may want to split this up further
+# classes for the program
+# Users, patients, login, etc...
+# we may want to split this up further
 
 import hashlib
 
-class Patient():
+
+class Patient:
     def __init__(self):
-        
-        #PERSONAL INFORMATION
+        # PERSONAL INFORMATION
         self.ID = ""
         self.firstName = ""
         self.middleName = ""
         self.lastName = ""
-        self.address = ["", "", "", ""] # Street, City, State, Zip
+        self.address = ["", "", "", ""]  # Street, City, State, Zip
         self.homePhone = ""
         self.workPhone = ""
         self.mobilePhone = ""
-        self.emergencyContactNames = [] # Name, Phone number
-        self.emergencyContactNumbers = [] # Phone number of emergency contact
-        
-        
-        #MEDICAL INFORMATION
+        self.emergencyContactNames = []  # Name, Phone number
+        self.emergencyContactNumbers = []  # Phone number of emergency contact
+
+        # MEDICAL INFORMATION
         self.dateAdmittance = ""
         self.timeAdmittance = ""
         self.reasonAdmission = ""
         self.familyDoctor = ""
         self.dateDischarge = ""
         self.timeDischarge = ""
-        self.doctorNotes = [] # List of strings to append to
-        self.nurseNotes = [] # List of strings to append to
-        self.prescriptionNames = [] # List of strings to append to
-        self.prescriptionAmount = [] # List of strings to append to
-        self.prescriptionSchedule = [] # List of strings to append to
-        self.scheduledProcedures = [] # List of strings to append to
-        
+        self.doctorNotes = []  # List of strings to append to
+        self.nurseNotes = []  # List of strings to append to
+        self.prescriptionNames = []  # List of strings to append to
+        self.prescriptionAmount = []  # List of strings to append to
+        self.prescriptionSchedule = []  # List of strings to append to
+        self.scheduledProcedures = []  # List of strings to append to
 
-        #LOCATION INFORMATION
-        self.location = ["", "", "", ""] # Facility, Floor, Room, Bed number
+        # LOCATION INFORMATION
+        self.location = ["", "", "", ""]  # Facility, Floor, Room, Bed number
         self.locationFacility = ""
         self.locationFloor = ""
         self.locationRoom = ""
-        self.locationBed = "" # Bed number in a given room
+        self.locationBed = ""  # Bed number in a given room
         self.numAllowedVisitors = ""
-        self.allowedVisitors = [] # List of visitor names
+        self.allowedVisitors = []  # List of visitor names
 
-
-        #BILLING INFORMATION
+        # BILLING INFORMATION
         self.insuranceCarrier = ""
         self.insuranceAccountNumber = ""
         self.insuranceGroupNumber = ""
-        self.listCharges = [] # List of strings containing the name of each charge
-        self.listChargesAmount = [] # List of floats(?) containing the value of each charge
+        self.listCharges = []  # List of strings containing the name of each charge
+        self.listChargesAmount = []  # List of floats(?) containing the value of each charge
         self.amountPaid = 0.0
         self.amountOwed = 0.0
         self.amountPaidByInsurance = 0.0
 
-    
     ################################
     # PERSONAL INFORMATION METHODS
     ################################
@@ -64,7 +60,7 @@ class Patient():
 
     def setFirstName(self, firstName):
         self.firstName = firstName
-    
+
     def setMiddleName(self, middleName):
         self.middleName = middleName
 
@@ -73,11 +69,11 @@ class Patient():
 
     # address = list of 4 strings that equate to Street, City, State, Zip
     def setAddress(self, address):
-        self.address[0] = address[0] # Street
-        self.address[1] = address[1] # City
-        self.address[2] = address[2] # State
-        self.address[3] = address[3] # Zip
-    
+        self.address[0] = address[0]  # Street
+        self.address[1] = address[1]  # City
+        self.address[2] = address[2]  # State
+        self.address[3] = address[3]  # Zip
+
     def setHomePhone(self, homePhone):
         self.homePhone = homePhone
 
@@ -86,11 +82,10 @@ class Patient():
 
     def setMobilePhone(self, mobilePhone):
         self.mobilePhone = mobilePhone
-    
+
     def addEmergencyContact(self, emergencyContactName, emergencyContactNumber):
         self.emergencyContactNames.append(emergencyContactName)
         self.emergencyContactNumbers.append(emergencyContactNumber)
-    
 
     ################################
     # MEDICAL INFORMATION METHODS
@@ -106,7 +101,7 @@ class Patient():
 
     def setFamilyDoctor(self, familyDoctor):
         self.familyDoctor = familyDoctor
-    
+
     def setDateDischarge(self, dateDischarge):
         self.dateDischarge = dateDischarge
 
@@ -127,23 +122,21 @@ class Patient():
     def addScheduledProcedure(self, scheduledProcedure):
         self.scheduledProcedures.append(scheduledProcedure)
 
-    
     ################################
     # LOCATION INFORMATION METHODS
     ################################
     # location = list of 4 strings that equate to Facility, Floor, Room number, and Bed number
     def setLocation(self, location):
-        self.location[0] = location[0] # Facility
-        self.location[1] = location[1] # Floor
-        self.location[2] = location[2] # Room number
-        self.location[3] = location[3] # Bed number
+        self.location[0] = location[0]  # Facility
+        self.location[1] = location[1]  # Floor
+        self.location[2] = location[2]  # Room number
+        self.location[3] = location[3]  # Bed number
 
     def setNumAllowedVisitors(self, numVisitors):
         self.numAllowedVisitors = numVisitors
 
     def addAllowedVisitor(self, allowedVisitor):
         self.allowedVisitors.append(allowedVisitor)
-    
 
     ################################
     # BILLING INFORMATION METHODS
@@ -166,7 +159,7 @@ class Patient():
 
     def setAmountOwed(self, amountOwed):
         self.amountOwed = amountOwed
-    
+
     def updateAmountOwed(self):
         totalCharges = 0.0
         for x in self.listChargesAmount:
@@ -192,22 +185,19 @@ class User:
         return self.userType
 
 
-class loginSystem:
+class LoginSystem:
     def login(user, username, password):
         auth = password.encode()
         auth_hash = hashlib.md5(auth).hexdigest()
         with open("logins.txt", "r") as f:
             lines = f.readlines()
         f.close()
-        
+
         loginFound = False
         for line in lines:
             line = line.split()
             if username == line[0] and auth_hash == line[1]:
                 user.setUserType(int(line[2]))
                 return True
-        if loginFound == False:
+        if not loginFound:
             return False
-    
-
-        

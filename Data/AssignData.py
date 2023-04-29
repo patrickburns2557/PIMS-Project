@@ -1,16 +1,17 @@
 # create list of patient objects from database info
 import Data.System
-from Data.sqlConnector import *
-from Data.dataClasses import *
+from Data.SqlConnector import *
+from Data.DataClasses import *
 
-class patientList():
+
+class PatientList:
 
     def __init__(self):
 
         # access database
-        self.db = myConnector()
+        self.db = MyConnector()
 
-         # list of patient objects
+        # list of patient objects
         self.patientRecords = []
 
     # method to get specific data from database by column
@@ -50,12 +51,18 @@ class patientList():
                 patients.setLocation(location)
 
                 # emergency contacts
-                if (self.setData("emergency1_name")[i][0]) != None and (self.setData("emergency1_number")[i][0]) != None:
-                    patients.addEmergencyContact((self.setData("emergency1_name")[i][0]), (self.setData("emergency1_number")[i][0]))
-                if (self.setData("emergency2_name")[i][0]) != None and (self.setData("emergency2_number")[i][0]) != None:
-                    patients.addEmergencyContact((self.setData("emergency2_name")[i][0]), (self.setData("emergency2_number")[i][0]))
-                if (self.setData("emergency3_name")[i][0]) != None and (self.setData("emergency3_number")[i][0]) != None:
-                    patients.addEmergencyContact((self.setData("emergency3_name")[i][0]), (self.setData("emergency3_number")[i][0]))
+                if (self.setData("emergency1_name")[i][0]) is not None and (
+                        self.setData("emergency1_number")[i][0]) is not None:
+                    patients.addEmergencyContact((self.setData("emergency1_name")[i][0]),
+                                                 (self.setData("emergency1_number")[i][0]))
+                if (self.setData("emergency2_name")[i][0]) is not None and (
+                        self.setData("emergency2_number")[i][0]) is not None:
+                    patients.addEmergencyContact((self.setData("emergency2_name")[i][0]),
+                                                 (self.setData("emergency2_number")[i][0]))
+                if (self.setData("emergency3_name")[i][0]) is not None and (
+                        self.setData("emergency3_number")[i][0]) is not None:
+                    patients.addEmergencyContact((self.setData("emergency3_name")[i][0]),
+                                                 (self.setData("emergency3_number")[i][0]))
 
                 # allowed visitor amount and names
                 patients.setNumAllowedVisitors((self.setData("allowed_visitor_amount")[i])[0])
@@ -85,7 +92,6 @@ class patientList():
                     patients.setInsuranceCarrier((self.setData("insurance_carrier")[i])[0])
                     patients.setInsuranceAccountNumber((self.setData("insurance_account_number")[i])[0])
                     patients.setInsuranceGroupNumber((self.setData("insurance_group_number")[i])[0])
-
 
                     # billing info
                     names = (self.setData("billing_items_name")[i][0]).split('\n')
@@ -145,7 +151,6 @@ class patientList():
                     if len(procedures) != 0:
                         for j in range(len(procedures)):
                             patients.addScheduledProcedure(procedures[j])
-
 
                 # list of all patient objects
                 self.patientRecords.append(patients)

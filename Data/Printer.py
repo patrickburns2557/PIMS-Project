@@ -1,19 +1,23 @@
 import Data.System
-from Data.dataClasses import Patient
+from Data.DataClasses import Patient
 import GUI.MainWindow
 import pandas as pd
-from os import startfile
+try:
+    from os import startfile
+except:
+    pass
 from datetime import datetime
 
 # constants
 REPORT_NAME = "PatientReport.txt"
+
 
 # To use the class, simply call Data.Printer.initPrint() to print the current view
 
 # This class allows a way to print patient data.
 # First a user must add one or more patients with an add method
 # Then they can use the print method to write the data to a text file.
-class Printer():
+class Printer:
     def __init__(self):
         self.patients = []
         self.viewType = None  # set whenever view is switched
@@ -21,7 +25,7 @@ class Printer():
     # start printing the correct number of user(s)
     def startPrint(self, scope):
         self.__getContext()
-        if (self.viewType is None):  # viewtype was not set yet.
+        if self.viewType is None:  # viewtype was not set yet.
             print("viewType not set!\nAborting print.")
             return
         elif self.viewType == 0:  # patient lists
@@ -182,7 +186,10 @@ def writeFile(dataFrame):
 
 # opens the report in the OS's text viewer
 def openFile(file):
-    startfile(file)
+    try:
+        startfile(file)
+    except:
+        pass
 
 
 # print a current view
